@@ -1,8 +1,13 @@
 {
+  "scripts": {
+    "start": "npm --prefix ./algo-que-pedir-2025-react-grupo7 run dev"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react-swc": "^4.2.0",
     "@vitest/coverage-v8": "^4.0.5",
     "jsdom": "^27.0.1",
