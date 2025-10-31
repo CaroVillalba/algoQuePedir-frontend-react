@@ -13,5 +13,10 @@
     "jsdom": "^27.0.1",
     "prettier": "^3.6.2",
     "vitest": "^4.0.5"
+  },
+  "dependencies": {
+    "primeicons": "^7.0.0",
+    "primereact": "^10.9.7",
+    "react-router-dom": "^7.9.5"
   }
 }
