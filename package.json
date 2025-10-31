@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "npm --prefix ./algo-que-pedir-2025-react-grupo7 run dev"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
