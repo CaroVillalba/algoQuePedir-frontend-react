@@ -5,8 +5,8 @@ export const ProfileView = () => {
     const [name, setName] = useState("")
 
     return (
-        <div className="p-4">
-            <label htmlFor="name" className="block mb-2">Nombre</label>
+        <div>
+            <label>Nombre</label>
             <InputText
                 id="name"
                 value={name}
