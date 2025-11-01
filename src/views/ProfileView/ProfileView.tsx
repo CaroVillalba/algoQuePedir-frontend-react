@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { InputText } from "primereact/inputtext"
 import './ProfileView.css'
 
+
 export const ProfileView = () => {
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
@@ -55,6 +56,7 @@ export const ProfileView = () => {
                     <label htmlFor="latitude">Latitud</label>
                     <InputText
                         id="latitude"
+                        keyfilter={"int"}
                         value={latitude}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLatitude(e.target.value)}
                     />
@@ -64,6 +66,7 @@ export const ProfileView = () => {
                     <label htmlFor="longitude">Longitud</label>
                     <InputText
                         id="longitude"
+                        keyfilter={"int"}
                         value={longitude}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLongitude(e.target.value)}
                     />
