@@ -6,7 +6,7 @@
   --primary-color: #e66831;
   --secondary-color: #e39617;
   --tertiary-color: #ecc95b;
-  --background-color: #f8efca;
+  --background-color: #fffaf2;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,8 +25,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--background-color);
