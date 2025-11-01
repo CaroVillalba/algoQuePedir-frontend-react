@@ -6,7 +6,6 @@
   --primary-color: #e66831;
   --secondary-color: #e39617;
   --tertiary-color: #ecc95b;
-  --background-color: #fffaf2;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,7 +13,8 @@
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 100px;
+  width: 100%;
   min-height: 100vh;
   background-color: var(--background-color);
 }

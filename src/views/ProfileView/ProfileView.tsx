@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { InputText } from "primereact/inputtext"
 import './ProfileView.css'
 
-
 export const ProfileView = () => {
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
@@ -13,6 +12,7 @@ export const ProfileView = () => {
 
     return (
         <>
+            
             <h2>Información personal</h2>
             <div className="input-form">
                 <label htmlFor="name">Nombre</label>
