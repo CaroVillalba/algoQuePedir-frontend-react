@@ -1,14 +1,14 @@
-import React, { useState } from "react"
-import { InputText } from "primereact/inputtext"
+import React, { useState } from 'react'
+import { InputText } from 'primereact/inputtext'
 import './ProfileView.css'
 
 export const ProfileView = () => {
-    const [name, setName] = useState("")
-    const [surname, setSurname] = useState("")
-    const [address, setAddress] = useState("")
-    const [location, setLocation] = useState("")
-    const [latitude, setLatitude] = useState("")
-    const [longitude, setLongitude] = useState("")
+    const [name, setName] = useState('')
+    const [surname, setSurname] = useState('')
+    const [address, setAddress] = useState('')
+    const [location, setLocation] = useState('')
+    const [latitude, setLatitude] = useState('')
+    const [longitude, setLongitude] = useState('')
 
     return (
         <>

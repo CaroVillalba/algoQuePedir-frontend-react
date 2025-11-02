@@ -3,11 +3,13 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --primary-color: #e66831;
-  --secondary-color: #e39617;
-  --tertiary-color: #ecc95b;
-  --background-color: #fffaf2;
+  --color-primary: #BC7B43;
+  --color-secondary: #CE9C71;
+  --background-color: #EFDECF;
+  --color-container: #fff;
 
+  --tertiary-color: #ecc95b;
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
