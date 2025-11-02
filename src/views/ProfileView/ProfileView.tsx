@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 import { InputText } from "primereact/inputtext"
+import { Button } from 'primereact/button'
+import { Card } from  'primereact/card'
+import { ChevronRightIcon } from 'primereact/icons/chevronright';
 import './ProfileView.css'
 
 export const ProfileView = () => {
@@ -73,7 +76,15 @@ export const ProfileView = () => {
                 </div>
             </div>
 
-            <h2>Preferencias</h2>
+           <h2>Preferencias</h2>
+           <div onClick={()=>console.log("click")} className="preference-button">
+                <h4>Criterios de busqueda</h4>
+                <ChevronRightIcon/>
+           </div>
+
+            
+
+            
             
 
 
