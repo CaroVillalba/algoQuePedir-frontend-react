@@ -9,13 +9,21 @@
   z-index: 1000;
 }
 
-/* Color base de íconos y texto no seleccionados */
 .bottom-nav .MuiBottomNavigationAction-root {
-  transition: none; /* elimina transición azul no deseada */
+  transition: none; 
 }
 
-/* Color de íconos y texto seleccionados */
+
 .bottom-nav .Mui-selected,
 .bottom-nav .Mui-selected > svg {
-  color: var(--color-primary); /* tu color personalizado */
+  color: var(--color-primary); 
+}
+
+.bottom-nav .MuiBottomNavigationAction-root .MuiTouchRipple-root {
+  color: var(--background-color);
+}
+
+
+.bottom-nav .MuiBottomNavigationAction-root {
+  outline: none;
 }
