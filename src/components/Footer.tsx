@@ -20,11 +20,7 @@ export default function SimpleBottomNavigation() {
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
-        sx={{
-            '& .Mui-selected, .Mui-selected > svg': {
-            color: 'var(--color-primary)', 
-          },
-        }}
+       className="bottom-nav"
       >
         <BottomNavigationAction label="Inicio" icon={<HomeFilledIcon />} />
         <BottomNavigationAction label="Pedidos" icon={<ReceiptIcon />} />

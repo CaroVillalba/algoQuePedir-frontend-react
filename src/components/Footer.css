@@ -8,3 +8,14 @@
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
+
+/* Color base de íconos y texto no seleccionados */
+.bottom-nav .MuiBottomNavigationAction-root {
+  transition: none; /* elimina transición azul no deseada */
+}
+
+/* Color de íconos y texto seleccionados */
+.bottom-nav .Mui-selected,
+.bottom-nav .Mui-selected > svg {
+  color: var(--color-primary); /* tu color personalizado */
+}
