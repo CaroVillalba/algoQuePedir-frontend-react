@@ -7,7 +7,7 @@ import './App.css'
 import Footer from './components/Footer';
 import { ProfileView } from './main/pages/ProfileView/ProfileView'
 import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutView'
-
+import { StoreSearch } from './main/pages/HomeView/StoreSearch'
 
 function App() {
 
@@ -18,6 +18,7 @@ function App() {
       <Routes>
         <Route path ="/profile" element={<ProfileView />}></Route>
         <Route path ="/order-checkout" element={<OrderCheckoutView />}></Route>
+        <Route path ="/" element={<StoreSearch/>}></Route>
       </Routes>
 
       <Footer />
