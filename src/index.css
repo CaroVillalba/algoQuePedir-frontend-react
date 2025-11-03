@@ -3,9 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --primary-color: #e66831;
-  --secondary-color: #e39617;
-  --tertiary-color: #ecc95b;
+  --color-primary: #e66831;
+  --color-secondary: #e39617;
+  --color-tertiary: #ecc95b;
   --background-color: #fffaf2;
 
   font-synthesis: none;
@@ -38,13 +38,13 @@ h2 {
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  background-color: var(--primary-color);
+  background-color: var(--color-secondary);
   transition: border-color 0.25s;
   color: var(--background-color);
 }
 
 .button-primary:hover {
-  border-color: var(--secondary-color);
+  border-color: var(--color-secondary);
 }
 
 button:focus,
