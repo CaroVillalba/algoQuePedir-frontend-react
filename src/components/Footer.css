@@ -20,7 +20,7 @@
 }
 
 .bottom-nav .MuiBottomNavigationAction-root .MuiTouchRipple-root {
-  color: var(--background-color);
+  color: var(--secondary-color);
 }
 
 
