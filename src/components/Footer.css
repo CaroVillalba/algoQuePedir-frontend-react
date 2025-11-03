@@ -16,7 +16,7 @@
 
 .bottom-nav .Mui-selected,
 .bottom-nav .Mui-selected > svg {
-  color: var(--color-primary); 
+  color: #e66831; 
 }
 
 .bottom-nav .MuiBottomNavigationAction-root .MuiTouchRipple-root {
