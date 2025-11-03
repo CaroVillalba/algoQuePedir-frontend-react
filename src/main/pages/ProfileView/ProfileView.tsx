@@ -92,6 +92,8 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
            </div>
 
+           <Button label="Guardar" className='button-primary' ></Button>
+
 
 
             
