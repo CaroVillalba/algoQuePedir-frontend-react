@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
-import { InputText } from 'primereact/inputtext'
+import React, { useState } from "react"
+import { InputText } from "primereact/inputtext"
+import { Button } from 'primereact/button'
+import { Card } from  'primereact/card'
+import { ChevronRightIcon } from 'primereact/icons/chevronright';
 import './ProfileView.css'
 
 export const ProfileView = () => {
@@ -12,6 +15,7 @@ export const ProfileView = () => {
 
     return (
         <>
+            
             <h2>Información personal</h2>
             <div className="input-form">
                 <label htmlFor="name">Nombre</label>
@@ -55,6 +59,7 @@ export const ProfileView = () => {
                     <label htmlFor="latitude">Latitud</label>
                     <InputText
                         id="latitude"
+                        keyfilter={"int"}
                         value={latitude}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLatitude(e.target.value)}
                     />
@@ -64,13 +69,22 @@ export const ProfileView = () => {
                     <label htmlFor="longitude">Longitud</label>
                     <InputText
                         id="longitude"
+                        keyfilter={"int"}
                         value={longitude}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLongitude(e.target.value)}
                     />
                 </div>
             </div>
 
-            <h2>Preferencias</h2>
+           <h2>Preferencias</h2>
+           <div onClick={()=>console.log("click")} className="preference-button">
+                <h4>Criterios de busqueda</h4>
+                <ChevronRightIcon/>
+           </div>
+
+            
+
+            
             
 
 

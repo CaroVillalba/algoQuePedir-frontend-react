@@ -18,3 +18,21 @@
     flex: 1 1 50px; 
     min-width: 0;
 }
+
+.preference-button{
+    cursor: pointer;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 11.5rem;
+    
+}
+
+.preference-button:hover{
+    background-color: #fff3e0;
+    
+}
+
+
+
