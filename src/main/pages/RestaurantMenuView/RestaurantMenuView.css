@@ -1,0 +1,109 @@
+.restaurant-menu-container {
+    background-color: #fafafa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.restaurant-header {
+    width: 100%;
+    overflow: hidden;
+}
+
+.restaurant-image {
+    width: 100%;
+    height: 180px;
+    display: block;
+}
+
+.restaurant-image-inner {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.restaurant-content {
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid var(--surface-border);
+    margin-top: -4px;
+}
+
+.restaurant-body {
+    margin-bottom: 1rem;
+}
+
+.restaurant-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.restaurant-meta {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+/* Menú */
+.menu-section {
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.menu-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #7b4f28;
+    margin-bottom: 0.75rem;
+}
+
+.menu-dish {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--surface-border);
+}
+
+.menu-dish:last-child {
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.dish-info {
+    flex: 1;
+    padding-right: 1rem;
+}
+
+.dish-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.dish-description {
+    display: block;
+    color: #7b4f28;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.dish-price-tag {
+    display: inline-block;
+    background-color: #6b3f1f;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Checkout */
+.checkout-bar {
+    position: fixed;
+    bottom: 5rem;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    border-top: 1px solid var(--surface-border);
+    background-color: var(--surface-a);
+    z-index: 100;
+}
