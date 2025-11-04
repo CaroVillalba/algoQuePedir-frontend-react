@@ -15,9 +15,9 @@ export default function SimpleBottomNavigation() {
   //evito que al recargar la pagina se pierda la seleccion del footer
   const getValueFromPath = (path: string) => {
     switch (path) {
-        case '/': return 0;
-        case '/profile': return 3;
-        default: return 0;
+        case '/': return 0
+        case '/profile': return 3
+        default: return 0
     }
   }
 

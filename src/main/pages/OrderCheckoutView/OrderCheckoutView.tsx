@@ -4,7 +4,9 @@ import { ScrollPanel } from 'primereact/scrollpanel'
 import { Divider } from 'primereact/divider'
 import { Image } from 'primereact/image'
 import { Dropdown } from 'primereact/dropdown'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { orderService } from '../../../services/OrderService'
+import type { CheckoutOrder } from '../../../types/Order'
 import '../../../CustomButtons.css'
 
 export const OrderCheckoutView = () => {
@@ -14,7 +16,7 @@ export const OrderCheckoutView = () => {
         { id: 3, name: 'Guacamole con Totopos', qty: 1, unitPrice: 8.50, total: 8.50 },
     ])
 
-    const [paymentMethod, setPaymentMethod] = useState(null)
+    const [paymentMethod, setPaymentMethod] = useState<string>('')
 
     const paymentOptions = [
         { label: 'Efectivo', value: 'cash' },
@@ -22,12 +24,48 @@ export const OrderCheckoutView = () => {
         { label: 'QR', value: 'qr' }
     ]
 
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const orders = await orderService.getOrderById()
+                console.log('Pedidos cargados ✅', orders)
+            } catch (error) {
+                console.error('Error al cargar pedidos:', error)
+            }
+        }
+
+        fetchOrders()
+    }, [])
+
     const handleRemoveItem = (itemId: number) => {
         setCartItems(currentItems => currentItems.filter(item => item.id !== itemId))
     }
 
     const handleClearCart = () => {
         setCartItems([])
+    }
+
+    const handleConfirmOrder = async () => {
+        setLoading(true)
+        try {
+            const checkoutOrder: CheckoutOrder = {
+                restaurantId: 1,
+                items: cartItems,
+                paymentMethod: paymentMethod
+            }
+    
+            const response = await orderService.confirmOrder(checkoutOrder)
+            console.log('Pedido confirmado ✅', response)
+            window.alert('Pedido confirmado correctamente')
+            handleClearCart()
+        } catch (error) {
+            console.error('Error al confirmar pedido:', error)
+            window.alert('Hubo un error al confirmar el pedido ❌')
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -112,9 +150,10 @@ export const OrderCheckoutView = () => {
 
             <div className="p-3 border-top-1 surface-border">
                 <Button 
-                label="Confirmar pedido" 
+                label={loading ? 'Confirmando...' : 'Confirmar pedido'} 
                 className="p-button-custom-primary w-full mb-2" 
                 disabled={!paymentMethod}
+                onClick={handleConfirmOrder}
                 />
                 <Button 
                 label="Limpiar carrito de compras" 
