@@ -1,65 +1,44 @@
 import { Button } from 'primereact/button'
-import { Toolbar } from 'primereact/toolbar'
 import { ScrollPanel } from 'primereact/scrollpanel'
 import { Divider } from 'primereact/divider'
-import { Image } from 'primereact/image'
 import { Dropdown } from 'primereact/dropdown'
-import { useState, useEffect } from 'react'
+import { Image } from 'primereact/image'
+import { useState } from 'react'
+import { useCart } from '../../../hooks/useCart'
 import { orderService } from '../../../services/OrderService'
-import type { CheckoutOrder } from '../../../types/Order'
-import '../../../CustomButtons.css'
 
+//TODO: Mejorar estilos (asumo que con crear un mini .css es suficiente) y ver como tener la info del restaurante dinámicamente
 export const OrderCheckoutView = () => {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Tacos al Pastor', qty: 1, unitPrice: 12.99, total: 12.99 },
-        { id: 2, name: 'Quesadillas de Pollo', qty: 2, unitPrice: 7.99, total: 15.98 },
-        { id: 3, name: 'Guacamole con Totopos', qty: 1, unitPrice: 8.50, total: 8.50 },
-    ])
-
+    const { cartItems, restaurantId, subtotal, clearCart, removeItem } = useCart()
     const [paymentMethod, setPaymentMethod] = useState<string>('')
+    const [loading, setLoading] = useState(false)
 
     const paymentOptions = [
         { label: 'Efectivo', value: 'cash' },
         { label: 'Tarjeta de Crédito', value: 'card' },
-        { label: 'QR', value: 'qr' }
+        { label: 'QR', value: 'qr' },
     ]
 
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const orders = await orderService.getOrderById()
-                console.log('Pedidos cargados ✅', orders)
-            } catch (error) {
-                console.error('Error al cargar pedidos:', error)
-            }
-        }
-
-        fetchOrders()
-    }, [])
-
-    const handleRemoveItem = (itemId: number) => {
-        setCartItems(currentItems => currentItems.filter(item => item.id !== itemId))
+    // TODO: Ver si traer los fees del back o si hay otra forma mejor para no tenerlos hardcodeados
+    const PAYMENT_FEES: Record<string, number> = {
+        cash: 1.0,
+        card: 1.05,
+        qr: 1.05
     }
 
-    const handleClearCart = () => {
-        setCartItems([])
-    }
+    const DELIVERY_FEE = 12.5 // TODO: Implementar que el fee sea como el deliveryCost() del back
+
+    const paymentFee = subtotal * (PAYMENT_FEES[paymentMethod] || 1)
+    const total = subtotal + paymentFee + DELIVERY_FEE
 
     const handleConfirmOrder = async () => {
+        if (!restaurantId) return
         setLoading(true)
         try {
-            const checkoutOrder: CheckoutOrder = {
-                restaurantId: 1,
-                items: cartItems,
-                paymentMethod: paymentMethod
-            }
-    
-            const response = await orderService.confirmOrder(checkoutOrder)
+            const response = await orderService.confirmOrder(cartItems, restaurantId!, paymentMethod)
             console.log('Pedido confirmado ✅', response)
             window.alert('Pedido confirmado correctamente')
-            handleClearCart()
+            clearCart()
         } catch (error) {
             console.error('Error al confirmar pedido:', error)
             window.alert('Hubo un error al confirmar el pedido ❌')
@@ -70,32 +49,29 @@ export const OrderCheckoutView = () => {
 
     return (
         <div className="h-screen flex flex-column">
-            <Toolbar 
-                start={<Button icon="pi pi-arrow-left" className="p-button-text" />} 
-                center="Tu pedido" 
-            />
-
-            <ScrollPanel className='flex-1'>
-                <div className=' p-3'>
+            <ScrollPanel className="flex-1">
+                <div className="p-3">
                     <div className="font-bold text-lg mb-3">Restaurante</div>
-                    <div className="flex align-items-center">
-                        <Image 
-                            src="https://picsum.photos/200/300"
-                            alt="Logo del restaurante" 
-                            width="60" 
-                            height="60" 
-                            className="border-round mr-3"
-                        />
-                        <div>
-                            <div className="font-bold">El Sabor Auténtico</div>
-                            <small className="text-color-secondary">4.8 · 5 km · Envío gratis</small>
+                        <div className="flex align-items-center">
+                            <Image 
+                                src="https://picsum.photos/200/300"
+                                alt="Logo del restaurante" 
+                                width="60" 
+                                height="60" 
+                                className="border-round mr-3"
+                            />
+                            <div>
+                                <div className="font-bold">El Sabor Auténtico</div>
+                                <small className="text-color-secondary">4.8 · 5 km · Envío gratis</small>
+                            </div>
                         </div>
-                    </div>
                 </div>
+
                 <Divider />
+
                 <div className="p-3">
                     <div className="font-bold text-lg mb-3">Artículos</div>
-                    {cartItems.map((item) => (
+                    {cartItems.map(item => (
                         <div key={item.id} className="flex justify-content-between align-items-center mb-3">
                             <div>
                                 <div className="font-bold">{item.name}</div>
@@ -103,63 +79,67 @@ export const OrderCheckoutView = () => {
                                 <small className="text-color-secondary">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
                             </div>
                             <div className="flex align-items-center">
-                                <span className="font-bold mr-3">${item.total.toFixed(2)}</span>
+                                <span className="font-bold mr-3">${(item.unitPrice * item.qty).toFixed(2)}</span>
                                 <Button 
                                     icon="pi pi-times" 
-                                    className="p-button-text p-button-rounded p-button-custom-icon-color"
-                                    onClick={() => handleRemoveItem(item.id)}
+                                    className="p-button-rounded p-button-danger p-button-sm" 
+                                    onClick={() => removeItem(item.id)} 
+                                    tooltip="Eliminar artículo"
                                 />
                             </div>
                         </div>
                     ))}
                 </div>
+
                 <Divider />
+
                 <div className="p-3">
                     <div className="font-bold text-lg mb-3">Resumen</div>
                     <div className="flex justify-content-between mb-2">
-                        <span className="text-color-secondary">Subtotal</span>
-                        <span>$37.47</span>
+                        <span>Subtotal</span>
+                        <span>${subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-content-between mb-2">
-                        <span className="text-color-secondary">Recargo por tipo de pago</span>
-                        <span>$2.62</span>
+                        <span>Recargo por tipo de pago</span>
+                        <span>${paymentFee.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-content-between mb-2">
-                        <span className="text-color-secondary">Tarifa de entrega</span>
-                        <span>$0.00</span>
+                        <span>Tarifa de entrega</span>
+                        <span>${DELIVERY_FEE.toFixed(2)}</span>
                     </div>
-                    <Divider />
                     <div className="flex justify-content-between align-items-center mt-3">
                         <span className="font-bold text-lg">Total</span>
-                        <span className="font-bold text-lg">$43.84</span>
+                        <span className="font-bold text-lg">${total.toFixed(2)}</span>
                     </div>
                 </div>
+
                 <Divider />
+
                 <div className="p-3">
-                    <label htmlFor="payment" className="font-bold block mb-2">Forma de pago</label>
-                    <Dropdown 
-                        id="payment"
-                        value={paymentMethod}
-                        options={paymentOptions}
-                        onChange={(e) => setPaymentMethod(e.value)}
-                        placeholder="Seleccione una opción"
-                        className="w-full"
-                    />
+                <label htmlFor="payment" className="font-bold block mb-2">Forma de pago</label>
+                <Dropdown 
+                    id="payment"
+                    value={paymentMethod}
+                    options={paymentOptions}
+                    onChange={(e) => setPaymentMethod(e.value)}
+                    placeholder="Seleccione una opción"
+                    className="w-full"
+                />
                 </div>
             </ScrollPanel>
 
             <div className="p-3 border-top-1 surface-border">
                 <Button 
-                label={loading ? 'Confirmando...' : 'Confirmar pedido'} 
-                className="p-button-custom-primary w-full mb-2" 
-                disabled={!paymentMethod}
-                onClick={handleConfirmOrder}
+                    label={loading ? 'Confirmando...' : 'Confirmar pedido'} 
+                    className="p-button-custom-primary w-full mb-2" 
+                    disabled={!paymentMethod || cartItems.length === 0}
+                    onClick={handleConfirmOrder}
                 />
                 <Button 
-                label="Limpiar carrito de compras" 
-                className="p-button-outlined p-button-custom-secondary w-full mb-2"
-                onClick={handleClearCart}
-                disabled={cartItems.length === 0} 
+                    label="Limpiar carrito de compras" 
+                    className="p-button-outlined p-button-secondary w-full mb-2"
+                    onClick={clearCart}
+                    disabled={cartItems.length === 0} 
                 />
             </div>
         </div>
