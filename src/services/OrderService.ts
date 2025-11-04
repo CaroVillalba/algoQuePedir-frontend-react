@@ -1,6 +1,5 @@
 import { CRUDService } from './CRUDService'
-import type { Order, CheckoutOrder } from '../types/Order'
-import axios from 'axios'
+import type { Order, CartItem } from '../types/Order'
 
 export class OrderService extends CRUDService<Order> {
     constructor() {
@@ -8,40 +7,42 @@ export class OrderService extends CRUDService<Order> {
     }
 
     async getOrderDetail(orderId: number): Promise<Order> {
-        const response = await axios.get(`${this.apiRoot}/${this.path}/orderDetail/${orderId}`)
+        const response = await this.api.get<Order>(`/${this.path}/orderDetail/${orderId}`)
         return response.data
     }
 
-    async confirmOrder(order: CheckoutOrder): Promise<Order> {
-        const response = await axios.post(`${this.apiRoot}/${this.path}`, order)
+    /* TODO: Mejorar la forma en la que envía el pedido, 
+    ya que luego el get no lo muestra en la página del local por incompatibilidad entre tipos de datos */
+    async confirmOrder(cartItems: CartItem[], restaurantId: number, paymentMethod: string): Promise<Order> {
+        const backendPaymentMethod = paymentMethod === 'cash' ? 'EFECTIVO'
+                                    : paymentMethod === 'qr'   ? 'QR'
+                                    : 'TRANSFERENCIA'
+    
+        const dto = {
+            restaurantId,
+            items: cartItems.map(item => ({
+                dishId: item.id,
+                quantity: item.qty
+            })),
+            paymentMethod: backendPaymentMethod
+        }
+    
+        console.log('DTO a enviar:', dto)
+        const response = await this.api.post<Order>(`/${this.path}`, dto)
         return response.data
     }
-
-    async getAllOrder(token?: string): Promise<Order[]> {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {}
-        const response = await axios.get(`${this.apiRoot}/${this.path}`, { headers })
-        return response.data
-    }
+    
 
     async getByStateOrder(state: string): Promise<Order[]> {
-        const response = await axios.get(`${this.apiRoot}/${this.path}`, {
+        const response = await this.api.get<Order[]>(`/${this.path}`, {
             params: { state }
         })
         return response.data
     }
 
-    async getOrderById(id: number): Promise<Order> {
-        const response = await axios.get(`${this.apiRoot}/${this.path}/${id}`)
-        return response.data
-    }
-
     async updateOrderState(id: number): Promise<Order> {
-        const response = await axios.patch(`${this.apiRoot}/${this.path}/${id}`)
+        const response = await this.api.patch<Order>(`/${this.path}/${id}`)
         return response.data
-    }
-
-    async deleteOrder(id: number): Promise<void> {
-        await axios.delete(`${this.apiRoot}/${this.path}/${id}`)
     }
 }
 
