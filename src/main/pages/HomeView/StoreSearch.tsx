@@ -4,7 +4,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from 'react'
 import './StoreSearch.css'
-import '../../../CustomButtons.css'
 
 export const StoreSearch = () => {
 
