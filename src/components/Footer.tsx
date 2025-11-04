@@ -15,8 +15,9 @@ export default function SimpleBottomNavigation() {
   //evito que al recargar la pagina se pierda la seleccion del footer
   const getValueFromPath = (path: string) => {
     switch (path) {
-        case '/profile': return 3
-        default: return 0
+        case '/': return 0;
+        case '/profile': return 3;
+        default: return 0;
     }
   }
 
@@ -34,7 +35,7 @@ export default function SimpleBottomNavigation() {
         value={value}
         className="bottom-nav"
       >
-        <BottomNavigationAction label="Inicio" icon={<HomeFilledIcon /> } />
+        <BottomNavigationAction label="Inicio" icon={<HomeFilledIcon /> } component={Link} to="/" />
         <BottomNavigationAction label="Pedidos" icon={<ReceiptIcon />}/>
         <BottomNavigationAction label="Calificar" icon={<StarBorderIcon />} />
         <BottomNavigationAction label="Perfil" icon={<PersonIcon />} component={Link} to="/profile" />
