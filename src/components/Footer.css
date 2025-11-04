@@ -1,5 +1,6 @@
 
 .footer-container {
+  /*TODO: PRÓXIMO FIXED, SE DESAPRUEBA -> TIENE QUE SER STICKY! */
   position: fixed;
   bottom: 0;
   left: 0;
@@ -10,14 +11,14 @@
 }
 
 .bottom-nav .MuiBottomNavigationAction-root {
-  transition: none; 
+  transition: none;
   outline: none;
 }
 
 
 .bottom-nav .Mui-selected,
 .bottom-nav .Mui-selected > svg {
-  color: #e66831; 
+  color: #e66831;
 }
 
 .bottom-nav .MuiBottomNavigationAction-root .MuiTouchRipple-root {
