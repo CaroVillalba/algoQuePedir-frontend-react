@@ -1,24 +1,23 @@
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import SearchIcon from '@mui/icons-material/Search'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useState } from 'react'
 import './StoreSearch.css'
-import '../../../CustomButtons.css'
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import Checkbox from '@mui/material/Checkbox'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 export const StoreSearch = () => {
   const [locales, setLocales] = useState([
     { id: 1, nombre: 'El Buen Sabor', direccion: 'Av. San Martín 1234', imagen: '/images/local1.jpg'},
     { id: 2, nombre: 'Sabores del Norte', direccion: 'Belgrano 456', imagen: '/images/local2.jpg' },
     { id: 3, nombre: 'Pizzería La Familia', direccion: 'Mitre 789', imagen: '/images/local3.jpg' },
-  ]);
+  ])
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
 
