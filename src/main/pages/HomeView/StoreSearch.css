@@ -34,4 +34,32 @@
   border-width: 1px;
 }
 
+.checkbox-container{
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding-top: 1rem;
+}
 
+.checkbox{
+  background-color: var(--color-primary);
+}
+
+.checkbox-label {
+  font-size: 1.03rem;
+  color: #916b2e;
+} 
+
+.MuiCheckbox-root{
+  transform: scale(1.1);
+  transform-origin: center;
+}
+
+.MuiButtonBase-root.MuiButtonBase-root {
+  padding: 0;
+  color: var(--color-secondary);
+}
+
+.MuiCheckbox-root.Mui-checked.Mui-checked {
+  color: var(--color-primary);
+}

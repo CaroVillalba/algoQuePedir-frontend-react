@@ -5,6 +5,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from 'react'
 import './StoreSearch.css'
 import '../../../CustomButtons.css'
+import Checkbox from '@mui/material/Checkbox';
 
 export const StoreSearch = () => {
 
@@ -16,13 +17,11 @@ export const StoreSearch = () => {
     <div className="search-header">
       <h2>Delivery</h2>
 
-
       <i className="shopping-cart-container">
         <ShoppingCartIcon className='shopping-cart-icon'/>
       </i>
-      
     </div>
-    
+
 
     <TextField
       variant="outlined"
@@ -38,6 +37,13 @@ export const StoreSearch = () => {
         ),
       }}
     />
+
+    <label className="checkbox-container">
+      <Checkbox/>
+      <span className="checkbox-label">Buscar locales cercanos</span>
+    </label>
+    
+    
     
   </>
 
