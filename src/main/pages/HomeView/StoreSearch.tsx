@@ -39,7 +39,7 @@ export const StoreSearch = () => {
     />
 
     <label className="checkbox-container">
-      <Checkbox/>
+      <Checkbox className="checkbox"/>
       <span className="checkbox-label">Buscar locales cercanos</span>
     </label>
     

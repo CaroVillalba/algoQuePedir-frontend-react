@@ -55,7 +55,7 @@
   transform-origin: center;
 }
 
-.MuiButtonBase-root.MuiButtonBase-root {
+.checkbox.MuiButtonBase-root.MuiButtonBase-root{
   padding: 0;
   color: var(--color-secondary);
 }
