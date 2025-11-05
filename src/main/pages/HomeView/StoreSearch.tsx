@@ -1,90 +1,74 @@
-import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
-import SearchIcon from '@mui/icons-material/Search'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useState } from 'react'
-import './StoreSearch.css'
-import Checkbox from '@mui/material/Checkbox'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material'
+import { InputText } from 'primereact/inputtext'
+import { Checkbox } from 'primereact/checkbox'
+import { Card } from 'primereact/card'
+import { IconField } from "primereact/iconfield";
+import { InputIcon } from "primereact/inputicon";
 import { useNavigate } from 'react-router-dom'
+import './StoreSearch.css'
 
 export const StoreSearch = () => {
   const [locales, setLocales] = useState([
-    { id: 1, nombre: 'El Buen Sabor', direccion: 'Av. San Martín 1234', imagen: '/images/local1.jpg'},
-    { id: 2, nombre: 'Sabores del Norte', direccion: 'Belgrano 456', imagen: '/images/local2.jpg' },
-    { id: 3, nombre: 'Pizzería La Familia', direccion: 'Mitre 789', imagen: '/images/local3.jpg' },
+    { id: 1, nombre: 'El Ferroviario', direccion: 'Av. San Martín 1234', imagen: '/temp-images/asado.png' },
+    { id: 2, nombre: 'Restorán La Canchita', direccion: 'Belgrano 456', imagen: '/temp-images/milanesa.png' },
+    { id: 3, nombre: 'Don Rogelio', direccion: 'Mitre 789', imagen: '/temp-images/ravioles.png' },
   ])
 
+  const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
 
   return (
+    <>
+      <div className="search-header">
+        <h3>Delivery</h3>
 
-  <>
+        <i className="shopping-cart-container">
+          <i className="pi pi-shopping-cart shopping-cart-icon"></i>
+        </i>
+      </div>
 
-    <div className="search-header">
-      <h3>Delivery</h3>
+      <div className="search-bar-container">
+        <IconField iconPosition="right">
+                <InputIcon className="pi pi-search"> </InputIcon>
+                <InputText  className="search-input" placeholder="Buscá tu local para pedir..."/>
+        </IconField>
+      </div>
 
-      <i className="shopping-cart-container">
-        <ShoppingCartIcon className='shopping-cart-icon'/>
-      </i>
-    </div>
 
+      <label className="checkbox-container">
+        <Checkbox
+          inputId="cercanos"
+          checked={checked}
+          onChange={(e) => setChecked(!!e.checked)}
+          className="checkbox"
+        />
+        <span className="checkbox-label">Buscar locales cercanos</span>
+      </label>
 
-    <TextField
-      variant="outlined"
-      placeholder="Buscá tu local para pedir..."
-      size="small"
-      fullWidth
-      className="search-bar"
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
+      <main className="main-container">
+        <h2>Locales de comida</h2>
 
-    <label className="checkbox-container">
-      <Checkbox className="checkbox"/>
-      <span className="checkbox-label">Buscar locales cercanos</span>
-    </label>
-    
-    <main className="main-container">
-
-      <h2>Locales de comida</h2>
-
-      <Box sx={{ width: '100%' }}>
-      <Grid container spacing={2} columns={2}>
-        {locales.map((local) => (
-          <Grid key={local.id} size={1} className="grid-item">
-            <Card sx={{ height: '100%' }}>
-              <CardActionArea onClick={() => navigate(`/locales/${local.id}`)}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={local.imagen}
+        <div className="grid">
+          {locales.map((local) => (
+            <div key={local.id} className="grid-item">
+              <Card
+                className="local-card"
+                onClick={() => navigate(`/locales/${local.id}`)}
+              >
+                <img
+                  src={local.imagen}
                   alt={`Imagen de ${local.nombre}`}
+                  className="local-img"
                 />
-                <CardContent>
-                  <Typography variant="subtitle1" noWrap>
-                    {local.nombre}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" noWrap>
-                    {local.direccion}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
-    </main>
-  </>
-
+                <div className="local-content">
+                  <strong className="local-nombre">{local.nombre}</strong>
+                  <span className="local-direccion">{local.direccion}</span>
+                </div>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
   )
-
 }
