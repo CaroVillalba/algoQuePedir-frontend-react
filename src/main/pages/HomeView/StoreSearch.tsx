@@ -11,7 +11,7 @@ export const StoreSearch = () => {
   const [locales, setLocales] = useState([
     { id: 1, nombre: 'El Ferroviario', direccion: 'Av. San Martín 1234', imagen: '/temp-images/asado.png' },
     { id: 2, nombre: 'Restorán La Canchita', direccion: 'Belgrano 456', imagen: '/temp-images/milanesa.png' },
-    { id: 3, nombre: 'Don Rogelio', direccion: 'Mitre 789', imagen: '/temp-images/ravioles.png' },
+    { id: 3, nombre: 'Maribel', direccion: 'Artigas 6950', imagen: '/temp-images/ravioles.png' },
   ])
 
   const [checked, setChecked] = useState(false)
