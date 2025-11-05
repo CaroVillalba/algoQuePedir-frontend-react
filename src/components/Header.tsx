@@ -2,6 +2,7 @@ import React from 'react'
 import { Toolbar } from 'primereact/toolbar'
 import { Button } from 'primereact/button'
 import { useNavigate } from 'react-router-dom'
+import './Header.css'
 
 interface HeaderProps {
     title: string
@@ -20,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ title, showBackButton = false })
     ) : null
 
     return (
-        <Toolbar
+        <Toolbar className='header'
             start={startContent}
             center={<span className="font-semibold text-lg">{title}</span>}
         />
