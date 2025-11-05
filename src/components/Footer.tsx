@@ -1,45 +1,44 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
+import { TabMenu } from 'primereact/tabmenu'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './Footer.css'
-import Box from '@mui/material/Box'
-import BottomNavigation from '@mui/material/BottomNavigation'
-import BottomNavigationAction from '@mui/material/BottomNavigationAction'
-import StarBorderIcon from '@mui/icons-material/StarBorder'
-import HomeFilledIcon from '@mui/icons-material/HomeFilled'
-import ReceiptIcon from '@mui/icons-material/Receipt'
-import PersonIcon from '@mui/icons-material/Person'
-import { Link, useLocation } from 'react-router-dom'
 
-export default function SimpleBottomNavigation() {
+export default function Footer() {
+  const navigate = useNavigate()
   const location = useLocation()
 
-  //evito que al recargar la pagina se pierda la seleccion del footer
-  const getValueFromPath = (path: string) => {
+  const getIndexFromPath = (path: string) => {
     switch (path) {
-        case '/': return 0
-        case '/profile': return 3
-        default: return 0
+      case '/':
+        return 0
+      case '/profile':
+        return 3
+      default:
+        return 0
     }
   }
 
-  const [value, setValue] = React.useState(getValueFromPath(location.pathname))
+  const [activeIndex, setActiveIndex] = useState(getIndexFromPath(location.pathname))
 
-  React.useEffect(() => {
-    setValue(getValueFromPath(location.pathname))
+  useEffect(() => {
+    setActiveIndex(getIndexFromPath(location.pathname))
   }, [location.pathname])
 
+  const items = [
+    { label: 'Inicio', icon: 'pi pi-home', command: () => navigate('/') },
+    { label: 'Pedidos', icon: 'pi pi-file' },
+    { label: 'Calificar', icon: 'pi pi-star' },
+    { label: 'Perfil', icon: 'pi pi-user', command: () => navigate('/profile') }
+  ]
+
   return (
-    <Box component="footer"
-      className="footer-container">
-      <BottomNavigation
-        showLabels
-        value={value}
+    <footer className="footer-container">
+      <TabMenu
+        model={items}
+        activeIndex={activeIndex}
+        onTabChange={(e) => setActiveIndex(e.index)}
         className="bottom-nav"
-      >
-        <BottomNavigationAction label="Inicio" icon={<HomeFilledIcon /> } component={Link} to="/" />
-        <BottomNavigationAction label="Pedidos" icon={<ReceiptIcon />}/>
-        <BottomNavigationAction label="Calificar" icon={<StarBorderIcon />} />
-        <BottomNavigationAction label="Perfil" icon={<PersonIcon />} component={Link} to="/profile" />
-      </BottomNavigation>
-    </Box>
+      />
+    </footer>
   )
 }

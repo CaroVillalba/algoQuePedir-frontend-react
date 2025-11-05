@@ -2,4 +2,5 @@
   max-width: 480px;
   margin: 0 auto;
   padding: 2rem;
+  padding-bottom: 0; /* Evito padding extra debajo del footer */
 }

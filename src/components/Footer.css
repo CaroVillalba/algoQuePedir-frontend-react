@@ -1,26 +1,74 @@
-
 .footer-container {
-  /*TODO: PRÓXIMO FIXED, SE DESAPRUEBA -> TIENE QUE SER STICKY! */
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  left: 0;
   width: 100%;
   background-color: white;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--color-section-shadow);
   z-index: 1000;
+
+  width: 100vw; /* ocupa todo el ancho de la ventana */
+  margin-left: calc(-1 * (100vw - 100%)/2); /* neutraliza el centrado del root */
+ 
 }
 
-.bottom-nav .MuiBottomNavigationAction-root {
+/* Contenedor del TabMenu */
+.bottom-nav .p-tabmenu-nav {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+/* Cada ítem ocupa el mismo espacio */
+.bottom-nav .p-tabmenuitem {
+  flex: 1;
+  text-align: center;
+}
+
+/* El enlace que contiene ícono y texto */
+.bottom-nav .p-tabmenuitem a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centra verticalmente el conjunto */
+  height: 64px; /* altura uniforme tipo BottomNavigation */
+  gap: 0.2rem; /* separación entre ícono y texto */
+  text-decoration: none;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+/* Ícono */
+.bottom-nav .p-menuitem-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+/* Texto */
+.bottom-nav .p-menuitem-text {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+/* Ítem activo */
+.bottom-nav .p-highlight a,
+.bottom-nav .p-highlight .p-menuitem-icon {
+  color: var(--color-primary);
+}
+
+/* Sin transición molesta */
+.bottom-nav .p-tabmenuitem a,
+.bottom-nav .p-menuitem-icon {
   transition: none;
-  outline: none;
 }
 
-
-.bottom-nav .Mui-selected,
-.bottom-nav .Mui-selected > svg {
-  color: #e66831;
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-icon {
+  margin: 0;
+  border-color: var(--color-primary);
 }
 
-.bottom-nav .MuiBottomNavigationAction-root .MuiTouchRipple-root {
-  color: var(--secondary-color);
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link{
+  border-color: var(--color-primary);
 }
