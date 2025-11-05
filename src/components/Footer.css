@@ -6,8 +6,6 @@
   box-shadow: var(--color-section-shadow);
   z-index: 1000;
 
-  width: 100vw; /* ocupa todo el ancho de la ventana */
-  margin-left: calc(-1 * (100vw - 100%)/2); /* neutraliza el centrado del root */
  
 }
 

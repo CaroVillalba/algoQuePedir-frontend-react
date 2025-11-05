@@ -1,6 +1,9 @@
 #root {
   max-width: 480px;
   margin: 0 auto;
-  padding: 2rem;
-  padding-bottom: 0; /* Evito padding extra debajo del footer */
+}
+
+.main-content {
+  padding: 1.5rem;
+  padding-bottom: 3rem;
 }

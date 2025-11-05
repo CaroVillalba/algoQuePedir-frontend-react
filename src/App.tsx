@@ -38,12 +38,14 @@ function AppContent() {
     <div className="App">
       <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />
 
-      <Routes>
-        <Route path="/profile" element={<ProfileView />} />
-        <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-        <Route path="/order-checkout" element={<OrderCheckoutView />} />
-        <Route path="/" element={<StoreSearch />} />
-      </Routes>
+      <main className="main-content">
+        <Routes>
+          <Route path="/profile" element={<ProfileView />} />
+          <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
+          <Route path="/order-checkout" element={<OrderCheckoutView />} />
+          <Route path="/" element={<StoreSearch />} />
+        </Routes>
+      </main>
 
       <Footer />
     </div>
