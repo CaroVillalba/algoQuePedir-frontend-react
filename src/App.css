@@ -6,4 +6,7 @@
 .main-content {
   padding: 1.5rem;
   padding-bottom: 3rem;
+  min-height: calc(100vh - 80px); /* la bendita solución al footer */
 }
+
+
