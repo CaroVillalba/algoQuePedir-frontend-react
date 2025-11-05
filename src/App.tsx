@@ -12,7 +12,7 @@ import { RestaurantMenuView } from './main/pages/RestaurantMenuView/RestaurantMe
 import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutView'
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
 import { CartProvider } from './context/CartProvider' 
-import { SearchCriteria } from './main/pages/SearchCriteriaProfile/SearchCriteria'
+import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCriteria'
 
 interface RouteConfig {
   title: string
