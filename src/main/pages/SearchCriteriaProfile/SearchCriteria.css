@@ -1,0 +1,63 @@
+.criteria-card{
+   border: 1.5px solid var(--color-primary);
+   background-color: var(--color-container);
+   border-radius: 10px;
+   box-shadow: none;
+   padding: 1rem;
+}
+
+
+.criteria-list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.p-card-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-text{
+    flex-direction: column;
+    display: flex;
+}
+
+.title {
+  font-weight: 650;
+  font-size: 1.3rem;
+  color: var(--color-dark);
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
+
+.custom-checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-checkbox .p-checkbox-input{
+    background-color: var(--color-primary);
+}
+
+.custom-checkbox .p-checkbox{
+    transform: none;
+    transform-origin: center;
+}
+
+.custom-checkbox .p-checkbox-box{
+    transform: scale(1.4);
+    border-radius: 0.35rem;
+    border-width: 2px;
+
+}
+
+.custom-checkbox .p-checkbox-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
