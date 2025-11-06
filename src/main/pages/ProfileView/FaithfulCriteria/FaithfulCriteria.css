@@ -31,7 +31,23 @@
 
 .faithful-criteria-container {
     position: relative;
-    padding-bottom: 50px; 
+    background-color: var(--color-container);
+    padding-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.remove-button {
+    color: #a0a0a0; 
+    height: 25px;
+    border: none;
+    padding: 0;
+    margin-left: auto; 
+}
+
+.p-button-danger{
+    height: 35px;
+    width: 35px;
+    border: none;
 }
 
 .header-card {
@@ -46,8 +62,6 @@
 .restaurants-dataview {
     padding: 0;
     border: none;
-    border-top: 1px solid #eeeeee; 
-
 }
 
 
@@ -59,10 +73,21 @@
 .restaurant-item {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
+    padding: 1rem 0.4rem;
     border-bottom: 1px solid #f0f0f0; 
-    gap: 10px;
+    gap: 1rem;
+    justify-content: center;
     width: 100%;
+    border-radius: 2rem;
+}
+
+.grid {
+  display: flex;
+  border-radius: 2rem;
+}
+
+.grid-nogutter {
+  padding-left: 1rem;
 }
 
 .restaurant-item:last-child {
@@ -95,4 +120,18 @@
 .restaurant-info span {
     font-size: 0.85rem;
     color: #888;
+}
+
+.add-button-container {
+    position: absolute;
+    bottom: 0.5rem; 
+    right: 0.4rem; 
+}
+
+.add-button {
+    background-color: var(--color-primary);
+    border: none ;
+    width: 35px;
+    height: 35px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

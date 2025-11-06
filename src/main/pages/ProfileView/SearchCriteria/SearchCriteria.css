@@ -1,5 +1,5 @@
 .criteria-card{
-   border: 1.5px solid var(--color-primary);
+   border: none;
    background-color: var(--color-container);
    border-radius: 10px;
    box-shadow: none;

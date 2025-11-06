@@ -37,7 +37,7 @@ export const FaithfulCriteria = () => {
                 <div className="restaurant-details">
                     <span className="restaurant-name">{restaurant.name}</span>
                     <div className="restaurant-info">
-                        <span>{restaurant.rating} • {restaurant.deliveryDelay} • {restaurant.appCommission}</span>
+                        <span>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</span>
                     </div>
                 </div>
         
@@ -73,6 +73,14 @@ export const FaithfulCriteria = () => {
                 layout='list'
                 className='restaurants-dataview'
             />
+
+            <div className='add-button-container'>
+                <Button 
+                    icon="pi pi-plus" 
+                    className="p-button-rounded p-button-danger add-button"
+                    onClick={() => console.log('Agregar restaurante')}
+                />
+            </div>
         </div>
 
         </>
