@@ -1,0 +1,30 @@
+.card{
+   border: 1.5px solid var(--color-primary);
+   background-color: var(--color-container);
+   border-radius: 10px;
+   box-shadow: none;
+   padding: 1rem;
+}
+
+.card-text{
+    flex-direction: column;
+    display: flex;
+}
+
+.p-card-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.title {
+  font-weight: 650;
+  font-size: 1.3rem;
+  color: var(--color-dark);
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
