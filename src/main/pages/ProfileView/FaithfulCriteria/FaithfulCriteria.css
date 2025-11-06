@@ -1,0 +1,98 @@
+.card{
+   border: 1.5px solid var(--color-primary);
+   background-color: var(--color-container);
+   border-radius: 10px;
+   box-shadow: none;
+   padding: 1rem;
+}
+
+.card-text{
+    flex-direction: column;
+    display: flex;
+}
+
+.p-card-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.title {
+  font-weight: 650;
+  font-size: 1.3rem;
+  color: var(--color-dark);
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
+
+.faithful-criteria-container {
+    position: relative;
+    padding-bottom: 50px; 
+}
+
+.header-card {
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 6px 6px 0 0; 
+    border: none;
+    box-shadow: none; 
+}
+
+.restaurants-dataview {
+    padding: 0;
+    border: none;
+    border-top: 1px solid #eeeeee; 
+
+}
+
+
+.restaurants-dataview .p-dataview-content {
+    padding: 0;
+}
+
+
+.restaurant-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0; 
+    gap: 10px;
+    width: 100%;
+}
+
+.restaurant-item:last-child {
+    border-bottom: none; 
+}
+
+
+.restaurant-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px; 
+    flex-shrink: 0; 
+}
+
+
+.restaurant-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    margin-right: 10px;
+}
+
+.restaurant-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.restaurant-info span {
+    font-size: 0.85rem;
+    color: #888;
+}

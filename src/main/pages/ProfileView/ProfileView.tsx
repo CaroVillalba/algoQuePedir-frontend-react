@@ -4,6 +4,7 @@ import { Button } from 'primereact/button'
 import { Card } from  'primereact/card'
 import { ChevronRightIcon } from 'primereact/icons/chevronright'
 import './ProfileView.css'
+import { useNavigate } from 'react-router-dom'
 
 export const ProfileView = () => {
     const [name, setName] = useState<string>('')
@@ -12,10 +13,11 @@ export const ProfileView = () => {
     const [location, setLocation] = useState<string>('')
     const [latitude, setLatitude] = useState<string>('')
     const [longitude, setLongitude] = useState<string>('')
+    const navigate = useNavigate()
 
     return (
         <>
-            
+        <section>
             <h2>Información personal</h2>
             <div className="input-form">
                 <label htmlFor="name">Nombre</label>
@@ -75,9 +77,11 @@ export const ProfileView = () => {
                     />
                 </div>
             </div>
+        </section>
 
+        <section>
            <h2>Preferencias</h2>
-           <div onClick={()=>console.log('click')} className="preference-button">
+           <div onClick={() => navigate('./criteria')} className="preference-button">
                 <h4>Criterios de busqueda</h4>
                 <ChevronRightIcon/>
            </div>
@@ -93,7 +97,7 @@ export const ProfileView = () => {
            </div>
 
            <Button label="Guardar" className='button-primary' ></Button>
-
+        </section>
 
 
             
