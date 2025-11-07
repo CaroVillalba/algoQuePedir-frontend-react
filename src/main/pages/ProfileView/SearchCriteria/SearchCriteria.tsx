@@ -5,6 +5,7 @@ import { Card } from  'primereact/card'
 import './SearchCriteria.css'
 import { Checkbox } from 'primereact/checkbox'
 import { FaithfulCriteria } from '../FaithfulCriteria/FaithfulCriteria'
+import { MarketingCriteria } from '../MarketingCriteria/MarketingCriteria'
 
 export const SearchCriteria = () => {
     const [checkedVegan, setCheckedVegan] = useState(false)
@@ -42,9 +43,10 @@ export const SearchCriteria = () => {
                 </Card>
 
                 <FaithfulCriteria></FaithfulCriteria>
+                <MarketingCriteria></MarketingCriteria>
 
                 
-                <Card className='criteria-card impatient-card'>
+                <Card className='criteria-card'>
                     <div className='card-text'>
                         <div className='header-row'>
                             <div className='card-text-header'>
@@ -57,7 +59,6 @@ export const SearchCriteria = () => {
                                 checked={checkedImpatient}
                             />
                         </div>
-
                         <section className='sub-subtitle'>
                             <span>Distancia(Kms)</span>
                         </section>
@@ -65,7 +66,6 @@ export const SearchCriteria = () => {
                 </Card>
 
                 <Button label = "Guardar" className='button-primary'/>
-
 
             </section>
         

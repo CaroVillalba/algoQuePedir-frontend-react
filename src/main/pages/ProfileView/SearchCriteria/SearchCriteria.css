@@ -15,14 +15,14 @@
     width: 100%;
 }
 
-.impatient-card .header-row{
+.header-row{
     display: flex;
     justify-content: space-between;
     align-items: center; 
     gap: 7.5rem;
 }
 
-.impatient-card .card-text-header{
+.card-text-header{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -30,21 +30,10 @@
     width: 100%;
 }
 
-.impatient-card .sub-subtitle{
+.sub-subtitle{
     margin-top: 0.5rem; 
     padding-top: 0;
 }
-
-
-.impatient-card .impatient-checkbox{
-    margin-left: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-
 
 .criteria-list{
     display: flex;
