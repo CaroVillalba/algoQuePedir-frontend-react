@@ -21,7 +21,7 @@ export const StoreSearch = () => {
   const [locales, setLocales] = useState([
     { id: 1, nombre: 'El Ferroviario', direccion: 'Av. San Martín 1234', imagen: '/temp-images/asado.png', esCercano: true },
     { id: 2, nombre: 'Restorán La Canchita', direccion: 'Belgrano 456', imagen: '/temp-images/milanesa.png', esCercano: false },
-    { id: 3, nombre: 'Maribel', direccion: 'Artigas 6950', imagen: '/temp-images/image.png', esCercano: true },
+    { id: 3, nombre: 'Maribel', direccion: 'Artigas 6950', imagen: '/temp-images/image.png', esCercano: false },
   ])
 
   const [checked, setChecked] = useState(false)
@@ -66,20 +66,12 @@ export const StoreSearch = () => {
                 className="local-card"
                 onClick={() => navigate(`/restaurant-menu/${local.id}`)}
               >
-               {/*  <img
-                  src={local.imagen}
-                  alt={`Imagen de ${local.nombre}`}
-                  className="local-img"
-                /> */}
                 <div className="local-img-container">
                   <img
                     src={local.imagen}
                     alt={`Imagen de ${local.nombre}`}
                     className="local-img"
                   />
-                  {/* <div className="local-pin">
-                    <i className="pi pi-map-marker"></i>
-                  </div> */}
                   <PinIcon esCercano={local.esCercano} />
                 </div>
 

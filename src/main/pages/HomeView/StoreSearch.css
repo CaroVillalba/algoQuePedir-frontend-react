@@ -14,7 +14,6 @@
   color: var(--color-secondary);
 }
 
-/* ==== BUSCADOR ==== */
 .search-bar-container {
   padding-top: 1rem;
 }
@@ -31,7 +30,6 @@
   padding-right: 2rem; 
 }
 
-/* ==== CHECKBOX ==== */
 .checkbox-container {
   display: flex;
   align-items: flex-start;
@@ -52,8 +50,6 @@
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
-
-/* ==== GRID / CARDS ==== */
 .main-container {
   gap: 1rem;
 }
@@ -136,7 +132,7 @@
 }
 
 .local-pin i {
-  color: #d32f2f; /* rojo estilo "pin" */
+  color: #d32f2f; 
   font-size: 1rem;
 }
 
