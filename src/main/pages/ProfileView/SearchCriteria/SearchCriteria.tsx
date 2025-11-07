@@ -43,14 +43,19 @@ export const SearchCriteria = () => {
 
                 <FaithfulCriteria></FaithfulCriteria>
 
+                
                 <Card className='criteria-card'>
                     <div className='card-text'>
                     <span className='title'>Impacientes</span>
                     <span className='subtitle'>Dentro de una distancia máxima</span>
+                    <section className='sub-subtitle'>
+                        <span>Distancia</span>
+                    </section>
                     </div>
                 <Checkbox className='custom-checkbox' onChange={e => setCheckedImpatient(e.checked ?? false)} checked = {checkedImpatient}></Checkbox>
-
                 </Card>
+
+                <Button label = "Guardar" className='button-primary'/>
 
 
             </section>

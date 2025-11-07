@@ -44,7 +44,7 @@ export const FaithfulCriteria = () => {
                 <Button 
                     icon="pi pi-times" 
                     className="p-button-rounded p-button-text p-button-danger remove-button"
-                    onClick={() => console.log(`Remover ${restaurant.name}`)} //remocion
+                    onClick={() => console.log(`Remover ${restaurant.name}`)} 
                 />
             </div>
         )
@@ -55,7 +55,7 @@ export const FaithfulCriteria = () => {
         <>
 
         <div className='faithful-criteria-container'>
-            <Card className='header-card p-shadow-2'> 
+            <Card className='criteria-card p-shadow-2'> 
                 <div className='card-text'>
                     <span className='title'>Fieles</span>
                     <span className='subtitle'>Solo los restaurantes preferidos</span>

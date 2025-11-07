@@ -1,5 +1,5 @@
-.card{
-   border: 1.5px solid var(--color-primary);
+.criteria-card{
+   border: none;
    background-color: var(--color-container);
    border-radius: 10px;
    box-shadow: none;
@@ -10,13 +10,6 @@
     flex-direction: column;
     display: flex;
 }
-
-.p-card-content{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 
 .title {
   font-weight: 650;
@@ -50,15 +43,6 @@
     border: none;
 }
 
-.header-card {
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 6px 6px 0 0; 
-    border: none;
-    box-shadow: none; 
-}
-
 .restaurants-dataview {
     padding: 0;
     border: none;
@@ -81,7 +65,7 @@
     border-radius: 2rem;
 }
 
-.grid {
+.restaurants-dataview .grid {
   display: flex;
   border-radius: 2rem;
 }

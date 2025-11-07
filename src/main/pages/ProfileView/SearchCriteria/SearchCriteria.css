@@ -14,7 +14,7 @@
     padding-bottom: 1rem;
 }
 
-.p-card-content{
+.criteria-card .p-card-content{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,6 +35,13 @@
   color: var(--color-text-light);
   font-size: 1rem;
 }
+
+.sub-subtitle{
+    display: flex;
+    flex-direction: column;
+    
+}
+
 
 .custom-checkbox{
     display: flex;
