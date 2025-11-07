@@ -37,14 +37,14 @@ export const FaithfulCriteria = () => {
                 <div className="restaurant-details">
                     <span className="restaurant-name">{restaurant.name}</span>
                     <div className="restaurant-info">
-                        <span>{restaurant.rating} • {restaurant.deliveryDelay} • {restaurant.appCommission}</span>
+                        <span>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</span>
                     </div>
                 </div>
         
                 <Button 
                     icon="pi pi-times" 
                     className="p-button-rounded p-button-text p-button-danger remove-button"
-                    onClick={() => console.log(`Remover ${restaurant.name}`)} //remocion
+                    onClick={() => console.log(`Remover ${restaurant.name}`)} 
                 />
             </div>
         )
@@ -55,7 +55,7 @@ export const FaithfulCriteria = () => {
         <>
 
         <div className='faithful-criteria-container'>
-            <Card className='header-card p-shadow-2'> 
+            <Card className='criteria-card p-shadow-2'> 
                 <div className='card-text'>
                     <span className='title'>Fieles</span>
                     <span className='subtitle'>Solo los restaurantes preferidos</span>
@@ -73,6 +73,14 @@ export const FaithfulCriteria = () => {
                 layout='list'
                 className='restaurants-dataview'
             />
+
+            <div className='add-button-container'>
+                <Button 
+                    icon="pi pi-plus" 
+                    className="p-button-rounded p-button-danger add-button"
+                    onClick={() => console.log('Agregar restaurante')}
+                />
+            </div>
         </div>
 
         </>

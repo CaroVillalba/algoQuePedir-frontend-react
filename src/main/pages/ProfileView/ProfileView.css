@@ -45,8 +45,21 @@
 .button-primary{
     width: 100%;
     top: 2rem;
-    
+    background-color: var(--color-primary);
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
 }
+
+.p-button-label{
+    font-weight: 700;
+    color: var(--color-container);
+}
+
+.p-button:focus {
+    box-shadow: 0 0 0 0.2rem var(--color-primary);
+}
+
 
 
 
