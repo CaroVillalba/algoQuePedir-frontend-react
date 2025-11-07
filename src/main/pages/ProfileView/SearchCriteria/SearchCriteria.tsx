@@ -5,6 +5,7 @@ import { Card } from  'primereact/card'
 import './SearchCriteria.css'
 import { Checkbox } from 'primereact/checkbox'
 import { FaithfulCriteria } from '../FaithfulCriteria/FaithfulCriteria'
+import { MarketingCriteria } from '../MarketingCriteria/MarketingCriteria'
 
 export const SearchCriteria = () => {
     const [checkedVegan, setCheckedVegan] = useState(false)
@@ -42,21 +43,29 @@ export const SearchCriteria = () => {
                 </Card>
 
                 <FaithfulCriteria></FaithfulCriteria>
+                <MarketingCriteria></MarketingCriteria>
 
                 
                 <Card className='criteria-card'>
                     <div className='card-text'>
-                    <span className='title'>Impacientes</span>
-                    <span className='subtitle'>Dentro de una distancia máxima</span>
-                    <section className='sub-subtitle'>
-                        <span>Distancia</span>
-                    </section>
+                        <div className='header-row'>
+                            <div className='card-text-header'>
+                                <span className='title'>Impacientes</span>
+                                <span className='subtitle'>Dentro de una distancia máxima</span>
+                            </div>
+                            <Checkbox 
+                                className='custom-checkbox impatient-checkbox' 
+                                onChange={e => setCheckedImpatient(e.checked ?? false)} 
+                                checked={checkedImpatient}
+                            />
+                        </div>
+                        <section className='sub-subtitle'>
+                            <span>Distancia(Kms)</span>
+                        </section>
                     </div>
-                <Checkbox className='custom-checkbox' onChange={e => setCheckedImpatient(e.checked ?? false)} checked = {checkedImpatient}></Checkbox>
                 </Card>
 
                 <Button label = "Guardar" className='button-primary'/>
-
 
             </section>
         
