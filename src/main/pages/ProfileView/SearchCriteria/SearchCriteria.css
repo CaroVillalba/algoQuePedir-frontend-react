@@ -3,9 +3,37 @@
    background-color: var(--color-container);
    border-radius: 10px;
    box-shadow: none;
+   height: auto;
    padding: 1rem;
 }
 
+.card-text-header{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    gap: 7.5rem;
+}
+
+.card-text-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.sub-subtitle{
+    margin-top: 0.5rem; 
+    padding-top: 0;
+}
 
 .criteria-list{
     display: flex;
@@ -25,21 +53,12 @@
     display: flex;
 }
 
-.title {
-  font-weight: 650;
-  font-size: 1.3rem;
-  color: var(--color-dark);
-}
-
-.subtitle {
-  color: var(--color-text-light);
-  font-size: 1rem;
-}
-
 .sub-subtitle{
     display: flex;
-    flex-direction: column;
-    
+    position: static;
+    color: var(--color-text-light);
+    font-size: 0.97rem;
+    padding-top: 1rem;
 }
 
 
