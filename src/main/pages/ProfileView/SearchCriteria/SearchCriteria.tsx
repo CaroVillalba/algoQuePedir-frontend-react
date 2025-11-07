@@ -44,15 +44,24 @@ export const SearchCriteria = () => {
                 <FaithfulCriteria></FaithfulCriteria>
 
                 
-                <Card className='criteria-card'>
+                <Card className='criteria-card impatient-card'>
                     <div className='card-text'>
-                    <span className='title'>Impacientes</span>
-                    <span className='subtitle'>Dentro de una distancia máxima</span>
-                    <section className='sub-subtitle'>
-                        <span>Distancia</span>
-                    </section>
+                        <div className='header-row'>
+                            <div className='card-text-header'>
+                                <span className='title'>Impacientes</span>
+                                <span className='subtitle'>Dentro de una distancia máxima</span>
+                            </div>
+                            <Checkbox 
+                                className='custom-checkbox impatient-checkbox' 
+                                onChange={e => setCheckedImpatient(e.checked ?? false)} 
+                                checked={checkedImpatient}
+                            />
+                        </div>
+
+                        <section className='sub-subtitle'>
+                            <span>Distancia(Kms)</span>
+                        </section>
                     </div>
-                <Checkbox className='custom-checkbox' onChange={e => setCheckedImpatient(e.checked ?? false)} checked = {checkedImpatient}></Checkbox>
                 </Card>
 
                 <Button label = "Guardar" className='button-primary'/>
