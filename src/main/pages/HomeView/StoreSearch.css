@@ -110,6 +110,37 @@
   aspect-ratio: 16 / 9;
 }
 
+.local-img-container {
+  position: relative;
+  width: 100%;
+}
+
+.local-img {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  display: block;
+}
+
+.local-pin {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.local-pin i {
+  color: #d32f2f; /* rojo estilo "pin" */
+  font-size: 1rem;
+}
+
+
 .local-content {
   display: flex;
   flex-direction: column;

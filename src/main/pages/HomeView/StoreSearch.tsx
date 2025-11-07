@@ -7,11 +7,21 @@ import { InputIcon } from "primereact/inputicon";
 import { useNavigate } from 'react-router-dom'
 import './StoreSearch.css'
 
+export const PinIcon = ({ esCercano }: { esCercano: boolean }) => {
+  if (esCercano) {
+    return (
+      <div className="local-pin">
+        <i className="pi pi-map-marker"></i>
+      </div> )
+  }
+}
+
 export const StoreSearch = () => {
+
   const [locales, setLocales] = useState([
-    { id: 1, nombre: 'El Ferroviario', direccion: 'Av. San Martín 1234', imagen: '/temp-images/asado.png' },
-    { id: 2, nombre: 'Restorán La Canchita', direccion: 'Belgrano 456', imagen: '/temp-images/milanesa.png' },
-    { id: 3, nombre: 'Maribel', direccion: 'Artigas 6950', imagen: '/temp-images/ravioles.png' },
+    { id: 1, nombre: 'El Ferroviario', direccion: 'Av. San Martín 1234', imagen: '/temp-images/asado.png', esCercano: true },
+    { id: 2, nombre: 'Restorán La Canchita', direccion: 'Belgrano 456', imagen: '/temp-images/milanesa.png', esCercano: false },
+    { id: 3, nombre: 'Maribel', direccion: 'Artigas 6950', imagen: '/temp-images/image.png', esCercano: true },
   ])
 
   const [checked, setChecked] = useState(false)
@@ -45,6 +55,7 @@ export const StoreSearch = () => {
         <span className="checkbox-label">Buscar locales cercanos</span>
       </label>
 
+
       <main className="main-container">
         <h2>Locales de comida</h2>
 
@@ -55,11 +66,23 @@ export const StoreSearch = () => {
                 className="local-card"
                 onClick={() => navigate(`/restaurant-menu/${local.id}`)}
               >
-                <img
+               {/*  <img
                   src={local.imagen}
                   alt={`Imagen de ${local.nombre}`}
                   className="local-img"
-                />
+                /> */}
+                <div className="local-img-container">
+                  <img
+                    src={local.imagen}
+                    alt={`Imagen de ${local.nombre}`}
+                    className="local-img"
+                  />
+                  {/* <div className="local-pin">
+                    <i className="pi pi-map-marker"></i>
+                  </div> */}
+                  <PinIcon esCercano={local.esCercano} />
+                </div>
+
                 <div className="local-content">
                   <strong className="local-nombre">{local.nombre}</strong>
                   <span className="local-direccion">{local.direccion}</span>
