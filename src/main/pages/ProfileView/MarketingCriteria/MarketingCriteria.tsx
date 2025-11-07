@@ -19,7 +19,7 @@ export const MarketingCriteria = () => {
                     <span className='subtitle'>Filran platos por palabras buscadas</span>
                 </div>
                 <Checkbox 
-                    className='custom-checkbox impatient-checkbox' 
+                    className='custom-checkbox' 
                     onChange={e => setCheckedMarketing(e.checked ?? false)} 
                     checked={checkedMarketing}
                 />
