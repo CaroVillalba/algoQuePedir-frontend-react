@@ -53,7 +53,7 @@ export const StoreSearch = () => {
             <div key={local.id} className="grid-item">
               <Card
                 className="local-card"
-                onClick={() => navigate(`/locales/${local.id}`)}
+                onClick={() => navigate(`/restaurant-menu/${local.id}`)}
               >
                 <img
                   src={local.imagen}
