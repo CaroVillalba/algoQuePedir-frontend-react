@@ -79,7 +79,7 @@ export const RestaurantMenuView = () => {
                         <Image
                         src={DUMMY_RESTAURANT.imageUrl}
                         alt="Restaurante"
-                        className="restaurant-image"
+                        className="restaurant-image-wide"
                         imageClassName="restaurant-image-inner"
                         />
                     </div>
