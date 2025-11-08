@@ -27,6 +27,10 @@ export const StoreSearch = () => {
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
 
+  const localesFiltrados = checked
+    ? locales.filter((local) => local.esCercano)
+    : locales
+
   return (
     <>
       <div className="search-header">
@@ -60,7 +64,7 @@ export const StoreSearch = () => {
         <h2>Locales de comida</h2>
 
         <div className="grid">
-          {locales.map((local) => (
+          {localesFiltrados.map((local) => (
             <div key={local.id} className="grid-item">
               <Card
                 className="local-card"
