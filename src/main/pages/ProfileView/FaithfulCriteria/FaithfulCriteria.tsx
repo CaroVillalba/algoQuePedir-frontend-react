@@ -12,6 +12,7 @@ import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHand
 import { Toast } from '../../../../components/common/toast'
 import { useToast } from '../../../../hooks/useToast'
 import { useOnInit } from '../../../../hooks/useOnInit'
+import '../../../../toast.css'
 
 export const FaithfulCriteria = () => {
     const [ checkedFaithful, setCheckedFaithful ] = useState(false)

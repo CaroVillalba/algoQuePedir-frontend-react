@@ -12,6 +12,7 @@ import { useToast } from '../../../hooks/useToast'
 import { useOnInit } from '../../../hooks/useOnInit'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import type { FormEvent } from 'react'
+import '../../../toast.css'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
