@@ -61,8 +61,9 @@ html, :root {
   background: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
   color: var(--primary-color-text) !important;
-  border-radius: 8px !important;
+  border-radius: 0.5rem !important;
   font-weight: 500 !important;
+  margin: 0 !important;
   transition: background-color 0.25s, border-color 0.25s !important;
 }
 .p-button-custom-primary:hover {
@@ -71,10 +72,26 @@ html, :root {
 }
 
 /* Botón Secundario (p-button-custom-secondary) */
+.p-button-custom-secondary {
+  background: var(--color-secondary) !important; /* blanco */
+  color: var(--color-dark) !important;
+  border-color: var(--color-border) !important;
+  border-radius: 0.5rem !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  transition: background-color 0.25s, border-color 0.25s !important;
+}
+.p-button-custom-secondary:hover {
+  background: var(--color-section-bg) !important;
+  color: var(--color-dark) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Botón Secundario Outline (p-button-custom-secondary.p-button-outlined) */
 .p-button-custom-secondary.p-button-outlined {
   color: var(--color-text-light) !important;
   border-color: var(--color-border) !important;
-  border-radius: 8px !important;
+  border-radius: 0.5rem !important;
 }
 .p-button-custom-secondary.p-button-outlined:hover {
   background: var(--color-section-bg) !important;
@@ -89,4 +106,24 @@ html, :root {
 .p-button-custom-icon-color.p-button-text:hover {
   background: var(--surface-b) !important;
   color: var(--color-dark) !important;
+}
+
+/* Cambia el color de los botones + y - del InputNumber */
+.p-inputnumber .p-button {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--primary-color-text) !important;
+  width: 4rem !important;
+}
+
+/* Hover de los botones */
+.p-inputnumber .p-button:hover {
+  background-color: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+  color: var(--primary-color-text) !important;
+}
+
+.p-tabview .p-tabview-nav li.p-tabview-selected a {
+  color: var(--color-logo) !important;
+  border-color: var(--color-logo) !important;
 }
