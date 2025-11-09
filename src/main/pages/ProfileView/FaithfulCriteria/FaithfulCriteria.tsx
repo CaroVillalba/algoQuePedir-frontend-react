@@ -11,6 +11,7 @@ import type { Local } from '../../../../types/Local'
 import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHandling'
 import { Toast } from '../../../../components/common/toast'
 import { useToast } from '../../../../hooks/useToast'
+import { useOnInit } from '../../../../hooks/useOnInit'
 
 export const FaithfulCriteria = () => {
     const [ checkedFaithful, setCheckedFaithful ] = useState(false)
@@ -31,9 +32,7 @@ export const FaithfulCriteria = () => {
 
     }
 
-    useEffect(() => {
-        getRestaurants()
-    }, [])
+    useOnInit(getRestaurants)
     
     const itemTemplate = (restaurant: Local) => {
         return (
