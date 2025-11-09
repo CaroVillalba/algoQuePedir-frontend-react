@@ -8,11 +8,15 @@ import { DataView } from 'primereact/dataview'
 import { localService } from '../../../../services/LocalService'
 import { useEffect } from 'react'
 import type { Local } from '../../../../types/Local'
-
+import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHandling'
+import { Toast } from '../../../../components/common/toast'
+import { useToast } from '../../../../hooks/useToast'
 
 export const FaithfulCriteria = () => {
     const [ checkedFaithful, setCheckedFaithful ] = useState(false)
     const [ restaurants , setRestaurants ] = useState<Local[]>([])
+
+    const { toast, showToast } = useToast()
 
 
     const getRestaurants = async () => {
@@ -20,8 +24,9 @@ export const FaithfulCriteria = () => {
         try{
         const newRestaurants = await localService.getRestaurants()
         setRestaurants(newRestaurants)
-        } catch(error) {
-            console.error('Error fetching restaurants', error)
+        } catch(error : unknown ) {
+            const errorMessage = getMensajeError(error as ErrorResponse)
+            showToast(errorMessage, 'error')
         }
 
     }
@@ -92,6 +97,11 @@ export const FaithfulCriteria = () => {
                 />
             </div>
         </div>
+
+        <div id ="toast-container">
+            <Toast toast = {toast} />
+        </div>
+
 
         </>
     )
