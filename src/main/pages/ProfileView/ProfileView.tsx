@@ -67,6 +67,7 @@ export const ProfileView = () => {
                 <label htmlFor="name">Nombre</label>
                 <InputText
                     id="name"
+                    required={true}
                     value={profileInfo.name}
                     onChange={handleChange}
                     
@@ -77,6 +78,7 @@ export const ProfileView = () => {
                 <label htmlFor="surname">Apellido</label>
                 <InputText
                     id="surname"
+                    required={true}
                     value={profileInfo.surname}
                     onChange={handleChange}
                     
@@ -86,6 +88,7 @@ export const ProfileView = () => {
                 <label htmlFor="address">Direccion</label> 
                 <InputText
                     id="address"
+                    required={true}
                     value={profileInfo.address}
                     onChange={handleChange}
                     
@@ -95,6 +98,7 @@ export const ProfileView = () => {
                 <label htmlFor="location">Ubicación</label> 
                 <InputText
                     id="location"
+                    required={true}
                     value={profileInfo.location}
                     onChange={handleChange}
                     
@@ -105,7 +109,8 @@ export const ProfileView = () => {
                     <label htmlFor="latitude">Latitud</label>
                     <InputText
                         id="latitude"
-                        keyfilter={'int'}
+                        keyfilter={'num'}
+                        required={true}
                         value={profileInfo.latitude.toString()}
                         onChange={handleChange}
                     />
@@ -115,7 +120,8 @@ export const ProfileView = () => {
                     <label htmlFor="longitude">Longitud</label>
                     <InputText
                         id="longitude"
-                        keyfilter={'int'}
+                        keyfilter={'num'}
+                        required={true}
                         value={profileInfo.longitude.toString()}
                         onChange={handleChange}
                     />
