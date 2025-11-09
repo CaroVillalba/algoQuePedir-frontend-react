@@ -49,6 +49,17 @@ export const FaithfulCriteria = () => {
             </div>
         )
     }
+
+    const listTemplate = ( items : Local[] ) => {
+        if( !items || items.length === 0) return null
+
+        let list = items.map((restaurants) => {
+            return itemTemplate(restaurants)
+        })
+
+        return <div className='restaurants-dataview grid grid-nogutter'>{list}</div>
+    }
+  
     
     return (
         <>
@@ -68,7 +79,7 @@ export const FaithfulCriteria = () => {
 
             <DataView 
                 value={restaurants} 
-                itemTemplate={itemTemplate} 
+                listTemplate={listTemplate}
                 layout='list'
                 className='restaurants-dataview'
             />
