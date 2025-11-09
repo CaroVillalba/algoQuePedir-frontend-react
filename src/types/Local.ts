@@ -3,6 +3,15 @@ export interface Local {
     name: string
     rating: string
     deliveryDelay: number
-    imgUrl: string
+    imgURL: string
     appCommission: number
+}
+
+export interface LocalPublic {
+    id: number
+    name: string
+    imgURL: string
+    rating: number
+    reviews: number
+    orders: number
 }
