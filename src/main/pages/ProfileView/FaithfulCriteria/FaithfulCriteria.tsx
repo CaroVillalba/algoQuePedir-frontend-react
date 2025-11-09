@@ -33,7 +33,7 @@ export const FaithfulCriteria = () => {
     const itemTemplate = (restaurant: Local) => {
         return (
             <div className="restaurant-item" key={restaurant.id}>
-                <img src={restaurant.imgUrl} alt={restaurant.name} className="restaurant-image" />
+                <img src={restaurant.imgURL} alt={restaurant.name} className="restaurant-image" />
                 <div className="restaurant-details">
                     <span className="restaurant-name">{restaurant.name}</span>
                     <div className="restaurant-info">
@@ -49,7 +49,6 @@ export const FaithfulCriteria = () => {
             </div>
         )
     }
-  
     
     return (
         <>

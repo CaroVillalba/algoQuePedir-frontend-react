@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { Card } from 'primereact/card'
-import { IconField } from "primereact/iconfield";
-import { InputIcon } from "primereact/inputicon";
+import { IconField } from 'primereact/iconfield'
+import { InputIcon } from 'primereact/inputicon'
 import { useNavigate } from 'react-router-dom'
 import './StoreSearch.css'
 
