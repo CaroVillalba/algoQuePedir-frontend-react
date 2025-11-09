@@ -3,17 +3,23 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .restaurant-header {
     width: 100%;
     overflow: hidden;
+    aspect-ratio: 352 / 180;
 }
 
 .restaurant-image-wide {
     width: 100%;
-    height: 180px;
+    height: 100%;
     display: block;
+    object-fit: cover;
 }
 
 .restaurant-image-inner {
@@ -25,8 +31,8 @@
 .restaurant-content {
     padding: 1rem;
     background-color: #fff;
-    border: 1px solid var(--surface-border);
-    margin-top: -4px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .restaurant-body {
@@ -44,7 +50,6 @@
     font-size: 0.9rem;
 }
 
-/* Menú */
 .menu-section {
     padding: 0;
     margin-top: 1rem;
@@ -63,6 +68,9 @@
     justify-content: space-between;
     padding: 0.75rem 0;
     border-top: 1px solid var(--surface-border);
+    width: 100%;
+    aspect-ratio: 352 / 180;
+    box-sizing: border-box;
 }
 
 .menu-dish:last-child {
@@ -72,6 +80,11 @@
 .dish-info {
     flex: 1;
     padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .dish-name {
@@ -84,6 +97,7 @@
     color: #7b4f28;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
+    flex-grow: 1;
 }
 
 .dish-price-tag {
@@ -91,19 +105,22 @@
     background-color: #6b3f1f;
     color: #fff;
     padding: 0.25rem 0.5rem;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     font-weight: 600;
     font-size: 0.9rem;
 }
 
-/* Checkout */
+.menu-dish img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
 .checkout-bar {
-    position: fixed;
-    bottom: 5rem;
-    left: 0;
-    right: 0;
+    background-color: #fff;
     padding: 1rem;
-    border-top: 1px solid var(--surface-border);
-    background-color: var(--surface-a);
-    z-index: 100;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
 }
