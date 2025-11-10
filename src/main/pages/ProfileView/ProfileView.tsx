@@ -22,19 +22,50 @@ export const ProfileView = () => {
         id : -1,
         name : '',
         surname : '',
-        address : '',
         location : '',
-        longitude : 0,
-        latitude : 0,
+        address : '',
+        longitude: 0,
+        latitude: 0,
 
     })
 
 
-    async function handlePersonalInfo(e : FormEvent ){
+    async function handlePersonalInfo(e : FormEvent){
         e.preventDefault()
+        
+        if(!validateName()){
+            showToast('El nombre es obligatorio', 'error')
+            return
+        }
+
+        if(!validateSurname()){
+            showToast('El apellido es obligatorio', 'error')
+            return
+        }
+
+        if(!validateAddress()){
+            showToast('La direccion es obligatoria', 'error')
+            return
+        }
+
+        if(!validateLocation()){
+            showToast('La ubicacion es obligatoria', 'error')
+            return
+        }
+
+        if(!validateLatitude()){
+            showToast('Latitud invalida. Debe estar entre -90 y 90', 'error')
+            return
+        }
+
+        if(!validateLongitude()){
+            showToast('Longitud invalida. Debe estar entre -180 y 180', 'error')
+            return 
+        }
         
         try {
             await userService.createProfile( profileInfo )
+            showToast('Perfil guardado correctamente', 'success')
 
         } catch ( error: unknown ){
             const errorMessage = getMensajeError( error as ErrorResponse )
@@ -42,6 +73,35 @@ export const ProfileView = () => {
         }
 
     }
+
+
+    function validateName() : boolean{
+        return profileInfo.name != ''
+    }
+
+    function validateSurname() : boolean{
+        return profileInfo.surname != ''
+    }
+
+    function validateAddress() : boolean{
+        return profileInfo.address != ''
+    }
+
+    function validateLocation() : boolean{
+        return profileInfo.location != ''
+    }
+
+    function validateLongitude() : boolean{
+        const lon = profileInfo.longitude
+        return (lon >= -180 && lon <= 180) && lon != 0
+    }
+
+    function validateLatitude() : boolean {
+        const lat = profileInfo.latitude
+        return (lat >= -90 && lat <= 90) && lat != 0
+    }
+
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
