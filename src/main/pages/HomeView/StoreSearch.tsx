@@ -44,7 +44,7 @@ export const StoreSearch = () => {
     }
 
     try {
-      const result = await localService.getRestaurantsBySerach(query)
+      const result = await localService.getRestaurantsBySearch(query)
       setLocales(result)
     }catch (error) {
       console.error('Error al buscar los locales', error)
