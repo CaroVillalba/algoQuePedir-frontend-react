@@ -88,3 +88,22 @@
     font-size: 1.2rem;
     line-height: 1;
 }
+
+.distance-row {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 10px;
+    width: 100%;
+}
+
+.distance-row .p-inputnumber-input{
+    width: 50px;
+    text-align: center;
+}
+
+.distance-row .p-inputnumber .p-button {
+    padding: 0.5rem;
+}
+
+

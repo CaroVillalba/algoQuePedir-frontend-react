@@ -6,12 +6,14 @@ import './SearchCriteria.css'
 import { Checkbox } from 'primereact/checkbox'
 import { FaithfulCriteria } from '../FaithfulCriteria/FaithfulCriteria'
 import { MarketingCriteria } from '../MarketingCriteria/MarketingCriteria'
+import { InputNumber, type InputNumberValueChangeEvent } from 'primereact/inputnumber'
 
 export const SearchCriteria = () => {
     const [checkedVegan, setCheckedVegan] = useState(false)
     const [checkedExquisite, setCheckedExquisite] = useState(false)
     const [checkedConservative, setCheckedConservative] = useState(false)
     const [checkedImpatient, setCheckedImpatient] = useState(false)
+    const [ distance, setDistance ] = useState<number>(1)
 
     return (
         <>
@@ -59,8 +61,20 @@ export const SearchCriteria = () => {
                                 checked={checkedImpatient}
                             />
                         </div>
-                        <section className='sub-subtitle'>
+                        <section className='sub-subtitle distance-row'>
                             <span>Distancia(Kms)</span>
+                            <InputNumber 
+                            inputId='Impatient' 
+                            value={distance} 
+                            onValueChange={(e: InputNumberValueChangeEvent) => setDistance(e.value ?? 0)} 
+                            showButtons
+                            buttonLayout='horizontal'
+                            min={1}
+                            max={5}
+                            disabled={!checkedImpatient}
+                            incrementButtonIcon='pi pi-plus'
+                            decrementButtonIcon='pi pi-minus'
+                            />
                         </section>
                     </div>
                 </Card>

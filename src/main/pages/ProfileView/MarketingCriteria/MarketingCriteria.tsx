@@ -16,7 +16,7 @@ export const MarketingCriteria = () => {
             <div className='header-row'>
                 <div className='card-text-header'>
                     <span className='title'>Marketing</span>
-                    <span className='subtitle'>Filran platos por palabras buscadas</span>
+                    <span className='subtitle'>Filtran platos por palabras buscadas</span>
                 </div>
                 <Checkbox 
                     className='custom-checkbox' 
