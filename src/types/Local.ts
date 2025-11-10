@@ -15,3 +15,17 @@ export interface LocalPublic {
     reviews: number
     orders: number
 }
+
+export interface LocalCheckout {
+    id: number;
+    name: string;
+    imgURL: string;
+    freeDelivery: boolean;
+    deliveryFee: number;
+    paymentMethods: PaymentMethodTax[];
+}
+
+export interface PaymentMethodTax {
+    name: string;
+    tax: number;
+}
