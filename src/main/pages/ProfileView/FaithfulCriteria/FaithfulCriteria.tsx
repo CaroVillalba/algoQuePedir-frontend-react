@@ -10,6 +10,9 @@ import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHand
 import { Toast } from '../../../../components/common/toast'
 import { useToast } from '../../../../hooks/useToast'
 import { useOnInit } from '../../../../hooks/useOnInit'
+import { Dialog } from 'primereact/dialog'
+import { PickList } from 'primereact/picklist'
+import '../../../../toast.css'
 
 export const FaithfulCriteria = () => {
     const [ checkedFaithful, setCheckedFaithful ] = useState(false)

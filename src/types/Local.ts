@@ -1,6 +1,7 @@
 export interface Local {
     id: number
     name: string
+    address: string
     rating: string
     deliveryDelay: number
     imgURL: string

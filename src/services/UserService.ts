@@ -7,7 +7,7 @@ class UserService extends CRUDService<User>{
         super('user')
     }
 
-    async postProfile(user : User) : Promise<User>{
+    async createProfile(user : User) : Promise<User>{
         try{
 
             const dto = {
