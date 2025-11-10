@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { TabMenu } from 'primereact/tabmenu'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './Footer.css'
