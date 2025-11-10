@@ -23,9 +23,14 @@ export const ProfileView = () => {
         name : '',
         surname : '',
         location : '',
-        address : '',
-        longitude: 0,
-        latitude: 0,
+        address: {
+            street: '',
+            number: 0,
+            coordinates: {
+                x: 0,
+                y:0,
+            }
+        }
 
     })
 
@@ -84,7 +89,7 @@ export const ProfileView = () => {
     }
 
     function validateAddress() : boolean{
-        return profileInfo.address != ''
+        return profileInfo.address.street != ''
     }
 
     function validateLocation() : boolean{
@@ -92,12 +97,12 @@ export const ProfileView = () => {
     }
 
     function validateLongitude() : boolean{
-        const lon = profileInfo.longitude
+        const lon = profileInfo.address.coordinates.x
         return (lon >= -180 && lon <= 180) && lon != 0
     }
 
     function validateLatitude() : boolean {
-        const lat = profileInfo.latitude
+        const lat = profileInfo.address.coordinates.y
         return (lat >= -90 && lat <= 90) && lat != 0
     }
 
@@ -106,11 +111,52 @@ export const ProfileView = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     
-    setProfileInfo(prevInfo => ({
-        ...prevInfo, 
-        [id]: value, 
-    }))
-    }   
+    setProfileInfo(prevInfo => {
+            if (['name', 'surname', 'location'].includes(id)) {
+                return { ...prevInfo, [id]: value }
+            }
+
+            if (['latitude', 'longitude'].includes(id)) {
+                
+                const coordKey = id === 'latitude' ? 'y' : 'x'
+                const numValue = parseFloat(value) || 0 
+                
+                return {
+                    ...prevInfo,
+                    address: {
+                        ...prevInfo.address,
+                        coordinates: {
+                            ...prevInfo.address.coordinates,
+                            [coordKey]: numValue,
+                        }
+                    }
+                }
+            }
+
+            if (id === 'street') {
+                return {
+                    ...prevInfo,
+                    address: {
+                        ...prevInfo.address,
+                        street: value,
+                    }
+                }
+            }
+
+            if (id === 'number') {
+                const numValue = parseInt(value) || 0
+                return {
+                    ...prevInfo,
+                    address: {
+                        ...prevInfo.address,
+                        number: numValue,
+                    }
+                }
+            }
+
+            return prevInfo
+        })
+    }
 
 
 
@@ -146,11 +192,22 @@ export const ProfileView = () => {
                 />
             </div>
             <div className="input-form">
-                <label htmlFor="address">Direccion</label> 
+                <label htmlFor="address">Calle</label> 
                 <InputText
-                    id="address"
+                    id="street"
                     required={true}
-                    value={profileInfo.address}
+                    value={profileInfo.address.street}
+                    onChange={handleChange}
+                    
+                />
+            </div>
+            <div className="input-form">
+                <label htmlFor="number">Número</label> 
+                <InputText
+                    id="number"
+                    required={true}
+                    keyfilter={'num'}
+                    value={profileInfo.address.number.toString()}
                     onChange={handleChange}
                     
                 />
@@ -172,7 +229,7 @@ export const ProfileView = () => {
                         id="latitude"
                         keyfilter={'num'}
                         required={true}
-                        value={profileInfo.latitude.toString()}
+                        value={profileInfo.address.coordinates.y.toString()}
                         onChange={handleChange}
                     />
                 </div>
@@ -183,7 +240,7 @@ export const ProfileView = () => {
                         id="longitude"
                         keyfilter={'num'}
                         required={true}
-                        value={profileInfo.longitude.toString()}
+                        value={profileInfo.address.coordinates.x.toString()}
                         onChange={handleChange}
                     />
                 </div>
