@@ -12,6 +12,7 @@ import { useToast } from '../../../hooks/useToast'
 import { useOnInit } from '../../../hooks/useOnInit'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import type { FormEvent } from 'react'
+import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
 
 export const ProfileView = () => {
@@ -165,6 +166,11 @@ export const ProfileView = () => {
         <section>
 
             <header>
+            <section className='profile-header'>
+                <Avatar className='profile-avatar' icon= "pi pi-user" size='xlarge' shape='circle' style={{ backgroundColor: '#ffffff' }}></Avatar>
+                <span className='title'>User</span>
+                <span className='subtitle'>user@email.com</span> 
+            </section>
             <h2>Información personal</h2>
             </header>
 
