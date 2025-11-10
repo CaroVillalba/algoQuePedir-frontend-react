@@ -1,5 +1,5 @@
 import { CRUDService } from './CRUDService'
-import type { Local, LocalPublic } from '../types/Local'
+import type { Local, LocalPublic, LocalCheckout } from '../types/Local'
 
 class LocalService extends CRUDService<Local>{
     constructor(){
@@ -16,8 +16,13 @@ class LocalService extends CRUDService<Local>{
         return response.data
     }
 
-    async getRestaurantsBySerach(query: string): Promise<Local[]>{
+    async getRestaurantsBySearch(query: string): Promise<Local[]>{
         const response = await this.api.get<Local[]>(`/${this.path}`, { params: { query } })
+        return response.data
+    }
+
+    async getCheckoutInfo(id: number): Promise<LocalCheckout> {
+        const response = await this.api.get<LocalCheckout>(`/${this.path}/order-checkout/${id}`)
         return response.data
     }
 }
