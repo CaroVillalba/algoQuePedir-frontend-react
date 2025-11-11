@@ -32,9 +32,9 @@ export const StoreSearch = () => {
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('') 
 
- /*  const localesFiltrados = checked
+  const localesFiltrados = checked
     ? locales.filter((local) => local.esCercano)
-    : locales */
+    : locales
 
 
   const buscar = async (query: string) => {
@@ -108,7 +108,7 @@ export const StoreSearch = () => {
         <h2>Locales de comida</h2>
 
         <div className="grid">
-          {locales.map((local) => (
+          {localesFiltrados.map((local) => (
             <div key={local.id} className="grid-item">
               <Card
                 className="local-card"
