@@ -34,7 +34,10 @@ export const RestaurantMenuView = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
     const [quantity, setQuantity] = useState(1)
-    const { addItem, totalItems } = useCart()
+    const { addItem, getTotalItemsByRestaurant } = useCart()
+
+    const restaurantId = Number(restaurantIdParam)
+    const totalItems = getTotalItemsByRestaurant(restaurantId)
 
     const handleOpenModal = (dish: Dish) => {
         setSelectedDish(dish)
@@ -95,7 +98,7 @@ export const RestaurantMenuView = () => {
                 <div className="restaurant-header">
                     <Image
                     src={local.imgURL}
-                    alt="Restaurante"
+                    alt={local.name}
                     className="restaurant-image-wide"
                     imageClassName="restaurant-image-inner"
                     />
@@ -151,7 +154,7 @@ export const RestaurantMenuView = () => {
                     <Button
                         label={`Ver Pedido (${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}
                         className="p-button-custom-primary w-full"
-                        onClick={() => navigate('/order-checkout')}
+                        onClick={() => navigate(`/order-checkout/${restaurantIdParam}`)}
                     />
                 </div>
             )}

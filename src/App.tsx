@@ -51,7 +51,7 @@ function AppContent() {
           <Route path="/profile" element={<ProfileView />} />
           <Route path="profile/criteria" element= {<SearchCriteria/>} />
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-          <Route path="/order-checkout" element={<OrderCheckoutView />} />
+          <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
           <Route path="/home" element={<StoreSearch />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

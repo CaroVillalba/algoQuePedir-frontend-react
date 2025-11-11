@@ -1,44 +1,87 @@
 import { Button } from 'primereact/button'
-import { ScrollPanel } from 'primereact/scrollpanel'
-import { Divider } from 'primereact/divider'
 import { Dropdown } from 'primereact/dropdown'
 import { Image } from 'primereact/image'
 import { useState } from 'react'
 import { useCart } from '../../../hooks/useCart'
 import { orderService } from '../../../services/OrderService'
+import { localService } from '../../../services/LocalService'
+import { useParams } from 'react-router-dom'
+import { useOnInit } from '../../../hooks/useOnInit'
+import type { LocalCheckout } from '../../../types/Local'
 
-//TODO: Mejorar estilos (asumo que con crear un mini .css es suficiente) y ver como tener la info del restaurante dinámicamente
+//TODO: Mejorar estilos (asumo que con crear un mini .css es suficiente)
 export const OrderCheckoutView = () => {
-    const { cartItems, restaurantId, subtotal, clearCart, removeItem } = useCart()
+    const { id } = useParams()
+    const restaurantId = Number(id)
+
+    const { 
+        getItemsByRestaurant,
+        getSubtotalByRestaurant,
+        removeItem,
+        clearCart
+    } = useCart()
+
+    const cartItems = getItemsByRestaurant(restaurantId)
+    const subtotal = getSubtotalByRestaurant(restaurantId)
+
     const [paymentMethod, setPaymentMethod] = useState<string>('')
     const [loading, setLoading] = useState(false)
+    const [localCheckout, setLocalCheckout] = useState<LocalCheckout>({
+        id: 0,
+        name: '',
+        imgURL: '',
+        freeDelivery: false,
+        deliveryFee: 0,
+        paymentMethods: []
+    })
 
-    const paymentOptions = [
-        { label: 'Efectivo', value: 'cash' },
-        { label: 'Tarjeta de Crédito', value: 'card' },
-        { label: 'QR', value: 'qr' },
-    ]
+    const paymentOptions = (localCheckout.paymentMethods ?? []).map(pm => {
+        const method = pm.name || ''
+        return {
+            label: method.charAt(0).toUpperCase() + method.slice(1),
+            value: method
+        }
+    })
 
-    // TODO: Ver si traer los fees del back o si hay otra forma mejor para no tenerlos hardcodeados
-    const PAYMENT_FEES: Record<string, number> = {
-        cash: 1.0,
-        card: 1.05,
-        qr: 1.05
-    }
+    const PAYMENT_FEES: Record<string, number> = (localCheckout.paymentMethods ?? [])
+    .reduce((acc: Record<string, number>, pm) => {
+        const method = pm.name || ''
+        const tax = pm.tax ?? 1
+        acc[method] = tax
+        return acc
+    }, {})
 
-    const DELIVERY_FEE = 12.5 // TODO: Implementar que el fee sea como el deliveryCost() del back
+    // Función para redondear como en el back, puesto que sino hay una diferencia de 0.01 centavos (al menos hasta donde hice pruebas)
+    const round2 = (n: number) =>
+        Number(
+            n.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+        )
 
-    const paymentFee = subtotal * (PAYMENT_FEES[paymentMethod] || 1)
-    const total = subtotal + paymentFee + DELIVERY_FEE
+    const DELIVERY_FEE = round2(localCheckout.freeDelivery ? 0 : (localCheckout.deliveryFee ?? 0))
+
+    const baseTotal = round2(subtotal + DELIVERY_FEE)
+
+    const paymentFee = round2(baseTotal * ((PAYMENT_FEES[paymentMethod] ?? 1) - 1))
+    const total = round2(subtotal + paymentFee + DELIVERY_FEE)
 
     const handleConfirmOrder = async () => {
-        if (!restaurantId) return
-        setLoading(true)
         try {
-            const response = await orderService.confirmOrder(cartItems, restaurantId!, paymentMethod)
+            setLoading(true)
+
+            const response = await orderService.confirmOrder(
+                cartItems,
+                restaurantId,
+                paymentMethod
+            )
+
             console.log('Pedido confirmado ✅', response)
             window.alert('Pedido confirmado correctamente')
-            clearCart()
+
+            clearCart(restaurantId)
+
         } catch (error) {
             console.error('Error al confirmar pedido:', error)
             window.alert('Hubo un error al confirmar el pedido ❌')
@@ -47,43 +90,59 @@ export const OrderCheckoutView = () => {
         }
     }
 
+    const getLocal = async () => {
+        try {
+            if (restaurantId) {
+                const data = await localService.getCheckoutInfo(restaurantId)
+                setLocalCheckout(data)
+                console.log(data)
+            }
+        } catch (error) {
+            console.error('Error fetching local:', error)
+        }
+    }
+
+    useOnInit(() => {
+        getLocal()
+    })
+
     return (
-        <div className="h-screen flex flex-column">
-            <ScrollPanel className="flex-1">
-                <div className="p-3">
+        <div className="h-full flex flex-column">
+            <div className="flex-1 overflow-y-auto">
+                <div className="p-2">
                     <div className="font-bold text-lg mb-3">Restaurante</div>
                         <div className="flex align-items-center">
                             <Image 
-                                src="https://picsum.photos/200/300"
-                                alt="Logo del restaurante" 
+                                src={localCheckout.imgURL}
+                                alt={localCheckout.name}  
                                 width="60" 
                                 height="60" 
-                                className="border-round mr-3"
+                                imageClassName="border-round-lg mr-3"
                             />
                             <div>
-                                <div className="font-bold">El Sabor Auténtico</div>
-                                <small className="text-color-secondary">4.8 · 5 km · Envío gratis</small>
+                                <div className="font-bold">{localCheckout.name}</div>
+                                <small className="text-color-secondary text-sm">
+                                    4.8 · 5 km · {localCheckout.freeDelivery ? 'Envío gratis' : 'Envío con costo'}
+                                </small>
                             </div>
                         </div>
                 </div>
 
-                <Divider />
-
-                <div className="p-3">
+                <div className="p-2">
                     <div className="font-bold text-lg mb-3">Artículos</div>
                     {cartItems.map(item => (
                         <div key={item.id} className="flex justify-content-between align-items-center mb-3">
                             <div>
                                 <div className="font-bold">{item.name}</div>
-                                <small className="text-color-secondary block">Cantidad: {item.qty}</small>
-                                <small className="text-color-secondary">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
+                                <small className="text-color-secondary block text-sm">Cantidad: {item.qty}</small>
+                                <small className="text-color-secondary text-sm">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
                             </div>
-                            <div className="flex align-items-center">
-                                <span className="font-bold mr-3">${(item.unitPrice * item.qty).toFixed(2)}</span>
+                            <div className="flex flex-column align-items-center">
+                                <span className="font-bold">${(item.unitPrice * item.qty).toFixed(2)}</span>
                                 <Button 
                                     icon="pi pi-times" 
-                                    className="p-button-rounded p-button-danger p-button-sm" 
-                                    onClick={() => removeItem(item.id)} 
+                                    className="p-button-rounded p-button-text p-button-sm text-red-500" 
+                                    onClick={() => removeItem(item.id, restaurantId)} 
                                     tooltip="Eliminar artículo"
                                 />
                             </div>
@@ -91,9 +150,7 @@ export const OrderCheckoutView = () => {
                     ))}
                 </div>
 
-                <Divider />
-
-                <div className="p-3">
+                <div className="p-2">
                     <div className="font-bold text-lg mb-3">Resumen</div>
                     <div className="flex justify-content-between mb-2">
                         <span>Subtotal</span>
@@ -113,9 +170,7 @@ export const OrderCheckoutView = () => {
                     </div>
                 </div>
 
-                <Divider />
-
-                <div className="p-3">
+                <div className="p-2">
                 <label htmlFor="payment" className="font-bold block mb-2">Forma de pago</label>
                 <Dropdown 
                     id="payment"
@@ -126,19 +181,18 @@ export const OrderCheckoutView = () => {
                     className="w-full"
                 />
                 </div>
-            </ScrollPanel>
-
-            <div className="p-3 border-top-1 surface-border">
+            </div>
+            <div className="p-2 flex flex-column gap-3">
                 <Button 
                     label={loading ? 'Confirmando...' : 'Confirmar pedido'} 
-                    className="p-button-custom-primary w-full mb-2" 
+                    className="p-button-custom-primary w-full" 
                     disabled={!paymentMethod || cartItems.length === 0}
                     onClick={handleConfirmOrder}
                 />
                 <Button 
-                    label="Limpiar carrito de compras" 
-                    className="p-button-outlined p-button-secondary w-full mb-2"
-                    onClick={clearCart}
+                    label="Limpiar carrito" 
+                    className="p-button-custom-secondary w-full"
+                    onClick={() => clearCart(restaurantId)}
                     disabled={cartItems.length === 0} 
                 />
             </div>
