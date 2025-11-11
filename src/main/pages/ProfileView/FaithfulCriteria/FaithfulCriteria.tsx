@@ -16,7 +16,9 @@ import '../../../../toast.css'
 
 export const FaithfulCriteria = () => {
     const [ checkedFaithful, setCheckedFaithful ] = useState(false)
-    const [ restaurants , setRestaurants ] = useState<Local[]>([])
+    const [ availableRestaurants, setAvailableRestaurants ] = useState<Local[]>([])
+    const [ selectedRestaurants, setSelectedRestaurants ] = useState<Local[]>([])
+    const [ displayAddDialog, setDisplayAddDialog ] = useState(false)
 
     const { toast, showToast } = useToast()
 
@@ -24,8 +26,15 @@ export const FaithfulCriteria = () => {
     const getRestaurants = async () => {
 
         try{
-        const newRestaurants = await localService.getRestaurants()
-        setRestaurants(newRestaurants)
+        const allRestaurants = await localService.getRestaurants()
+
+        const initialSelected = allRestaurants.slice(0, 3)
+        const initialAvailable = allRestaurants.slice(3) 
+
+        setSelectedRestaurants(initialSelected)
+        setAvailableRestaurants(initialAvailable)
+
+        
         } catch(error : unknown ) {
             const errorMessage = getMensajeError(error as ErrorResponse)
             showToast(errorMessage, 'error')
@@ -34,7 +43,26 @@ export const FaithfulCriteria = () => {
     }
 
     useOnInit(getRestaurants)
-    
+
+    const onChangePickList = (event: { source: Local[], target: Local[] }) => {
+        setAvailableRestaurants(event.source)
+        setSelectedRestaurants(event.target)
+    }
+
+
+    const pickListItemTemplate = (restaurant: Local) => {
+        return (
+            <div className="flex align-items-center p-2">
+                <img src={restaurant.imgURL} alt={restaurant.name} className="w-3rem h-3rem shadow-2 flex-shrink-0 mr-3" />
+                <div className="flex-1">
+                    <div className="font-bold">{restaurant.name}</div>
+                    <div>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</div>
+                </div>
+            </div>
+        )
+    }
+
+
     const itemTemplate = (restaurant: Local) => {
         return (
             <div className="restaurant-item" key={restaurant.id}>
@@ -45,12 +73,6 @@ export const FaithfulCriteria = () => {
                         <span>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</span>
                     </div>
                 </div>
-        
-                <Button 
-                    icon="pi pi-times" 
-                    className="p-button-rounded p-button-text p-button-danger remove-button"
-                    onClick={() => console.log(`Remover ${restaurant.name}`)} 
-                />
             </div>
         )
     }
@@ -83,7 +105,7 @@ export const FaithfulCriteria = () => {
             </Card>
 
             <DataView 
-                value={restaurants} 
+                value={selectedRestaurants} 
                 listTemplate={listTemplate}
                 layout='list'
                 className='restaurants-dataview'
@@ -93,10 +115,34 @@ export const FaithfulCriteria = () => {
                 <Button 
                     icon="pi pi-plus" 
                     className="p-button-rounded p-button-danger add-button"
-                    onClick={() => console.log('Agregar restaurante')}
+                    onClick={() => setDisplayAddDialog(true)}
                 />
             </div>
         </div>
+
+        <Dialog 
+                header="Agregar Restaurantes Preferidos" 
+                visible={displayAddDialog} 
+                onHide={() => setDisplayAddDialog(false)} 
+                modal 
+                style={{ width: '80%' , height: '100%'}}
+                
+            >
+                <div className="p-fluid">
+                    <PickList
+                        dataKey="id"
+                        source={availableRestaurants} 
+                        target={selectedRestaurants} 
+                        itemTemplate={pickListItemTemplate} 
+                        sourceHeader="Disponibles" 
+                        targetHeader="Preferidos" 
+                        onChange={onChangePickList} 
+                        sourceStyle={{ height: '90px'}} 
+                        targetStyle={{ height: '90px' }} 
+                        
+                    />
+                </div>
+            </Dialog>
 
         <div id ="toast-container">
             <Toast toast = {toast} />
