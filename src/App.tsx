@@ -13,6 +13,8 @@ import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutV
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
 import { CartProvider } from './context/CartProvider' 
 import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCriteria'
+import { ReivewsView } from './main/pages/ReviewsView/ReviewsView'
+import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRestorantView'
 
 interface RouteConfig {
   title: string
@@ -24,6 +26,7 @@ function AppContent() {
   const location = useLocation()
 
   const routeConfig: Record<string, RouteConfig> = {
+    '/login': { title: "Iniciar Sesion", showBackButton: false},
     '/profile': { title: 'Perfil', showBackButton: false },
     './criteria': { title: 'Selecciona tu criterio', showBackButton: true},
     '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
@@ -42,10 +45,12 @@ function AppContent() {
 
       <main className="main-content">
         <Routes>
-          <Route path="/profile" element={<ProfileView />} />
+          <Route path="/profile" element={<ProfileView/>} />
           <Route path="profile/criteria" element= {<SearchCriteria/>} />
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
           <Route path="/order-checkout" element={<OrderCheckoutView />} />
+          <Route path="/review" element={<ReivewsView />} />
+          <Route path="/review-restorant" element={<ReviewRestorantView/>} />
           <Route path="/" element={<StoreSearch />} />
         </Routes>
       </main>
