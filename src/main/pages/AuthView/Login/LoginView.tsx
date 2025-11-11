@@ -55,8 +55,8 @@ export const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               feedback={false}
-              className="w-full"          // wrapper
-              inputClassName="w-full"     // el input en sí
+              className="w-full"          
+              inputClassName="w-full"     
               showIcon="pi pi-eye-slash"
               hideIcon="pi pi-eye"
               placeholder="Contraseña"
