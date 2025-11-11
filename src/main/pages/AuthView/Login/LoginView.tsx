@@ -36,7 +36,7 @@ export const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="user" className="block mb-1">Usuario*</label>
+            <label htmlFor="user" className="block mb-1 ">Usuario*</label>
             <InputText
               id="user"
               value={user}
@@ -64,7 +64,7 @@ export const Login = () => {
             />
           </div>
 
-          <Button type="submit" label="Iniciar sesión" className="w-full" />
+          <Button type="submit" label="Iniciar sesión" className="w-full p-button-custom-primary" />
 
           <p className="text-center m-0 mt-2">
             ¿No tienes una cuenta?{" "}
