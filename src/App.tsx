@@ -5,11 +5,14 @@ import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
+import { Navigate } from "react-router-dom";
 import { Header } from './components/Header'
 import Footer from './components/Footer'
 import { ProfileView } from './main/pages/ProfileView/ProfileView'
 import { RestaurantMenuView } from './main/pages/RestaurantMenuView/RestaurantMenuView'
 import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutView'
+import { Login } from './main/pages/AuthView/Login/LoginView'
+import { Register } from './main/pages/AuthView/Register/RegisterView'
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
 import { CartProvider } from './context/CartProvider' 
 import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCriteria'
@@ -22,6 +25,9 @@ interface RouteConfig {
 // Ver si es mejor idea separar AppContent en otro archivo
 function AppContent() {
   const location = useLocation()
+  const hideFooterRoutes = ['/login', '/register'];
+  const shouldShowFooter = !hideFooterRoutes.includes(location.pathname);
+  const pathLocation = '/login' //Mas sencillo actualizar la ruta de redireccionamiento
 
   const routeConfig: Record<string, RouteConfig> = {
     '/profile': { title: 'Perfil', showBackButton: false },
@@ -38,19 +44,25 @@ function AppContent() {
 
   return (
     <div className="App">
-      <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />
+      {shouldShowFooter && <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />}
 
-      <main className="main-content">
+      <main className={shouldShowFooter ? "main-content" : "auth-content"}>
         <Routes>
           <Route path="/profile" element={<ProfileView />} />
           <Route path="profile/criteria" element= {<SearchCriteria/>} />
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
           <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
-          <Route path="/" element={<StoreSearch />} />
+          <Route path="/home" element={<StoreSearch />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+
+          <Route path="/" element={<Navigate to={pathLocation} replace />} />
+
         </Routes>
       </main>
 
-      <Footer />
+      {shouldShowFooter  && <Footer />}
     </div>
   )
 }

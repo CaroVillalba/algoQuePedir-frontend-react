@@ -25,8 +25,8 @@ export default function Footer() {
   }, [location.pathname])
 
   const items = [
-    { label: 'Inicio', icon: 'pi pi-home', command: () => navigate('/') },
-    { label: 'Pedidos', icon: 'pi pi-file' },
+    { label: 'Inicio', icon: 'pi pi-home', command: () => navigate('/home') },
+    { label: 'Pedidos', icon: 'pi pi-file', command: () => navigate('/orders') },
     { label: 'Calificar', icon: 'pi pi-star' },
     { label: 'Perfil', icon: 'pi pi-user', command: () => navigate('/profile') }
   ]

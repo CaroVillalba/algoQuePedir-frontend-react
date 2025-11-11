@@ -5,7 +5,26 @@
 
 .main-content {
   padding: 1.5rem;
-  min-height: calc(100vh - 80px); /* la bendita solución al footer */
+  padding-bottom: 3rem;
+  min-height: calc(100vh - 80px); 
 }
 
+.auth-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  padding: 1rem;
+  box-sizing: border-box; 
+}
+
+.p-password {
+  display: block;       /* esto es lo clave */
+  width: 100% ;
+}
+
+.p-password-input {
+  width: 100% ;
+  padding-right: 2.5rem ; /* espacio para el ícono */
+}
 
