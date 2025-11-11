@@ -12,6 +12,7 @@ import { useToast } from '../../../hooks/useToast'
 import { useOnInit } from '../../../hooks/useOnInit'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import type { FormEvent } from 'react'
+import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
 
 export const ProfileView = () => {
@@ -22,19 +23,55 @@ export const ProfileView = () => {
         id : -1,
         name : '',
         surname : '',
-        address : '',
         location : '',
-        longitude : 0,
-        latitude : 0,
+        address: {
+            street: '',
+            number: 0,
+            coordinates: {
+                x: 0,
+                y:0,
+            }
+        }
 
     })
 
 
-    async function handlePersonalInfo(e : FormEvent ){
+    async function handlePersonalInfo(e : FormEvent){
         e.preventDefault()
+        
+        if(!validateName()){
+            showToast('El nombre es obligatorio', 'error')
+            return
+        }
+
+        if(!validateSurname()){
+            showToast('El apellido es obligatorio', 'error')
+            return
+        }
+
+        if(!validateAddress()){
+            showToast('La direccion es obligatoria', 'error')
+            return
+        }
+
+        if(!validateLocation()){
+            showToast('La ubicacion es obligatoria', 'error')
+            return
+        }
+
+        if(!validateLatitude()){
+            showToast('Latitud invalida. Debe estar entre -90 y 90', 'error')
+            return
+        }
+
+        if(!validateLongitude()){
+            showToast('Longitud invalida. Debe estar entre -180 y 180', 'error')
+            return 
+        }
         
         try {
             await userService.createProfile( profileInfo )
+            showToast('Perfil guardado correctamente', 'success')
 
         } catch ( error: unknown ){
             const errorMessage = getMensajeError( error as ErrorResponse )
@@ -43,14 +80,84 @@ export const ProfileView = () => {
 
     }
 
+
+    function validateName() : boolean{
+        return profileInfo.name != ''
+    }
+
+    function validateSurname() : boolean{
+        return profileInfo.surname != ''
+    }
+
+    function validateAddress() : boolean{
+        return profileInfo.address.street != ''
+    }
+
+    function validateLocation() : boolean{
+        return profileInfo.location != ''
+    }
+
+    function validateLongitude() : boolean{
+        const lon = profileInfo.address.coordinates.x
+        return (lon >= -180 && lon <= 180) && lon != 0
+    }
+
+    function validateLatitude() : boolean {
+        const lat = profileInfo.address.coordinates.y
+        return (lat >= -90 && lat <= 90) && lat != 0
+    }
+
+
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     
-    setProfileInfo(prevInfo => ({
-        ...prevInfo, 
-        [id]: value, 
-    }))
-    }   
+    setProfileInfo(prevInfo => {
+            if (['name', 'surname', 'location'].includes(id)) {
+                return { ...prevInfo, [id]: value }
+            }
+
+            if (['latitude', 'longitude'].includes(id)) {
+                
+                const coordKey = id === 'latitude' ? 'y' : 'x'
+                const numValue = parseFloat(value) || 0 
+                
+                return {
+                    ...prevInfo,
+                    address: {
+                        ...prevInfo.address,
+                        coordinates: {
+                            ...prevInfo.address.coordinates,
+                            [coordKey]: numValue,
+                        }
+                    }
+                }
+            }
+
+            if (id === 'street') {
+                return {
+                    ...prevInfo,
+                    address: {
+                        ...prevInfo.address,
+                        street: value,
+                    }
+                }
+            }
+
+            if (id === 'number') {
+                const numValue = parseInt(value) || 0
+                return {
+                    ...prevInfo,
+                    address: {
+                        ...prevInfo.address,
+                        number: numValue,
+                    }
+                }
+            }
+
+            return prevInfo
+        })
+    }
 
 
 
@@ -59,6 +166,11 @@ export const ProfileView = () => {
         <section>
 
             <header>
+            <section className='profile-header'>
+                <Avatar className='profile-avatar' icon= "pi pi-user" size='xlarge' shape='circle' style={{ backgroundColor: '#ffffff' }}></Avatar>
+                <span className='title'>User</span>
+                <span className='subtitle'>user@email.com</span> 
+            </section>
             <h2>Información personal</h2>
             </header>
 
@@ -86,11 +198,22 @@ export const ProfileView = () => {
                 />
             </div>
             <div className="input-form">
-                <label htmlFor="address">Direccion</label> 
+                <label htmlFor="address">Calle</label> 
                 <InputText
-                    id="address"
+                    id="street"
                     required={true}
-                    value={profileInfo.address}
+                    value={profileInfo.address.street}
+                    onChange={handleChange}
+                    
+                />
+            </div>
+            <div className="input-form">
+                <label htmlFor="number">Número</label> 
+                <InputText
+                    id="number"
+                    required={true}
+                    keyfilter={'num'}
+                    value={profileInfo.address.number.toString()}
                     onChange={handleChange}
                     
                 />
@@ -112,7 +235,7 @@ export const ProfileView = () => {
                         id="latitude"
                         keyfilter={'num'}
                         required={true}
-                        value={profileInfo.latitude.toString()}
+                        value={profileInfo.address.coordinates.y.toString()}
                         onChange={handleChange}
                     />
                 </div>
@@ -123,7 +246,7 @@ export const ProfileView = () => {
                         id="longitude"
                         keyfilter={'num'}
                         required={true}
-                        value={profileInfo.longitude.toString()}
+                        value={profileInfo.address.coordinates.x.toString()}
                         onChange={handleChange}
                     />
                 </div>

@@ -13,10 +13,11 @@ export class OrderService extends CRUDService<Order> {
 
     /* TODO: Mejorar la forma en la que envía el pedido, 
     ya que luego el get no lo muestra en la página del local por incompatibilidad entre tipos de datos */
-    async confirmOrder(cartItems: CartItem[], restaurantId: number, paymentMethod: string): Promise<Order> {
-        const backendPaymentMethod = paymentMethod === 'cash' ? 'EFECTIVO'
-                                    : paymentMethod === 'qr'   ? 'QR'
-                                    : 'TRANSFERENCIA'
+    async confirmOrder(
+        cartItems: CartItem[],
+        restaurantId: number,
+        paymentMethod: string
+    ): Promise<Order> {
     
         const dto = {
             restaurantId,
@@ -24,14 +25,13 @@ export class OrderService extends CRUDService<Order> {
                 dishId: item.id,
                 quantity: item.qty
             })),
-            paymentMethod: backendPaymentMethod
+            paymentMethod: paymentMethod.toUpperCase()
         }
     
         console.log('DTO a enviar:', dto)
         const response = await this.api.post<Order>(`/${this.path}`, dto)
         return response.data
     }
-    
 
     async getByStateOrder(state: string): Promise<Order[]> {
         const response = await this.api.get<Order[]>(`/${this.path}`, {
