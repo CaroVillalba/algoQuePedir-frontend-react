@@ -1,11 +1,17 @@
+import type { Coordinates } from "./Address";
+
+
+
 export interface Local {
     id: number
     name: string
     address: string
+    coordinates: Coordinates,
     rating: string
     deliveryDelay: number
     imgURL: string
     appCommission: number
+    esCercano?: boolean;
 }
 
 export interface LocalPublic {

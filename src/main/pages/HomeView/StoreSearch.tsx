@@ -30,7 +30,7 @@ export const StoreSearch = () => {
 
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
-  const [searchTerm, setSearchTerm] = useState('') // 👈 nuevo estado
+  const [searchTerm, setSearchTerm] = useState('') 
 
  /*  const localesFiltrados = checked
     ? locales.filter((local) => local.esCercano)
@@ -39,13 +39,15 @@ export const StoreSearch = () => {
 
   const buscar = async (query: string) => {
     if (!query.trim()) {
-    setLocales([])
-    return
+      setLocales([])
+      return
     }
 
     try {
-      const result = await localService.getRestaurantsBySearch(query)
-      setLocales(result)
+      const userId = Number(sessionStorage.getItem("userId"));
+      const result = await localService.getRestaurantsBySearch(query, userId);
+
+      setLocales(result);
     }catch (error) {
       console.error('Error al buscar los locales', error)
       window.alert('Hubo un error al buscar los locales.')
@@ -118,7 +120,7 @@ export const StoreSearch = () => {
                     alt={`Imagen de ${local.name}`}
                     className="local-img"
                   />
-                  {/* <PinIcon esCercano={local.esCercano} /> */}
+                  <PinIcon esCercano={local.esCercano ?? false} />
                 </div>
 
                 <div className="local-content">

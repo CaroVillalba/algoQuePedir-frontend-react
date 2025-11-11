@@ -16,8 +16,8 @@ class LocalService extends CRUDService<Local>{
         return response.data
     }
 
-    async getRestaurantsBySearch(query: string): Promise<Local[]>{
-        const response = await this.api.get<Local[]>(`/${this.path}`, { params: { query } })
+    async getRestaurantsBySearch(query: string, userId: number): Promise<Local[]>{
+        const response = await this.api.get<Local[]>(`/${this.path}`, { params: { query, userId } })
         return response.data
     }
 
