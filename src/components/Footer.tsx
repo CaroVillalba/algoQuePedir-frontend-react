@@ -8,6 +8,7 @@ export default function Footer() {
   const location = useLocation()
 
   const getIndexFromPath = (path: string) => {
+    //Cambiar a map de js
     switch (path) {
       case '/':
         return 0
