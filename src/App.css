@@ -19,12 +19,12 @@
 }
 
 .p-password {
-  display: block;       /* esto es lo clave */
+  display: block;      
   width: 100% ;
 }
 
 .p-password-input {
   width: 100% ;
-  padding-right: 2.5rem ; /* espacio para el ícono */
+  padding-right: 2.5rem ; 
 }
 
