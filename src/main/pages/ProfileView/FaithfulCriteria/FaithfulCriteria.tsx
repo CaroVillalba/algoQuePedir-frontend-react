@@ -24,27 +24,6 @@ export const FaithfulCriteria = () => {
     const { toast, showToast } = useToast()
 
 
-    const getRestaurants = async () => {
-
-        try{
-        const allRestaurants = await localService.getRestaurants()
-
-        const initialSelected = allRestaurants.slice(0, 3)
-        const initialAvailable = allRestaurants.slice(3) 
-
-        setSelectedRestaurants(initialSelected)
-        setAvailableRestaurants(initialAvailable)
-
-        
-        } catch(error : unknown ) {
-            const errorMessage = getMensajeError(error as ErrorResponse)
-            showToast(errorMessage, 'error')
-        }
-
-    }
-
-    useOnInit(getRestaurants)
-
     const onChangePickList = (event: { source: Local[], target: Local[] }) => {
         setAvailableRestaurants(event.source)
         setSelectedRestaurants(event.target)
