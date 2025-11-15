@@ -13,6 +13,7 @@ import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutV
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
 import { CartProvider } from './context/CartProvider' 
 import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCriteria'
+import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
 
 interface RouteConfig {
   title: string
@@ -25,7 +26,7 @@ function AppContent() {
 
   const routeConfig: Record<string, RouteConfig> = {
     '/profile': { title: 'Perfil', showBackButton: false },
-    './criteria': { title: 'Selecciona tu criterio', showBackButton: true},
+    'criteria': { title: 'Selecciona tu criterio', showBackButton: true},
     '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
     '/order-checkout': { title: 'Tu pedido', showBackButton: true }
   }
@@ -42,8 +43,10 @@ function AppContent() {
 
       <main className="main-content">
         <Routes>
-          <Route path="/profile" element={<ProfileView />} />
-          <Route path="profile/criteria" element= {<SearchCriteria/>} />
+          <Route path= "/profile" element={<LayoutProfile/>}>
+            <Route path="/profile" element={<ProfileView />}/>
+            <Route path="criteria" element= {<SearchCriteria/>} />
+          </Route>
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
           <Route path="/order-checkout" element={<OrderCheckoutView />} />
           <Route path="/" element={<StoreSearch />} />

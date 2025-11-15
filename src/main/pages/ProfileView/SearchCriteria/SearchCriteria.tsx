@@ -7,13 +7,13 @@ import { Checkbox } from 'primereact/checkbox'
 import { FaithfulCriteria } from '../FaithfulCriteria/FaithfulCriteria'
 import { MarketingCriteria } from '../MarketingCriteria/MarketingCriteria'
 import { InputNumber, type InputNumberValueChangeEvent } from 'primereact/inputnumber'
+import { useOutletContext } from 'react-router-dom'
+import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const SearchCriteria = () => {
-    const [checkedVegan, setCheckedVegan] = useState(false)
-    const [checkedExquisite, setCheckedExquisite] = useState(false)
-    const [checkedConservative, setCheckedConservative] = useState(false)
-    const [checkedImpatient, setCheckedImpatient] = useState(false)
-    const [ distance, setDistance ] = useState<number>(1)
+
+    const { checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
+         distance, setDistance } = useOutletContext<ProfileContextType>()
 
     return (
         <>
@@ -78,8 +78,6 @@ export const SearchCriteria = () => {
                         </section>
                     </div>
                 </Card>
-
-                <Button label = "Guardar" className='button-primary'/>
 
             </section>
         

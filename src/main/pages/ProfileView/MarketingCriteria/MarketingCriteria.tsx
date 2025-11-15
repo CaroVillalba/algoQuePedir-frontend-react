@@ -2,12 +2,14 @@ import '../SearchCriteria/SearchCriteria.css'
 import { Card } from 'primereact/card'
 import { useState } from 'react'
 import { Checkbox } from 'primereact/checkbox'
+import { useOutletContext } from 'react-router-dom'
+import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 
 
 export const MarketingCriteria = () => {
-
-    const [ checkedMarketing, setCheckedMarketing ] = useState(false)
+    
+    const { checkedMarketing, setCheckedMarketing } = useOutletContext<ProfileContextType>()
     
     return (
         <>

@@ -18,8 +18,9 @@ import '../../../toast.css'
 export const ProfileView = () => {
     const navigate = useNavigate()
     const { toast, showToast } = useToast()
+    
 
-    const [profileInfo, setProfileInfo ]= useState<User>({
+    const [profileInfo, setProfileInfo ]= useState<User>({ //no
         id : -1,
         name : '',
         surname : '',

@@ -15,10 +15,13 @@ import { useOnInit } from '../../../../hooks/useOnInit'
 import { Dialog } from 'primereact/dialog'
 import { PickList } from 'primereact/picklist'
 import '../../../../toast.css'
+import { useOutlet, useOutletContext } from 'react-router-dom'
+import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const FaithfulCriteria = () => {
-    const [ checkedFaithful, setCheckedFaithful ] = useState(false)
-    const [ restaurants , setRestaurants ] = useState<Local[]>([])
+
+    const { checkedFaithful, setCheckedFaithful, availableRestaurants, setAvailableRestaurants, selectedRestaurants,
+         setSelectedRestaurants, displayAddDialog, setDisplayAddDialog} = useOutletContext<ProfileContextType>()
 
     const { toast, showToast } = useToast()
 
@@ -26,8 +29,15 @@ export const FaithfulCriteria = () => {
     const getRestaurants = async () => {
 
         try{
-        const newRestaurants = await localService.getRestaurants()
-        setRestaurants(newRestaurants)
+        const allRestaurants = await localService.getRestaurants()
+
+        const initialSelected = allRestaurants.slice(0, 3)
+        const initialAvailable = allRestaurants.slice(3) 
+
+        setSelectedRestaurants(initialSelected)
+        setAvailableRestaurants(initialAvailable)
+
+        
         } catch(error : unknown ) {
             const errorMessage = getMensajeError(error as ErrorResponse)
             showToast(errorMessage, 'error')
@@ -36,7 +46,26 @@ export const FaithfulCriteria = () => {
     }
 
     useOnInit(getRestaurants)
-    
+
+    const onChangePickList = (event: { source: Local[], target: Local[] }) => {
+        setAvailableRestaurants(event.source)
+        setSelectedRestaurants(event.target)
+    }
+
+
+    const pickListItemTemplate = (restaurant: Local) => {
+        return (
+            <div className="flex align-items-center p-2">
+                <img src={restaurant.imgURL} alt={restaurant.name} className="w-3rem h-3rem shadow-2 flex-shrink-0 mr-3" />
+                <div className="flex-1">
+                    <div className="font-bold">{restaurant.name}</div>
+                    <div>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</div>
+                </div>
+            </div>
+        )
+    }
+
+
     const itemTemplate = (restaurant: Local) => {
         return (
             <div className="restaurant-item" key={restaurant.id}>
