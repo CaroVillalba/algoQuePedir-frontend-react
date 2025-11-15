@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import './StoreSearch.css'
 import { localService } from '../../../services/LocalService'
 import type { Local } from '../../../types/Local'
+import { useOnInit } from '../../../hooks/useOnInit'
 
 export const PinIcon = ({ esCercano }: { esCercano: boolean }) => {
   if (esCercano) {
@@ -22,30 +23,40 @@ export const StoreSearch = () => {
 
   const [locales, setLocales] = useState<Local[]>([])
 
- /*  let [locales, setLocales] = useState([
-    { id: 1, nombre: 'El Ferroviario', direccion: 'Av. San Martín 1234', imagen: '/temp-images/asado.png', esCercano: true },
-    { id: 2, nombre: 'Restorán La Canchita', direccion: 'Belgrano 456', imagen: '/temp-images/milanesa.png', esCercano: false },
-    { id: 3, nombre: 'Maribel', direccion: 'Artigas 6950', imagen: '/temp-images/image.png', esCercano: false },
-  ]) */
-
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
-  const [searchTerm, setSearchTerm] = useState('') // 👈 nuevo estado
+  const [searchTerm, setSearchTerm] = useState('') 
 
- /*  const localesFiltrados = checked
+  
+
+  const localesFiltrados = checked
     ? locales.filter((local) => local.esCercano)
-    : locales */
+    : locales
 
+  const fetchLocales = async () => {
+    try {
+      const result = await localService.getRestaurants()
+
+      setLocales(result);
+    } catch (error) {
+      console.error('Error al obtener los locales', error)
+      window.alert('Hubo un error al obtener los locales.')
+    }
+  }
+
+  useOnInit(fetchLocales)
 
   const buscar = async (query: string) => {
-    if (!query.trim()) {
-    setLocales([])
-    return
-    }
+   /*  if (!query.trim()) {
+      setLocales([])
+      return
+    } */
 
     try {
-      const result = await localService.getRestaurantsBySerach(query)
-      setLocales(result)
+      const userId = Number(sessionStorage.getItem("userId"));
+      const result = await localService.getRestaurantsBySearch(query, userId);
+
+      setLocales(result);
     }catch (error) {
       console.error('Error al buscar los locales', error)
       window.alert('Hubo un error al buscar los locales.')
@@ -106,7 +117,7 @@ export const StoreSearch = () => {
         <h2>Locales de comida</h2>
 
         <div className="grid">
-          {locales.map((local) => (
+          {localesFiltrados.map((local) => (
             <div key={local.id} className="grid-item">
               <Card
                 className="local-card"
@@ -118,7 +129,7 @@ export const StoreSearch = () => {
                     alt={`Imagen de ${local.name}`}
                     className="local-img"
                   />
-                  {/* <PinIcon esCercano={local.esCercano} /> */}
+                  <PinIcon esCercano={local.esCercano ?? false} />
                 </div>
 
                 <div className="local-content">

@@ -1,0 +1,9 @@
+.starContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+}

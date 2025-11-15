@@ -1,6 +1,5 @@
 .restaurant-menu-container {
-    background-color: #fafafa;
-    min-height: 100vh;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     width: 100%;

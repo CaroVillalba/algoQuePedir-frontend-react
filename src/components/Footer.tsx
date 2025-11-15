@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { TabMenu } from 'primereact/tabmenu'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './Footer.css'
@@ -8,6 +8,7 @@ export default function Footer() {
   const location = useLocation()
 
   const getIndexFromPath = (path: string) => {
+    //Cambiar a map de js
     switch (path) {
       case '/':
         return 0
@@ -25,9 +26,9 @@ export default function Footer() {
   }, [location.pathname])
 
   const items = [
-    { label: 'Inicio', icon: 'pi pi-home', command: () => navigate('/') },
-    { label: 'Pedidos', icon: 'pi pi-file' },
-    { label: 'Calificar', icon: 'pi pi-star' },
+    { label: 'Inicio', icon: 'pi pi-home', command: () => navigate('/home') },
+    { label: 'Pedidos', icon: 'pi pi-file', command: () => navigate('/orders') },
+    { label: 'Calificar', icon: 'pi pi-star', command: () => navigate('/review') },
     { label: 'Perfil', icon: 'pi pi-user', command: () => navigate('/profile') }
   ]
 

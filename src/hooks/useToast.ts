@@ -5,6 +5,7 @@ export interface ToastMessage {
   type: 'success' | 'error' | 'warning' | 'info' 
   duration?: number 
 }
+
 export const useToast = () => {
   const [toast, setToast] = useState<ToastMessage | null>(null)
   

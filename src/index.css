@@ -87,18 +87,6 @@ html, :root {
   border-color: var(--color-border) !important;
 }
 
-/* Botón Secundario Outline (p-button-custom-secondary.p-button-outlined) */
-.p-button-custom-secondary.p-button-outlined {
-  color: var(--color-text-light) !important;
-  border-color: var(--color-border) !important;
-  border-radius: 0.5rem !important;
-}
-.p-button-custom-secondary.p-button-outlined:hover {
-  background: var(--color-section-bg) !important;
-  color: var(--color-dark) !important;
-  border-color: var(--color-border) !important;
-}
-
 /* Iconos */
 .p-button-custom-icon-color.p-button-text {
   color: var(--color-text-light) !important;

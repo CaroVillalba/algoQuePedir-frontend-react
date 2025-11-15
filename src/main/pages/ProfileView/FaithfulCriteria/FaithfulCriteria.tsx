@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
@@ -6,7 +5,6 @@ import { Card } from 'primereact/card'
 import './FaithfulCriteria.css'
 import { DataView } from 'primereact/dataview'
 import { localService } from '../../../../services/LocalService'
-import { useEffect } from 'react'
 import type { Local } from '../../../../types/Local'
 import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHandling'
 import { Toast } from '../../../../components/common/toast'
@@ -76,12 +74,6 @@ export const FaithfulCriteria = () => {
                         <span>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</span>
                     </div>
                 </div>
-        
-                <Button 
-                    icon="pi pi-times" 
-                    className="p-button-rounded p-button-text p-button-danger remove-button"
-                    onClick={() => console.log(`Remover ${restaurant.name}`)} 
-                />
             </div>
         )
     }
@@ -114,7 +106,7 @@ export const FaithfulCriteria = () => {
             </Card>
 
             <DataView 
-                value={restaurants} 
+                value={selectedRestaurants} 
                 listTemplate={listTemplate}
                 layout='list'
                 className='restaurants-dataview'
@@ -124,10 +116,34 @@ export const FaithfulCriteria = () => {
                 <Button 
                     icon="pi pi-plus" 
                     className="p-button-rounded p-button-danger add-button"
-                    onClick={() => console.log('Agregar restaurante')}
+                    onClick={() => setDisplayAddDialog(true)}
                 />
             </div>
         </div>
+
+        <Dialog 
+                header="Agregar Restaurantes Preferidos" 
+                visible={displayAddDialog} 
+                onHide={() => setDisplayAddDialog(false)} 
+                modal 
+                style={{ width: '80%' , height: '100%'}}
+                
+            >
+                <div className="p-fluid">
+                    <PickList
+                        dataKey="id"
+                        source={availableRestaurants} 
+                        target={selectedRestaurants} 
+                        itemTemplate={pickListItemTemplate} 
+                        sourceHeader="Disponibles" 
+                        targetHeader="Preferidos" 
+                        onChange={onChangePickList} 
+                        sourceStyle={{ height: '90px'}} 
+                        targetStyle={{ height: '90px' }} 
+                        
+                    />
+                </div>
+            </Dialog>
 
         <div id ="toast-container">
             <Toast toast = {toast} />
