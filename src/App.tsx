@@ -52,8 +52,10 @@ function AppContent() {
 
       <main className={shouldShowFooter ? "main-content" : "auth-content"}>
         <Routes>
-          <Route path="/profile" element={<ProfileView />} />
-          <Route path="profile/criteria" element= {<SearchCriteria/>} />
+          <Route path='/profile' element={<LayoutProfile/>}>
+            <Route path="/profile" element={<ProfileView />} />
+            <Route path="criteria" element= {<SearchCriteria/>} />
+          </Route>
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
           <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
           <Route path="/home" element={<StoreSearch />} />

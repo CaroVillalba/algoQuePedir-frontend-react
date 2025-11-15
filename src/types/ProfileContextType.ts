@@ -13,7 +13,7 @@ export type ProfileContextType = {
     checkedMarketing: boolean
     setCheckedMarketing: ( value: boolean ) => void
     checkedVegan : boolean
-    setCheckedVegan : ( value : boolean ) => void
+    setCheckedVegan : Dispatch<SetStateAction<boolean>>
     checkedExquisite : boolean
     setCheckedExquisite : ( value: boolean ) => void
     checkedConservative : boolean,
