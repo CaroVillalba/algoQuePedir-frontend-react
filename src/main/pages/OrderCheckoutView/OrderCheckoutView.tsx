@@ -9,20 +9,14 @@ import { useParams } from 'react-router-dom'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { LocalCheckout } from '../../../types/Local'
 
-//TODO: Mejorar estilos (asumo que con crear un mini .css es suficiente)
 export const OrderCheckoutView = () => {
     const { id } = useParams()
-    const restaurantId = Number(id)
+    const restaurantId = Number(id ?? 0)
 
-    const { 
-        getItemsByRestaurant,
-        getSubtotalByRestaurant,
-        removeItem,
-        clearCart
-    } = useCart()
-
-    const cartItems = getItemsByRestaurant(restaurantId)
-    const subtotal = getSubtotalByRestaurant(restaurantId)
+    const cartItems = useCart(state => state.items)
+    const subtotal = useCart(state => state.getSubtotal())
+    const removeItem = useCart(state => state.removeItem)
+    const clearCart = useCart(state => state.clearCart)
 
     const [paymentMethod, setPaymentMethod] = useState<string>('')
     const [loading, setLoading] = useState(false)
@@ -80,7 +74,7 @@ export const OrderCheckoutView = () => {
             console.log('Pedido confirmado ✅', response)
             window.alert('Pedido confirmado correctamente')
 
-            clearCart(restaurantId)
+            clearCart()
 
         } catch (error) {
             console.error('Error al confirmar pedido:', error)
@@ -142,7 +136,7 @@ export const OrderCheckoutView = () => {
                                 <Button 
                                     icon="pi pi-times" 
                                     className="p-button-rounded p-button-text p-button-sm text-red-500" 
-                                    onClick={() => removeItem(item.id, restaurantId)} 
+                                    onClick={() => removeItem(item.id)} 
                                     tooltip="Eliminar artículo"
                                 />
                             </div>
@@ -192,7 +186,7 @@ export const OrderCheckoutView = () => {
                 <Button 
                     label="Limpiar carrito" 
                     className="p-button-custom-secondary w-full"
-                    onClick={() => clearCart(restaurantId)}
+                    onClick={() => clearCart()}
                     disabled={cartItems.length === 0} 
                 />
             </div>

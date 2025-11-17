@@ -6,8 +6,10 @@ import { Image } from 'primereact/image'
 import { Dialog } from 'primereact/dialog'
 import { InputNumber } from 'primereact/inputnumber'
 import { TabView, TabPanel } from 'primereact/tabview'
+import { Toast } from '../../../components/common/toast'
 import { useCart } from '../../../hooks/useCart'
 import { useOnInit } from '../../../hooks/useOnInit'
+import { useToast } from '../../../hooks/useToast'
 import type { CartItem } from '../../../types/Order'
 import { localService } from '../../../services/LocalService'
 import { dishService } from '../../../services/DishService'
@@ -34,10 +36,10 @@ export const RestaurantMenuView = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
     const [quantity, setQuantity] = useState(1)
-    const { addItem, getTotalItemsByRestaurant } = useCart()
-
-    const restaurantId = Number(restaurantIdParam)
-    const totalItems = getTotalItemsByRestaurant(restaurantId)
+    const addItem = useCart(state => state.addItem)
+    const totalItems = useCart(state => state.getTotalItems())
+    const { toast, showToast } = useToast()
+    const cartRestaurantId = useCart(state => state.restaurantId)
 
     const handleOpenModal = (dish: Dish) => {
         setSelectedDish(dish)
@@ -61,7 +63,16 @@ export const RestaurantMenuView = () => {
             total: selectedDish.price * quantity,
         }
 
-        addItem(newItem, Number(restaurantIdParam))
+        const ok = addItem(newItem, Number(restaurantIdParam))
+
+        if (!ok) {
+            showToast(
+                "Ya tenés productos de otro local. Finalizá el pedido o limpiá el carrito.",
+                "warning"
+            )
+            return
+        }
+
         handleModalCancel()
     }
 
@@ -149,7 +160,7 @@ export const RestaurantMenuView = () => {
                 </TabPanel>
             </TabView>
 
-            {totalItems > 0 && (
+            {totalItems > 0 && Number(restaurantIdParam) === cartRestaurantId && (
                 <div className="fixed-bottom checkout-bar">
                     <Button
                         label={`Ver Pedido (${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}
@@ -212,6 +223,10 @@ export const RestaurantMenuView = () => {
                     <span>${(selectedDish ? selectedDish.price * quantity : 0).toFixed(2)}</span>
                 </div>
             </Dialog>
+        
+            <div id="toast-container">
+                <Toast toast = { toast } />
+            </div>
         </div>
     )
 }
