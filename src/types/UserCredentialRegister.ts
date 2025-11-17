@@ -1,6 +1,6 @@
 export interface UserCredentialRegister {
-  name: string;
-  surname: string;
+  firstname: string;
+  lastname: string;
   username: string;
   password: string;
   birthDate: Date;

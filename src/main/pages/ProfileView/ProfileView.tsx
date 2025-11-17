@@ -14,16 +14,18 @@ import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandlin
 import type { FormEvent } from 'react'
 import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
+import { authService } from '../../../services/AuthService'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
     const { toast, showToast } = useToast()
     
-
-    const [profileInfo, setProfileInfo ]= useState<User>({ //no
+    const [username, setUsername] = useState('username')
+    const [profileInfo, setProfileInfo] = useState<User>({ 
         id : -1,
-        name : '',
-        surname : '',
+        firstname : '',
+        username : '',
+        lastname : '',
         location : '',
         address: {
             street: '',
@@ -36,52 +38,34 @@ export const ProfileView = () => {
 
     })
 
-
-    async function handlePersonalInfo(e : FormEvent){
-        e.preventDefault()
+    const fetchProfileInfo = async () => {
+        const username = authService.getLoggedUsername() 
         
-        if(!validateName()){
-            showToast('El nombre es obligatorio', 'error')
+        if (!username) {
+            showToast('Debe iniciar sesión para ver su perfil.', 'error')
+            navigate('/login') 
             return
         }
 
-        if(!validateSurname()){
-            showToast('El apellido es obligatorio', 'error')
-            return
-        }
+        setUsername(username) 
 
-        if(!validateAddress()){
-            showToast('La direccion es obligatoria', 'error')
-            return
-        }
-
-        if(!validateLocation()){
-            showToast('La ubicacion es obligatoria', 'error')
-            return
-        }
-
-        if(!validateLatitude()){
-            showToast('Latitud invalida. Debe estar entre -90 y 90', 'error')
-            return
-        }
-
-        if(!validateLongitude()){
-            showToast('Longitud invalida. Debe estar entre -180 y 180', 'error')
-            return 
-        }
-        
         try {
-            await userService.createProfile( profileInfo )
-            showToast('Perfil guardado correctamente', 'success')
-
-        } catch ( error: unknown ){
-            const errorMessage = getMensajeError( error as ErrorResponse )
-            showToast( errorMessage, 'error' )
+            const userProfile = await userService.getUserProfile(username) 
+            console.log('Respuesta del backend:', userProfile)
+            setProfileInfo(userProfile)
+        } catch (error: unknown) {
+            const errorMessage = getMensajeError(error as ErrorResponse)
+            showToast(`Error al cargar perfil: ${errorMessage}`, 'error')
         }
-
     }
 
+    async function handlePersonalInfo(e: FormEvent) {
+        e.preventDefault()
+    }
 
+    useOnInit(fetchProfileInfo)
+
+/*
     function validateName() : boolean{
         return profileInfo.name != ''
     }
@@ -107,14 +91,14 @@ export const ProfileView = () => {
         const lat = profileInfo.address.coordinates.y
         return (lat >= -90 && lat <= 90) && lat != 0
     }
-
+*/
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     
     setProfileInfo(prevInfo => {
-            if (['name', 'surname', 'location'].includes(id)) {
+            if (['firstname', 'lastname', 'location'].includes(id)) {
                 return { ...prevInfo, [id]: value }
             }
 
@@ -178,11 +162,11 @@ export const ProfileView = () => {
             <form action= "#" method="post">
             <section>
             <div className="input-form">
-                <label htmlFor="name">Nombre</label>
+                <label htmlFor="firstname">Nombre</label>
                 <InputText
-                    id="name"
+                    id="firstname"
                     required={true}
-                    value={profileInfo.name}
+                    value={profileInfo.firstname ?? ''}
                     onChange={handleChange}
                     
                 />
@@ -191,9 +175,9 @@ export const ProfileView = () => {
             <div className="input-form">
                 <label htmlFor="surname">Apellido</label>
                 <InputText
-                    id="surname"
+                    id="lastname"
                     required={true}
-                    value={profileInfo.surname}
+                    value={profileInfo.lastname ?? ''}
                     onChange={handleChange}
                     
                 />

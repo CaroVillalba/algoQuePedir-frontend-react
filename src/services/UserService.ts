@@ -7,20 +7,11 @@ class UserService extends CRUDService<User>{
         super('user')
     }
 
-    async createProfile(user : User) : Promise<User>{
-        try{
-
-            const dto = {
-                ...user
-            }
-
-            const response = await this.api.post<User>(`/${this.path}`, dto)
-            return response.data
-        } catch(error) {
-            console.error('Error posting profile', error)
-            throw error
-        }
-
+    async getUserProfile(username : string) : Promise<User>{
+        const response = await this.api.get<User>(`/${this.path}`, {
+            params : { username }
+        })
+        return response.data
     }
 
 

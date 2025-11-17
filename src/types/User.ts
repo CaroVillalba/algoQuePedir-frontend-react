@@ -2,8 +2,9 @@ import type { Address } from './Address'
 
 export interface User {
     id: number
-    name: string
-    surname: string
+    firstname: string
+    username: string
+    lastname: string
     location: string
     address: Address
 }
