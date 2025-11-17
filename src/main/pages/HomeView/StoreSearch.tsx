@@ -5,10 +5,13 @@ import { Card } from 'primereact/card'
 import { IconField } from 'primereact/iconfield'
 import { InputIcon } from 'primereact/inputicon'
 import { useNavigate } from 'react-router-dom'
+import { Toast } from '../../../components/common/toast'
 import './StoreSearch.css'
 import { localService } from '../../../services/LocalService'
 import type { Local } from '../../../types/Local'
 import { useOnInit } from '../../../hooks/useOnInit'
+import { useCart } from '../../../hooks/useCart'
+import { useToast } from '../../../hooks/useToast'
 
 export const PinIcon = ({ esCercano }: { esCercano: boolean }) => {
   if (esCercano) {
@@ -27,7 +30,7 @@ export const StoreSearch = () => {
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('') 
 
-  
+  const { toast, showToast } = useToast()
 
   const localesFiltrados = checked
     ? locales.filter((local) => local.esCercano)
@@ -47,7 +50,7 @@ export const StoreSearch = () => {
   useOnInit(fetchLocales)
 
   const buscar = async (query: string) => {
-   /*  if (!query.trim()) {
+    /*  if (!query.trim()) {
       setLocales([])
       return
     } */
@@ -79,13 +82,24 @@ export const StoreSearch = () => {
     debouncedBuscar(value)
   }
   
+  const cartRestaurantId = useCart(state => state.restaurantId)
 
   return (
     <>
       <div className="search-header">
         <h3>Delivery</h3>
 
-        <i className="shopping-cart-container">
+        <i
+          className="shopping-cart-container"
+          onClick={() => {
+            if (!cartRestaurantId) {
+              showToast("No tenés ningún pedido activo.", "info")
+              return
+            }
+
+            navigate(`/order-checkout/${cartRestaurantId}`)
+          }}
+        >
           <i className="pi pi-shopping-cart shopping-cart-icon"></i>
         </i>
       </div>
@@ -139,6 +153,9 @@ export const StoreSearch = () => {
               </Card>
             </div>
           ))}
+            <div id="toast-container">
+                <Toast toast = { toast } />
+            </div>
         </div>
       </main>
     </>
