@@ -14,7 +14,6 @@ import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutV
 import { Login } from './main/pages/AuthView/Login/LoginView'
 import { Register } from './main/pages/AuthView/Register/RegisterView'
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
-import { CartProvider } from './context/CartProvider' 
 import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCriteria'
 import { ReivewsView } from './main/pages/ReviewsView/ReviewsView'
 import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRestorantView'
@@ -78,10 +77,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
-    </CartProvider>
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   )
 }
