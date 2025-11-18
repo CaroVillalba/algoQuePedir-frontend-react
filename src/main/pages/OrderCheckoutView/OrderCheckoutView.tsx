@@ -89,7 +89,7 @@ export const OrderCheckoutView = () => {
 
             clearCart()
         } catch (error) {
-            showToast('Error al confirmar el pedido. Por favor, intente nuevamente.', 'error')
+            showToast(`Error al confirmar el pedido. Por favor, intente nuevamente. ${error}`, 'error')
         } finally {
             setLoading(false)
             navigate('/home')
@@ -104,7 +104,7 @@ export const OrderCheckoutView = () => {
                 setLocalCheckout(data)
             }
         } catch (error) {
-            showToast('Error al obtener la información del local.', 'error')
+            showToast(`Error al obtener la información del local. ${error}`, 'error')
         }
     }
 
