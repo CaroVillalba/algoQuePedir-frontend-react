@@ -1,4 +1,4 @@
-import type { Coordinates } from "./Address";
+import type { Coordinates } from './Address'
 
 export interface Local {
     id: number
