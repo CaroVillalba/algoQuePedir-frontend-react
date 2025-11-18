@@ -1,11 +1,10 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import 'primereact/resources/themes/lara-light-blue/theme.css'  
 import 'primereact/resources/primereact.min.css'                
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
-import { Navigate } from "react-router-dom";
 import { Header } from './components/Header'
 import Footer from './components/Footer'
 import { ProfileView } from './main/pages/ProfileView/ProfileView'
@@ -27,12 +26,12 @@ interface RouteConfig {
 // Ver si es mejor idea separar AppContent en otro archivo
 function AppContent() {
   const location = useLocation()
-  const hideFooterRoutes = ['/login', '/register'];
-  const shouldShowFooter = !hideFooterRoutes.includes(location.pathname);
+  const hideFooterRoutes = ['/login', '/register']
+  const shouldShowFooter = !hideFooterRoutes.includes(location.pathname)
   const pathLocation = '/login' //Mas sencillo actualizar la ruta de redireccionamiento
 
   const routeConfig: Record<string, RouteConfig> = {
-    '/login': { title: "Iniciar Sesion", showBackButton: false},
+    '/login': { title: 'Iniciar Sesion', showBackButton: false},
     '/profile': { title: 'Perfil', showBackButton: false },
     'criteria': { title: 'Selecciona tu criterio', showBackButton: true},
     '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
@@ -49,7 +48,7 @@ function AppContent() {
     <div className="App">
       {shouldShowFooter && <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />}
 
-      <main className={shouldShowFooter ? "main-content" : "auth-content"}>
+      <main className={shouldShowFooter ? 'main-content' : 'auth-content'}>
         <Routes>
           <Route path='/profile' element={<LayoutProfile/>}>
             <Route path="/profile" element={<ProfileView />} />

@@ -67,8 +67,8 @@ export const RestaurantMenuView = () => {
 
         if (!ok) {
             showToast(
-                "Ya tenés productos de otro local. Finalizá el pedido o limpiá el carrito.",
-                "warning"
+                'Ya tenés productos de otro local. Finalizá el pedido o limpiá el carrito.',
+                'warning'
             )
             return
         }

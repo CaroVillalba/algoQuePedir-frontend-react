@@ -72,7 +72,7 @@ export const OrderCheckoutView = () => {
         try {
             setLoading(true)
 
-            const clientId = Number(sessionStorage.getItem("userId"))
+            const clientId = Number(sessionStorage.getItem('userId'))
             if (!clientId) {
                 showToast('No se encontró el ID del cliente. Por favor, inicie sesión nuevamente.', 'error')
                 return
@@ -99,7 +99,7 @@ export const OrderCheckoutView = () => {
     const getLocal = async () => {
         try {
             if (restaurantId) {
-                const clientId = Number(sessionStorage.getItem("userId"))
+                const clientId = Number(sessionStorage.getItem('userId'))
                 const data = await localService.getCheckoutInfo(restaurantId, clientId)
                 setLocalCheckout(data)
             }
