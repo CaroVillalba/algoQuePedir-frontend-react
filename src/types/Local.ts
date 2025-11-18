@@ -28,6 +28,7 @@ export interface LocalCheckout {
     freeDelivery: boolean;
     deliveryFee: number;
     paymentMethods: PaymentMethodTax[];
+    distanceKm: Number;
 }
 
 export interface PaymentMethodTax {
