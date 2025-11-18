@@ -28,6 +28,5 @@ export type ProfileContextType = {
     username : string
     setUsername: Dispatch<SetStateAction<string>>
     getRestaurants: () => Promise<Local[]>
-    handleSaveAll: () => void
 
 }

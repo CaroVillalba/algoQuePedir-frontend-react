@@ -22,7 +22,7 @@ export const ProfileView = () => {
     const { toast, showToast } = useToast()
     
 
-    const { profileInfo, setProfileInfo, handleSaveAll } = useOutletContext<ProfileContextType>()
+    const { profileInfo, setProfileInfo } = useOutletContext<ProfileContextType>()
 
     async function handlePersonalInfo(e: FormEvent) {
         e.preventDefault()
@@ -54,7 +54,6 @@ export const ProfileView = () => {
         
         try {
             await userService.updateUserProfile(profileInfo)
-            handleSaveAll()
             showToast('Perfil actualizado y preferencias guardadas correctamente', 'success')
         } catch(error : unknown) {
             const errorMessage = getMensajeError(error as ErrorResponse)

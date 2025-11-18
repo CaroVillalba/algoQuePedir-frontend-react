@@ -63,33 +63,6 @@ export const LayoutProfile = () => {
                 email: '',
         
         })
-        const [ savedCheckedFaithful, setSavedCheckedFaithful ] = useState(false)
-        const [ savedAvailableRestaurants, setSavedAvailableRestaurants ] = useState<Local[]>([])
-        const [ savedSelectedRestaurants, setSavedSelectedRestaurants ] = useState<Local[]>([])
-        const [ saveddisplayAddDialog, setSavedDisplayAddDialog ] = useState(false)
-        const [ savedcheckedMarketing, setSavedCheckedMarketing ] = useState(false)
-        const [ savedcheckedVegan, setSavedCheckedVegan] = useState(false)
-        const [ savedcheckedExquisite, setSavedCheckedExquisite] = useState(false)
-        const [ savedcheckedConservative, setSavedCheckedConservative] = useState(false)
-        const [ savedcheckedImpatient, setSavedCheckedImpatient] = useState(false)
-        const [ savedDistance, setSavedDistance ] = useState<number>(1)
-
-
-        const handleSaveAll = () => {
-        
-        setSavedProfileInfo(profileInfo)
-        setSavedAvailableRestaurants(availableRestaurants)
-        setSavedCheckedFaithful(checkedFaithful)
-        setSavedSelectedRestaurants(selectedRestaurants)
-        setSavedDistance(distance)
-        setSavedDisplayAddDialog(displayAddDialog)
-        setSavedCheckedMarketing(checkedMarketing)
-        setSavedCheckedVegan(checkedVegan)
-        setSavedCheckedExquisite(checkedExquisite)
-        setSavedCheckedConservative(checkedConservative)
-        setSavedCheckedImpatient(checkedImpatient)
-        
-    }
 
 
         const getRestaurants = async () => {
@@ -137,7 +110,6 @@ export const LayoutProfile = () => {
 
         return(<>
         <Outlet context= {{
-            handleSaveAll,
             checkedFaithful, setCheckedFaithful, 
             availableRestaurants, setAvailableRestaurants, 
             selectedRestaurants, setSelectedRestaurants, 
@@ -150,16 +122,6 @@ export const LayoutProfile = () => {
             distance, setDistance,
             profileInfo, setProfileInfo,
             username, setUsername,
-            savedCheckedFaithful,
-            savedAvailableRestaurants,
-            savedDistance,
-            savedSelectedRestaurants,
-            saveddisplayAddDialog,
-            savedcheckedMarketing,
-            savedcheckedVegan,
-            savedcheckedImpatient,
-            savedcheckedExquisite,
-            savedcheckedConservative,
             getRestaurants,
            }}/>
         
