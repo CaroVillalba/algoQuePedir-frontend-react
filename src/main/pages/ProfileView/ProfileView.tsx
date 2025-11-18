@@ -245,13 +245,13 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=>console.log('click')} className="preference-button">
-                <h4>Ingredientes preferidos</h4>
+            <div onClick={() => navigate('./IngredientsAvoid')} className="preference-button">
+                <h4>Ingredientes a evitar</h4>
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=>console.log('click')} className="preference-button">
-                <h4>Ingredientes a evitar</h4>
+            <div onClick={()=> navigate('./IngredientsPreffered')} className="preference-button">
+                <h4>Ingredientes preferidos</h4>
                 <ChevronRightIcon/>
             </div>
             </section>

@@ -27,6 +27,11 @@ export type ProfileContextType = {
     setProfileInfo : Dispatch<SetStateAction<User>>
     username : string
     setUsername: Dispatch<SetStateAction<string>>
+    avoidIngredients: string[]
+    setAvoidIngredients: Dispatch<SetStateAction<string[]>>
+    preferredIngredients: string[]
+    setPreferredIngredients : Dispatch<SetStateAction<string[]>>
+
     getRestaurants: () => Promise<Local[]>
 
 }

@@ -5,7 +5,7 @@ import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import { Header } from './components/Header'
 import Footer from './components/Footer'
 import { ProfileView } from './main/pages/ProfileView/ProfileView'
@@ -19,6 +19,8 @@ import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCr
 import { ReivewsView } from './main/pages/ReviewsView/ReviewsView'
 import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRestorantView'
 import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
+import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
+import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
 
 interface RouteConfig {
   title: string
@@ -33,9 +35,11 @@ function AppContent() {
   const pathLocation = '/login' //Mas sencillo actualizar la ruta de redireccionamiento
 
   const routeConfig: Record<string, RouteConfig> = {
-    '/login': { title: "Iniciar Sesion", showBackButton: false},
+    '/login': { title: 'Iniciar Sesion', showBackButton: false},
     '/profile': { title: 'Perfil', showBackButton: false },
     'criteria': { title: 'Selecciona tu criterio', showBackButton: true},
+    'ingredientsAvoid' : { title: ' Ingredientes a evitar ', showBackButton: true },
+    'ingredientsPreffered' : { title: ' Ingredientes preferidos ', showBackButton: true },
     '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
     '/order-checkout': { title: 'Tu pedido', showBackButton: true }
   }
@@ -50,11 +54,13 @@ function AppContent() {
     <div className="App">
       {shouldShowFooter && <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />}
 
-      <main className={shouldShowFooter ? "main-content" : "auth-content"}>
+      <main className={shouldShowFooter ? 'main-content' : 'auth-content'}>
         <Routes>
           <Route path='/profile' element={<LayoutProfile/>}>
             <Route path="/profile" element={<ProfileView />} />
             <Route path="criteria" element= {<SearchCriteria/>} />
+            <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
+            <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
           </Route>
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
           <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />

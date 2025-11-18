@@ -64,6 +64,9 @@ export const LayoutProfile = () => {
         
         })
 
+        const [ avoidIngredients, setAvoidIngredients ] = useState<string[]>([])
+        const [ preferredIngredients, setPreferredIngredients ] = useState<string[]>([])
+
 
         const getRestaurants = async () => {
         
@@ -110,6 +113,8 @@ export const LayoutProfile = () => {
 
         return(<>
         <Outlet context= {{
+            avoidIngredients, setAvoidIngredients,
+            preferredIngredients, setPreferredIngredients,
             checkedFaithful, setCheckedFaithful, 
             availableRestaurants, setAvailableRestaurants, 
             selectedRestaurants, setSelectedRestaurants, 
