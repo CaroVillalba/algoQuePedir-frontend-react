@@ -7,4 +7,5 @@ export interface User {
     lastname: string
     location: string
     address: Address
+    email: string
 }

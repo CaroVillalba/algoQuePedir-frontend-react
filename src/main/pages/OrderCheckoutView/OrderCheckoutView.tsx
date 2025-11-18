@@ -1,28 +1,28 @@
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import { Image } from 'primereact/image'
+import { Toast } from '../../../components/common/toast'
 import { useState } from 'react'
 import { useCart } from '../../../hooks/useCart'
+import { useToast } from '../../../hooks/useToast'
 import { orderService } from '../../../services/OrderService'
 import { localService } from '../../../services/LocalService'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { LocalCheckout } from '../../../types/Local'
 
-//TODO: Mejorar estilos (asumo que con crear un mini .css es suficiente)
 export const OrderCheckoutView = () => {
     const { id } = useParams()
-    const restaurantId = Number(id)
+    const restaurantId = Number(id ?? 0)
 
-    const { 
-        getItemsByRestaurant,
-        getSubtotalByRestaurant,
-        removeItem,
-        clearCart
-    } = useCart()
+    const cartItems = useCart(state => state.items)
+    const subtotal = useCart(state => state.getSubtotal())
+    const removeItem = useCart(state => state.removeItem)
+    const clearCart = useCart(state => state.clearCart)
 
-    const cartItems = getItemsByRestaurant(restaurantId)
-    const subtotal = getSubtotalByRestaurant(restaurantId)
+    const navigate = useNavigate()
+
+    const {toast, showToast} = useToast()
 
     const [paymentMethod, setPaymentMethod] = useState<string>('')
     const [loading, setLoading] = useState(false)
@@ -32,7 +32,8 @@ export const OrderCheckoutView = () => {
         imgURL: '',
         freeDelivery: false,
         deliveryFee: 0,
-        paymentMethods: []
+        paymentMethods: [],
+        distanceKm: 0
     })
 
     const paymentOptions = (localCheckout.paymentMethods ?? []).map(pm => {
@@ -71,34 +72,39 @@ export const OrderCheckoutView = () => {
         try {
             setLoading(true)
 
-            const response = await orderService.confirmOrder(
+            const clientId = Number(sessionStorage.getItem('userId'))
+            if (!clientId) {
+                showToast('No se encontró el ID del cliente. Por favor, inicie sesión nuevamente.', 'error')
+                return
+            }
+
+            await orderService.confirmOrder(
                 cartItems,
                 restaurantId,
-                paymentMethod
+                paymentMethod,
+                clientId
             )
 
-            console.log('Pedido confirmado ✅', response)
-            window.alert('Pedido confirmado correctamente')
+            showToast('Pedido confirmado con éxito ✅', 'success')
 
-            clearCart(restaurantId)
-
+            clearCart()
         } catch (error) {
-            console.error('Error al confirmar pedido:', error)
-            window.alert('Hubo un error al confirmar el pedido ❌')
+            showToast(`Error al confirmar el pedido. Por favor, intente nuevamente. ${error}`, 'error')
         } finally {
             setLoading(false)
+            navigate('/home')
         }
     }
 
     const getLocal = async () => {
         try {
             if (restaurantId) {
-                const data = await localService.getCheckoutInfo(restaurantId)
+                const clientId = Number(sessionStorage.getItem('userId'))
+                const data = await localService.getCheckoutInfo(restaurantId, clientId)
                 setLocalCheckout(data)
-                console.log(data)
             }
         } catch (error) {
-            console.error('Error fetching local:', error)
+            showToast(`Error al obtener la información del local. ${error}`, 'error')
         }
     }
 
@@ -122,7 +128,7 @@ export const OrderCheckoutView = () => {
                             <div>
                                 <div className="font-bold">{localCheckout.name}</div>
                                 <small className="text-color-secondary text-sm">
-                                    4.8 · 5 km · {localCheckout.freeDelivery ? 'Envío gratis' : 'Envío con costo'}
+                                    {localCheckout.distanceKm?.toFixed(1) ?? '?'} km · {localCheckout.freeDelivery ? 'Envío gratis' : 'Envío con costo'}
                                 </small>
                             </div>
                         </div>
@@ -142,7 +148,7 @@ export const OrderCheckoutView = () => {
                                 <Button 
                                     icon="pi pi-times" 
                                     className="p-button-rounded p-button-text p-button-sm text-red-500" 
-                                    onClick={() => removeItem(item.id, restaurantId)} 
+                                    onClick={() => removeItem(item.id)} 
                                     tooltip="Eliminar artículo"
                                 />
                             </div>
@@ -192,9 +198,12 @@ export const OrderCheckoutView = () => {
                 <Button 
                     label="Limpiar carrito" 
                     className="p-button-custom-secondary w-full"
-                    onClick={() => clearCart(restaurantId)}
+                    onClick={() => clearCart()}
                     disabled={cartItems.length === 0} 
                 />
+            </div>
+            <div id="toast-container">
+                <Toast toast = { toast } />
             </div>
         </div>
     )

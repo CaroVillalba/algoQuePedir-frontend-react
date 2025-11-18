@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { Local } from './Local'
+import type { User } from './User'
 
 export type ProfileContextType = {
     checkedFaithful: boolean
@@ -22,5 +23,15 @@ export type ProfileContextType = {
     setCheckedImpatient : ( value: boolean ) => void
     distance : number
     setDistance : ( value: number ) => void
+    profileInfo : User
+    setProfileInfo : Dispatch<SetStateAction<User>>
+    username : string
+    setUsername: Dispatch<SetStateAction<string>>
+    avoidIngredients: string[]
+    setAvoidIngredients: Dispatch<SetStateAction<string[]>>
+    preferredIngredients: string[]
+    setPreferredIngredients : Dispatch<SetStateAction<string[]>>
+
     getRestaurants: () => Promise<Local[]>
+
 }

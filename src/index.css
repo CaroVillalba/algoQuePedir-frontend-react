@@ -71,6 +71,13 @@ html, :root {
   border-color: var(--color-secondary) !important;
 }
 
+.p-button-custom-primary.p-disabled {
+  background: var(--color-logo) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--primary-color-text) !important;
+  cursor: not-allowed !important;
+}
+
 /* Botón Secundario (p-button-custom-secondary) */
 .p-button-custom-secondary {
   background: var(--color-secondary) !important; /* blanco */
@@ -82,7 +89,7 @@ html, :root {
   transition: background-color 0.25s, border-color 0.25s !important;
 }
 .p-button-custom-secondary:hover {
-  background: var(--color-section-bg) !important;
+  background: var(--color-label) !important;
   color: var(--color-dark) !important;
   border-color: var(--color-border) !important;
 }

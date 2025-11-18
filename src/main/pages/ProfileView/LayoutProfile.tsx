@@ -7,6 +7,10 @@ import '../../../toast.css'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import { localService } from '../../../services/LocalService'
 import { useOnInit } from '../../../hooks/useOnInit'
+import type { User } from '../../../types/User'
+import { authService } from '../../../services/AuthService'
+import { userService } from '../../../services/UserService'
+import type { FormEvent } from 'react'
 
 
 export const LayoutProfile = () => {
@@ -21,6 +25,47 @@ export const LayoutProfile = () => {
         const [checkedImpatient, setCheckedImpatient] = useState(false)
         const [ distance, setDistance ] = useState<number>(1)
         const { toast, showToast } = useToast()
+        const [profileInfo, setProfileInfo] = useState<User>({ 
+                id : -1,
+                firstname : '',
+                username : '',
+                lastname : '',
+                location : '',
+                address: {
+                    street: '',
+                    number: 0,
+                    coordinates: {
+                        x: 0,
+                        y:0,
+                    }
+                },
+                email: '',
+        
+            })
+        const [ username, setUsername ] = useState('username')
+
+
+        const [savedProfileInfo, setSavedProfileInfo] = useState<User>({
+              id : -1,
+                firstname : '',
+                username : '',
+                lastname : '',
+                location : '',
+                address: {
+                    street: '',
+                    number: 0,
+                    coordinates: {
+                        x: 0,
+                        y:0,
+                    }
+                },
+
+                email: '',
+        
+        })
+
+        const [ avoidIngredients, setAvoidIngredients ] = useState<string[]>([])
+        const [ preferredIngredients, setPreferredIngredients ] = useState<string[]>([])
 
 
         const getRestaurants = async () => {
@@ -41,14 +86,48 @@ export const LayoutProfile = () => {
                 }
         
         }
+
+        async function fetchProfileInfo()  {
+                const username = authService.getLoggedUsername() 
+                
+                if (username == null) {
+                    showToast('Debe iniciar sesión para ver su perfil.', 'error')
+                    return
+                }
         
+                setUsername(username) 
+        
+                try {
+                    const userProfile = await userService.getUserProfile(username) 
+                    setProfileInfo(userProfile)
+                } catch (error: unknown) {
+                    const errorMessage = getMensajeError(error as ErrorResponse)
+                    showToast(`Error al cargar perfil: ${errorMessage}`, 'error')
+                }
+        }
+    
+
         useOnInit(getRestaurants)
+        useOnInit(fetchProfileInfo)
 
 
         return(<>
-        <Outlet context= {{  checkedFaithful, setCheckedFaithful, availableRestaurants, setAvailableRestaurants, selectedRestaurants, setSelectedRestaurants, displayAddDialog,
-            setDisplayAddDialog, checkedMarketing, setCheckedMarketing, checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative,
-            checkedImpatient, setCheckedImpatient, distance, setDistance, getRestaurants
+        <Outlet context= {{
+            avoidIngredients, setAvoidIngredients,
+            preferredIngredients, setPreferredIngredients,
+            checkedFaithful, setCheckedFaithful, 
+            availableRestaurants, setAvailableRestaurants, 
+            selectedRestaurants, setSelectedRestaurants, 
+            displayAddDialog, setDisplayAddDialog, 
+            checkedMarketing, setCheckedMarketing, 
+            checkedVegan, setCheckedVegan, 
+            checkedExquisite, setCheckedExquisite, 
+            checkedConservative, setCheckedConservative,
+            checkedImpatient, setCheckedImpatient, 
+            distance, setDistance,
+            profileInfo, setProfileInfo,
+            username, setUsername,
+            getRestaurants,
            }}/>
         
         
