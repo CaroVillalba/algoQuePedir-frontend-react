@@ -15,6 +15,7 @@ export default [
         sourceType: 'module',
         ecmaFeatures: { jsx: true },
       },
+
       globals: {
         window: 'readonly',
         document: 'readonly',
@@ -28,6 +29,7 @@ export default [
         HTMLElement: 'readonly',
         HTMLDivElement: 'readonly',
         HTMLSelectElement: 'readonly',
+        localStorage: 'readonly',
       },
     },
     plugins: {

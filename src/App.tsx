@@ -17,6 +17,8 @@ import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCr
 import { ReivewsView } from './main/pages/ReviewsView/ReviewsView'
 import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRestorantView'
 import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
+import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
+import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
 
 interface RouteConfig {
   title: string
@@ -34,6 +36,8 @@ function AppContent() {
     '/login': { title: 'Iniciar Sesion', showBackButton: false},
     '/profile': { title: 'Perfil', showBackButton: false },
     'criteria': { title: 'Selecciona tu criterio', showBackButton: true},
+    'ingredientsAvoid' : { title: ' Ingredientes a evitar ', showBackButton: true },
+    'ingredientsPreffered' : { title: ' Ingredientes preferidos ', showBackButton: true },
     '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
     '/order-checkout': { title: 'Tu pedido', showBackButton: true }
   }
@@ -53,6 +57,8 @@ function AppContent() {
           <Route path='/profile' element={<LayoutProfile/>}>
             <Route path="/profile" element={<ProfileView />} />
             <Route path="criteria" element= {<SearchCriteria/>} />
+            <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
+            <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
           </Route>
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
           <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />

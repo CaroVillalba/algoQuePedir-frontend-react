@@ -4,7 +4,7 @@ import { Button } from 'primereact/button'
 import { Card } from  'primereact/card'
 import { ChevronRightIcon } from 'primereact/icons/chevronright'
 import './ProfileView.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import type { User } from '../../../types/User'
 import { userService } from '../../../services/UserService'
 import { Toast } from '../../../components/common/toast'
@@ -14,80 +14,61 @@ import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandlin
 import type { FormEvent } from 'react'
 import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
+import { authService } from '../../../services/AuthService'
+import type { ProfileContextType } from '../../../types/ProfileContextType'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
     const { toast, showToast } = useToast()
     
 
-    const [profileInfo, setProfileInfo ]= useState<User>({ //no
-        id : -1,
-        name : '',
-        surname : '',
-        location : '',
-        address: {
-            street: '',
-            number: 0,
-            coordinates: {
-                x: 0,
-                y:0,
-            }
-        }
+    const { profileInfo, setProfileInfo } = useOutletContext<ProfileContextType>()
 
-    })
-
-
-    async function handlePersonalInfo(e : FormEvent){
+    async function handlePersonalInfo(e: FormEvent) {
         e.preventDefault()
-        
-        if(!validateName()){
-            showToast('El nombre es obligatorio', 'error')
+
+        if(!validateFirstname()){
+            showToast('El nombre no puede estar vacío', 'error')
             return
         }
-
-        if(!validateSurname()){
-            showToast('El apellido es obligatorio', 'error')
+        if(!validateLastname()){
+            showToast('El apellido no puede estar vacío', 'error')
             return
         }
-
         if(!validateAddress()){
-            showToast('La direccion es obligatoria', 'error')
+            showToast('La calle no puede estar vacía', 'error')
             return
         }
-
         if(!validateLocation()){
-            showToast('La ubicacion es obligatoria', 'error')
+            showToast('La localidad no puede estar vacía', 'error')
             return
         }
-
         if(!validateLatitude()){
-            showToast('Latitud invalida. Debe estar entre -90 y 90', 'error')
+            showToast('La latitud es inválida, debe estar entre -90 y 90', 'error')
             return
         }
-
         if(!validateLongitude()){
-            showToast('Longitud invalida. Debe estar entre -180 y 180', 'error')
-            return 
+            showToast('La longitud es inválida, debe estar entre -180 y 180', 'error')
+            return
         }
         
         try {
-            await userService.createProfile( profileInfo )
-            showToast('Perfil guardado correctamente', 'success')
+            await userService.updateUserProfile(profileInfo)
+            showToast('Perfil actualizado y preferencias guardadas correctamente', 'success')
+        } catch(error : unknown) {
+            const errorMessage = getMensajeError(error as ErrorResponse)
+            showToast(errorMessage, 'error')
 
-        } catch ( error: unknown ){
-            const errorMessage = getMensajeError( error as ErrorResponse )
-            showToast( errorMessage, 'error' )
         }
 
     }
 
-
-    function validateName() : boolean{
-        return profileInfo.name != ''
+    function validateFirstname() : boolean{
+        return profileInfo.firstname != ''
     }
 
-    function validateSurname() : boolean{
-        return profileInfo.surname != ''
+    function validateLastname() : boolean{
+        return profileInfo.lastname != ''
     }
 
     function validateAddress() : boolean{
@@ -114,7 +95,7 @@ export const ProfileView = () => {
     const { id, value } = e.target
     
     setProfileInfo(prevInfo => {
-            if (['name', 'surname', 'location'].includes(id)) {
+            if (['firstname', 'lastname', 'location'].includes(id)) {
                 return { ...prevInfo, [id]: value }
             }
 
@@ -178,11 +159,11 @@ export const ProfileView = () => {
             <form action= "#" method="post">
             <section>
             <div className="input-form">
-                <label htmlFor="name">Nombre</label>
+                <label htmlFor="firstname">Nombre</label>
                 <InputText
-                    id="name"
+                    id="firstname"
                     required={true}
-                    value={profileInfo.name}
+                    value={profileInfo.firstname ?? ''}
                     onChange={handleChange}
                     
                 />
@@ -191,9 +172,9 @@ export const ProfileView = () => {
             <div className="input-form">
                 <label htmlFor="surname">Apellido</label>
                 <InputText
-                    id="surname"
+                    id="lastname"
                     required={true}
-                    value={profileInfo.surname}
+                    value={profileInfo.lastname ?? ''}
                     onChange={handleChange}
                     
                 />
@@ -264,13 +245,13 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=>console.log('click')} className="preference-button">
-                <h4>Ingredientes preferidos</h4>
+            <div onClick={() => navigate('./IngredientsAvoid')} className="preference-button">
+                <h4>Ingredientes a evitar</h4>
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=>console.log('click')} className="preference-button">
-                <h4>Ingredientes a evitar</h4>
+            <div onClick={()=> navigate('./IngredientsPreffered')} className="preference-button">
+                <h4>Ingredientes preferidos</h4>
                 <ChevronRightIcon/>
             </div>
             </section>
