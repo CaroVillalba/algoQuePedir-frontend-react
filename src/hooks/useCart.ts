@@ -1,31 +1,76 @@
-import { createContext, useContext } from 'react'
+import { create } from 'zustand'
 import type { CartItem } from '../types/Order'
 
-export interface CartContextType {
-    addItem: (item: CartItem, restaurantId: number) => void
-    removeItem: (itemId: number, restaurantId: number) => void
-    clearCart: (restaurantId: number) => void
+interface CartState {
+    restaurantId: number | null;
+    items: CartItem[];
 
-    getItemsByRestaurant: (restaurantId: number) => CartItem[]
-    getTotalItemsByRestaurant: (restaurantId: number) => number
-    getSubtotalByRestaurant: (restaurantId: number) => number
+    addItem: (item: CartItem, restaurantId: number) => boolean;
+    removeItem: (itemId: number) => void;
+    clearCart: () => void;
+
+    getSubtotal: () => number;
+    getTotalItems: () => number;
 }
 
-export const CartContext = createContext<CartContextType>({} as CartContextType)
+export const useCart = create<CartState>((set, get) => ({
+    restaurantId: null,
+    items: [],
+    
+    addItem: (item: CartItem, restaurantId: number) => {
+        const state = get();
 
-export const useCart = () => {
-    const context = useContext(CartContext)
-    
-    if (!context) {
-        throw new Error('useCart debe ser usado dentro de un CartProvider')
+        if (state.restaurantId === null) {
+            set({
+                restaurantId,
+                items: [item]
+            });
+            return true;
+        }
+
+        if (state.restaurantId === restaurantId) {
+            const existing = state.items.find(i => i.id === item.id);
+
+            if (existing) {
+                set({
+                    items: state.items.map(i =>
+                        i.id === item.id
+                            ? {
+                                ...i,
+                                qty: i.qty + item.qty,
+                                total: (i.qty + item.qty) * i.unitPrice
+                            }
+                            : i
+                    )
+                });
+            } else {
+                set({ items: [...state.items, item] });
+            }
+
+            return true;
+        }
+
+        return false;
+    },
+
+    removeItem: (itemId) => {
+        set(state => ({
+            items: state.items.filter(i => i.id !== itemId)
+        }));
+    },
+
+    clearCart: () => {
+        set({
+            restaurantId: null,
+            items: []
+        });
+    },
+
+    getSubtotal: () => {
+        return get().items.reduce((acc, i) => acc + i.total, 0);
+    },
+
+    getTotalItems: () => {
+        return get().items.reduce((acc, i) => acc + i.qty, 0);
     }
-    
-    return {
-        addItem: context.addItem,
-        removeItem: context.removeItem,
-        clearCart: context.clearCart,
-        getItemsByRestaurant: context.getItemsByRestaurant,
-        getTotalItemsByRestaurant: context.getTotalItemsByRestaurant,
-        getSubtotalByRestaurant: context.getSubtotalByRestaurant
-    }
-}
+}));

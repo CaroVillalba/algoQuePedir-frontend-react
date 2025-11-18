@@ -1,6 +1,4 @@
-import type { Coordinates } from "./Address";
-
-
+import type { Coordinates } from './Address'
 
 export interface Local {
     id: number
@@ -30,6 +28,7 @@ export interface LocalCheckout {
     freeDelivery: boolean;
     deliveryFee: number;
     paymentMethods: PaymentMethodTax[];
+    distanceKm: Number;
 }
 
 export interface PaymentMethodTax {

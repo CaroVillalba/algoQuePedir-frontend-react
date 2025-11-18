@@ -4,7 +4,7 @@ import { Button } from 'primereact/button'
 import { Card } from  'primereact/card'
 import { ChevronRightIcon } from 'primereact/icons/chevronright'
 import './ProfileView.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import type { User } from '../../../types/User'
 import { userService } from '../../../services/UserService'
 import { Toast } from '../../../components/common/toast'
@@ -15,63 +15,60 @@ import type { FormEvent } from 'react'
 import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
 import { authService } from '../../../services/AuthService'
+import type { ProfileContextType } from '../../../types/ProfileContextType'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
     const { toast, showToast } = useToast()
     
-    const [username, setUsername] = useState('username')
-    const [profileInfo, setProfileInfo] = useState<User>({ 
-        id : -1,
-        firstname : '',
-        username : '',
-        lastname : '',
-        location : '',
-        address: {
-            street: '',
-            number: 0,
-            coordinates: {
-                x: 0,
-                y:0,
-            }
-        }
 
-    })
-
-    const fetchProfileInfo = async () => {
-        const username = authService.getLoggedUsername() 
-        
-        if (!username) {
-            showToast('Debe iniciar sesión para ver su perfil.', 'error')
-            navigate('/login') 
-            return
-        }
-
-        setUsername(username) 
-
-        try {
-            const userProfile = await userService.getUserProfile(username) 
-            console.log('Respuesta del backend:', userProfile)
-            setProfileInfo(userProfile)
-        } catch (error: unknown) {
-            const errorMessage = getMensajeError(error as ErrorResponse)
-            showToast(`Error al cargar perfil: ${errorMessage}`, 'error')
-        }
-    }
+    const { profileInfo, setProfileInfo } = useOutletContext<ProfileContextType>()
 
     async function handlePersonalInfo(e: FormEvent) {
         e.preventDefault()
+
+        if(!validateFirstname()){
+            showToast('El nombre no puede estar vacío', 'error')
+            return
+        }
+        if(!validateLastname()){
+            showToast('El apellido no puede estar vacío', 'error')
+            return
+        }
+        if(!validateAddress()){
+            showToast('La calle no puede estar vacía', 'error')
+            return
+        }
+        if(!validateLocation()){
+            showToast('La localidad no puede estar vacía', 'error')
+            return
+        }
+        if(!validateLatitude()){
+            showToast('La latitud es inválida, debe estar entre -90 y 90', 'error')
+            return
+        }
+        if(!validateLongitude()){
+            showToast('La longitud es inválida, debe estar entre -180 y 180', 'error')
+            return
+        }
+        
+        try {
+            await userService.updateUserProfile(profileInfo)
+            showToast('Perfil actualizado y preferencias guardadas correctamente', 'success')
+        } catch(error : unknown) {
+            const errorMessage = getMensajeError(error as ErrorResponse)
+            showToast(errorMessage, 'error')
+
+        }
+
     }
 
-    useOnInit(fetchProfileInfo)
-
-/*
-    function validateName() : boolean{
-        return profileInfo.name != ''
+    function validateFirstname() : boolean{
+        return profileInfo.firstname != ''
     }
 
-    function validateSurname() : boolean{
-        return profileInfo.surname != ''
+    function validateLastname() : boolean{
+        return profileInfo.lastname != ''
     }
 
     function validateAddress() : boolean{
@@ -91,7 +88,7 @@ export const ProfileView = () => {
         const lat = profileInfo.address.coordinates.y
         return (lat >= -90 && lat <= 90) && lat != 0
     }
-*/
+
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -248,13 +245,13 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=>console.log('click')} className="preference-button">
-                <h4>Ingredientes preferidos</h4>
+            <div onClick={() => navigate('./IngredientsAvoid')} className="preference-button">
+                <h4>Ingredientes a evitar</h4>
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=>console.log('click')} className="preference-button">
-                <h4>Ingredientes a evitar</h4>
+            <div onClick={()=> navigate('./IngredientsPreffered')} className="preference-button">
+                <h4>Ingredientes preferidos</h4>
                 <ChevronRightIcon/>
             </div>
             </section>

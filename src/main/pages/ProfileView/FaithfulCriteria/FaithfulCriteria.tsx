@@ -19,9 +19,11 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 export const FaithfulCriteria = () => {
 
     const { checkedFaithful, setCheckedFaithful, availableRestaurants, setAvailableRestaurants, selectedRestaurants,
-         setSelectedRestaurants, displayAddDialog, setDisplayAddDialog} = useOutletContext<ProfileContextType>()
+         setSelectedRestaurants, displayAddDialog, setDisplayAddDialog } = useOutletContext<ProfileContextType>()
 
     const { toast, showToast } = useToast()
+
+
 
 
     const onChangePickList = (event: { source: Local[], target: Local[] }) => {
