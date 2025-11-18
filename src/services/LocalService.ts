@@ -21,8 +21,11 @@ class LocalService extends CRUDService<Local>{
         return response.data
     }
 
-    async getCheckoutInfo(id: number): Promise<LocalCheckout> {
-        const response = await this.api.get<LocalCheckout>(`/${this.path}/order-checkout/${id}`)
+    async getCheckoutInfo(id: number, userId?: number): Promise<LocalCheckout> {
+        const response = await this.api.get<LocalCheckout>(
+            `/${this.path}/order-checkout/${id}`,
+            { params: userId ? { userId } : {} }
+        )
         return response.data
     }
 }
