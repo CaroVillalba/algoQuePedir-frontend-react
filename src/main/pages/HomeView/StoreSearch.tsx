@@ -30,9 +30,10 @@ export const StoreSearch = () => {
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('') 
 
-  const { toast, showToast } = useToast()
 
-  const localesFiltrados = checked
+  const { toast, showToast } = useToast()
+9
+  const localesFiltrados = () => checked
     ? locales.filter((local) => local.esCercano)
     : locales
 
@@ -116,7 +117,7 @@ export const StoreSearch = () => {
         <h2>Locales de comida</h2>
 
         <div className="grid">
-          {localesFiltrados.map((local) => (
+          {localesFiltrados().map((local) => (
             <div key={local.id} className="grid-item">
               <Card
                 className="local-card"

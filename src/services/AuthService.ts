@@ -24,7 +24,7 @@ export class AuthService {
 
   }
 
-  async register(credentials: UserCredentialRegister) {
+  async register(credentials: UserCredentialRegister):Promise<RegisterResponse {
 
     const payload = {
       firstname: credentials.firstname,

@@ -19,6 +19,7 @@ import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRest
 import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
 import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
 import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
+import { LayoutMain } from './main/LayoutMain'
 
 interface RouteConfig {
   title: string
@@ -28,7 +29,7 @@ interface RouteConfig {
 // Ver si es mejor idea separar AppContent en otro archivo
 function AppContent() {
   const location = useLocation()
-  const hideFooterRoutes = ['/login', '/register']
+  const hideFooterRoutes = ['/', '/register']
   const shouldShowFooter = !hideFooterRoutes.includes(location.pathname)
   const pathLocation = '/login' //Mas sencillo actualizar la ruta de redireccionamiento
 
@@ -43,39 +44,42 @@ function AppContent() {
   }
 
   const basePath = Object.keys(routeConfig).find(path =>
-    location.pathname.startsWith(path)
-  )
+    {
+
+      console.log(location.pathname.includes(path),path,location.pathname)
+    return location.pathname.includes(path)
+  })
 
   const matchedConfig = basePath ? routeConfig[basePath] : { title: '', showBackButton: false }
 
   return (
     <div className="App">
-      {shouldShowFooter && <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />}
 
-      <main className={shouldShowFooter ? 'main-content' : 'auth-content'}>
         <Routes>
-          <Route path='/profile' element={<LayoutProfile/>}>
-            <Route path="/profile" element={<ProfileView />} />
-            <Route path="criteria" element= {<SearchCriteria/>} />
-            <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
-            <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
+          <Route path='/' element={<LayoutMain/>}>
+              <Route path='/profile' element={<LayoutProfile/>}>
+                <Route path="/profile" element={<ProfileView />} />
+                <Route path="criteria" element= {<SearchCriteria/>} />
+                <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
+                <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
+              </Route>
+              <Route path='/cart' element={<LayoutCart/>}></Route>
+              <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
+              <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
+              <Route path="/home" element={<StoreSearch />} />
+            <Route path="/review" element={<ReivewsView />} />
+            <Route path="/review-restorant" element={<ReviewRestorantView/>} />
           </Route>
-          <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-          <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
-          <Route path="/home" element={<StoreSearch />} />
-          <Route path="/login" element={<Login />} />
+
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/review" element={<ReivewsView />} />
-          <Route path="/review-restorant" element={<ReviewRestorantView/>} />
 
 
-          <Route path="/" element={<Navigate to={pathLocation} replace />} />
-
+          {/* <Route path="/" element={<Navigate to={pathLocation} replace />} /> */}
+          {/* loading && LOADER */}
 
         </Routes>
-      </main>
 
-      {shouldShowFooter  && <Footer />}
     </div>
   )
 }

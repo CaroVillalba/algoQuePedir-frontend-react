@@ -14,7 +14,7 @@ import type { LocalCheckout } from '../../../types/Local'
 export const OrderCheckoutView = () => {
     const { id } = useParams()
     const restaurantId = Number(id ?? 0)
-
+    /* const [cartItems, subtotal, removeItem, clearCart] = useCart() */
     const cartItems = useCart(state => state.items)
     const subtotal = useCart(state => state.getSubtotal())
     const removeItem = useCart(state => state.removeItem)

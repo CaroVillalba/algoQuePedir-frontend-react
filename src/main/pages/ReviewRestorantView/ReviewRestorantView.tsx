@@ -12,7 +12,7 @@ export const ReviewRestorantView = () => {
                 <Button><i className="pi pi-star"/> 4 </Button>
                 <Button><i className="pi pi-star"/> 5 </Button>
             </div>
-
+            {/* NO usar br para saltos de página */}
             <br/>
 
             <TextareaAutosize minRows={5} placeholder="Contanos tu experiencia"/>

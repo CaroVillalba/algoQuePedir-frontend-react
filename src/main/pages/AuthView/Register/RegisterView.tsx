@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Password } from 'primereact/password'
 import { Calendar } from 'primereact/calendar'
@@ -20,6 +20,10 @@ export const Register = () => {
     registerDate: new Date(),
     email: '',
   }) 
+
+/*   type formtType = keyof typeof UserCredentialRegister
+
+  type nuevoFormType = 'firstname' | 'lastname' */
 
   const [password2, setPassword2] = useState('')
 
@@ -49,7 +53,7 @@ export const Register = () => {
     try {
       await authService.register(credentials)
       window.alert('Usuario registrado con éxito.')
-      navigate('/login')
+      navigate('/')
     } catch {
       window.alert('Error al registrar el usuario.')
     }

@@ -25,6 +25,8 @@ export const LayoutProfile = () => {
         const [checkedImpatient, setCheckedImpatient] = useState(false)
         const [ distance, setDistance ] = useState<number>(1)
         const { toast, showToast } = useToast()
+        const [criteriaInfo, setCriteriaInfo] = useState<string>('')
+        const [preferencesInfo, setPreferencesInfo] = useState<string>('')
         const [profileInfo, setProfileInfo] = useState<User>({ 
                 id : -1,
                 firstname : '',
@@ -71,13 +73,13 @@ export const LayoutProfile = () => {
         const getRestaurants = async () => {
         
                 try{
-                const allRestaurants = await localService.getRestaurants()
-        
-                const initialSelected = allRestaurants.slice(0, 3)
-                const initialAvailable = allRestaurants.slice(3) 
-        
-                setSelectedRestaurants(initialSelected)
-                setAvailableRestaurants(initialAvailable)
+                    const allRestaurants = await localService.getRestaurants()
+            
+                    const initialSelected = allRestaurants.slice(0, 3)
+                    const initialAvailable = allRestaurants.slice(3) 
+            
+                    setSelectedRestaurants(initialSelected)
+                    setAvailableRestaurants(initialAvailable)
         
                 
                 } catch(error : unknown ) {

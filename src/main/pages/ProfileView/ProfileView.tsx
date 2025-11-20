@@ -240,7 +240,7 @@ export const ProfileView = () => {
             <h2>Preferencias</h2>
             </header>
 
-            <div onClick={() => navigate('./criteria')} className="preference-button">
+            <div onClick={() => navigate('criteria')} className="preference-button">
                 <h4>Criterios de busqueda</h4>
                 <ChevronRightIcon/>
             </div>
