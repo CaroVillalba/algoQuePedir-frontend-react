@@ -17,6 +17,7 @@ import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCr
 import { ReivewsView } from './main/pages/ReviewsView/ReviewsView'
 import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRestorantView'
 import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
+import { OrderView } from './main/pages/OrderView/OrderView'
 import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
 import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
 
@@ -61,6 +62,7 @@ function AppContent() {
             <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
           </Route>
           <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
+          <Route path="/orders" element={<OrderView/>} />
           <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
           <Route path="/home" element={<StoreSearch />} />
           <Route path="/login" element={<Login />} />
