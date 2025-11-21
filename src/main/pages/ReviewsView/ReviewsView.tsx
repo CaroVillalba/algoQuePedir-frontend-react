@@ -1,6 +1,6 @@
 import { RestorantToReview } from "./RestorantToReview/RestorantToReview"
 
-export const ReivewsView = () => {
+export const ReviewsView = () => {
     const items = [
         {nombre:"La Pizzeria", puntuacion:"4,5", tiempo:"25-35 min"},
         {nombre:"El Gran Sabor", puntuacion:"4,2", tiempo:"30-40 min"},
