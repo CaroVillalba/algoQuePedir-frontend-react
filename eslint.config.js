@@ -30,6 +30,7 @@ export default [
         HTMLDivElement: 'readonly',
         HTMLSelectElement: 'readonly',
         localStorage: 'readonly',
+        sessionStorage: 'readonly',
       },
     },
     plugins: {
