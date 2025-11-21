@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Password } from 'primereact/password'
 import { Calendar } from 'primereact/calendar'
@@ -138,7 +138,8 @@ export const Register = () => {
       <Button label="Registrarse" className="w-full p-button-custom-primary" onClick={handleRegister} />
 
       <p className="text-center mt-3">
-        ¿Ya tienes una cuenta? <a href="/login">Inicia Sesión</a>
+        ¿Ya tienes una cuenta?{' '}
+        <Link to="/login" className="font-bold">Inicia sesión</Link>
       </p>
     </Card>
   </div>

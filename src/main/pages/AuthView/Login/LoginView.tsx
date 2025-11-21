@@ -1,32 +1,32 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
-import { authService } from "../../../../services/AuthService";
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { InputText } from 'primereact/inputtext'
+import { Password } from 'primereact/password'
+import { Button } from 'primereact/button'
+import { Card } from 'primereact/card'
+import { authService } from '../../../../services/AuthService'
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
 
 
-  const handleLogin = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
+  const handleLogin = async (e: { preventDefault: () => void }) => {
+    e.preventDefault()
     try {
-      const res = await authService.login({ username: user, password });
-      sessionStorage.setItem("userId", res.id.toString());
-      navigate("/home");
+      const res = await authService.login({ username: user, password })
+      sessionStorage.setItem('userId', res.id.toString())
+      navigate('/home')
     } catch (error) {
       window.alert(
-        "¿Olvidaste tu contraseña o usuario? 😅 Todavía no implementamos recuperarlas."
-      );
+        '¿Olvidaste tu contraseña o usuario? 😅 Todavía no implementamos recuperarlas.'
+      )
     }
-  };
+  }
 
   return (
-    <section className="flex justify-content-center align-items-center">
+    <section className="auth-content flex justify-content-center align-items-center">
       <Card className="p-4 w-full max-w-25rem bg-transparent shadow-none border-none">
         <form onSubmit={handleLogin} className="flex flex-column gap-3">
 
@@ -67,11 +67,11 @@ export const Login = () => {
           <Button type="submit" label="Iniciar sesión" className="w-full p-button-custom-primary" />
 
           <p className="text-center m-0 mt-2">
-            ¿No tienes una cuenta?{" "}
-            <a href="/register" className="font-bold">Regístrate</a>
+            ¿No tienes una cuenta?{' '}
+            <Link to="/register" className="font-bold">Regístrate</Link>
           </p>
         </form>
       </Card>
     </section>
-  );
-};
+  )
+}

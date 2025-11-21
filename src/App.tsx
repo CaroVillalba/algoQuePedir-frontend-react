@@ -5,8 +5,7 @@ import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
-import { Header } from './components/Header'
-import Footer from './components/Footer'
+import { LayoutMain } from './main/LayoutMain'
 import { ProfileView } from './main/pages/ProfileView/ProfileView'
 import { RestaurantMenuView } from './main/pages/RestaurantMenuView/RestaurantMenuView'
 import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutView'
@@ -14,7 +13,7 @@ import { Login } from './main/pages/AuthView/Login/LoginView'
 import { Register } from './main/pages/AuthView/Register/RegisterView'
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
 import { SearchCriteria } from './main/pages/ProfileView/SearchCriteria/SearchCriteria'
-import { ReivewsView } from './main/pages/ReviewsView/ReviewsView'
+import { ReviewsView } from './main/pages/ReviewsView/ReviewsView'
 import { ReviewRestorantView } from './main/pages/ReviewRestorantView/ReviewRestorantView'
 import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
 import { OrderView } from './main/pages/OrderView/OrderView'
@@ -29,9 +28,8 @@ interface RouteConfig {
 // Ver si es mejor idea separar AppContent en otro archivo
 function AppContent() {
   const location = useLocation()
-  const hideFooterRoutes = ['/login', '/register']
-  const shouldShowFooter = !hideFooterRoutes.includes(location.pathname)
-  const pathLocation = '/login' //Mas sencillo actualizar la ruta de redireccionamiento
+  // const hideFooterRoutes = ['/login', '/register']
+  // const shouldShowFooter = !hideFooterRoutes.includes(location.pathname)
 
   const routeConfig: Record<string, RouteConfig> = {
     '/login': { title: 'Iniciar Sesion', showBackButton: false},
@@ -49,35 +47,32 @@ function AppContent() {
 
   const matchedConfig = basePath ? routeConfig[basePath] : { title: '', showBackButton: false }
 
-  return (
+return (
     <div className="App">
-      {shouldShowFooter && <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />}
 
-      <main className={shouldShowFooter ? 'main-content' : 'auth-content'}>
         <Routes>
-          <Route path='/profile' element={<LayoutProfile/>}>
-            <Route path="/profile" element={<ProfileView />} />
-            <Route path="criteria" element= {<SearchCriteria/>} />
-            <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
-            <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
+          <Route path='/' element={<LayoutMain/>}>
+              <Route path='/profile' element={<LayoutProfile/>}>
+                <Route path="/profile" element={<ProfileView />} />
+                <Route path="criteria" element= {<SearchCriteria/>} />
+                <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
+                <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
+              </Route>
+              {/*<Route path='/cart' element={<LayoutCart/>}></Route>*/}
+              <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
+              <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
+              <Route path="/home" element={<StoreSearch />} />
+              <Route path="/orders" element={<OrderView />} />
+              <Route path="/review" element={<ReviewsView />} />
+              <Route path="/review-restorant" element={<ReviewRestorantView/>} />
           </Route>
-          <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-          <Route path="/orders" element={<OrderView/>} />
-          <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
-          <Route path="/home" element={<StoreSearch />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/review" element={<ReivewsView />} />
-          <Route path="/review-restorant" element={<ReviewRestorantView/>} />
 
-
-          <Route path="/" element={<Navigate to={pathLocation} replace />} />
-
-
+          {/* <Route path="/" element={<Navigate to={pathLocation} replace />} /> /}
+          {/ loading && LOADER */}
         </Routes>
-      </main>
-
-      {shouldShowFooter  && <Footer />}
     </div>
   )
 }
