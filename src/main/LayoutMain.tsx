@@ -9,7 +9,7 @@ export const LayoutMain = () => {
         return(<>
 
         <Header title='placeholder'/>
-        <main >
+        <main className='main-content'>
             <Outlet />
         </main>
 
