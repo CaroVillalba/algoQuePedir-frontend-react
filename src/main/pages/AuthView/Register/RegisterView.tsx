@@ -56,92 +56,106 @@ export const Register = () => {
   }
 
   return (
-  <div className="flex justify-content-center align-items-center min-h-screen surface-ground">
-    <Card className="p-4 w-full sm:w-20rem">
-      <div className="flex flex-column align-items-center mb-3">
-        <i className="pi pi-user-plus" style={{ fontSize: '2rem' }}></i>
-        <h2>Crea tu cuenta</h2>
-      </div>
+    <section className="flex justify-content-center align-items-center min-h-screen px-3 surface-ground">
+      <Card className="p-4 w-full max-w-25rem bg-transparent shadow-none border-none">
+        
+        <div className="flex flex-column align-items-center mb-3">
+          <i className="pi pi-user-plus text-3xl mb-2"></i>
+          <h2 className="m-0">Crea tu cuenta</h2>
+        </div>
 
-      <div className="field mb-3">
-        <label>Nombre*</label>
-        <InputText
-          className="w-full"
-          value={credentials.firstname}
-          onChange={(e) => setCredentials({ ...credentials, firstname: e.target.value })}
+        {/* Nombre */}
+        <div className="field mb-3">
+          <label className="block mb-1">Nombre*</label>
+          <InputText
+            className="w-full"
+            value={credentials.firstname}
+            onChange={(e) => setCredentials({ ...credentials, firstname: e.target.value })}
+          />
+        </div>
+
+        {/* Apellido */}
+        <div className="field mb-3">
+          <label className="block mb-1">Apellido*</label>
+          <InputText
+            className="w-full"
+            value={credentials.lastname}
+            onChange={(e) => setCredentials({ ...credentials, lastname: e.target.value })}
+          />
+        </div>
+
+        {/* Usuario */}
+        <div className="field mb-3">
+          <label className="block mb-1">Usuario*</label>
+          <InputText
+            className="w-full"
+            maxLength={100}
+            value={credentials.username}
+            onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+          />
+        </div>
+
+        {/* Email */}
+        <div className="field mb-3">
+          <label className="block mb-1">E-mail*</label>
+          <InputText
+            className="w-full"
+            value={credentials.email}
+            onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
+          />
+        </div>
+
+        {/* Fecha de nacimiento */}
+        <div className="field mb-3">
+          <label className="block mb-1">Fecha de nacimiento*</label>
+          <Calendar
+            value={credentials.birthDate}
+            onChange={(e) => setCredentials({ ...credentials, birthDate: e.value as Date })}
+            showIcon
+            className="w-full"
+            inputClassName="w-full"
+          />
+        </div>
+
+        {/* Contraseña */}
+        <div className="field mb-3">
+          <label className="block mb-1">Contraseña*</label>
+          <Password
+            className="w-full"
+            inputClassName="w-full"
+            toggleMask
+            feedback={false}
+            value={credentials.password}
+            onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+          />
+        </div>
+
+        {/* Repetir contraseña */}
+        <div className="field mb-4">
+          <label className="block mb-1">Reingrese la contraseña*</label>
+          <Password
+            className="w-full"
+            inputClassName="w-full"
+            toggleMask
+            feedback={false}
+            value={password2}
+            onChange={(e) => setPassword2(e.target.value)}
+          />
+        </div>
+
+        {/* Botón */}
+        <Button
+          label="Registrarse"
+          className="w-full p-button-custom-primary"
+          onClick={handleRegister}
         />
-      </div>
 
-      <div className="field mb-3">
-        <label>Apellido*</label>
-        <InputText
-          className="w-full"
-          value={credentials.lastname}
-          onChange={(e) => setCredentials({ ...credentials, lastname: e.target.value })}
-        />
-      </div>
-
-      <div className="field mb-3">
-        <label>Usuario*</label>
-        <InputText
-          className="w-full"
-          maxLength={100}
-          value={credentials.username}
-          onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-        />
-      </div>
-
-      <div className="field mb-3">
-        <label>E-mail*</label>
-        <InputText
-          className="w-full"
-          value={credentials.email}
-          onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-        />
-      </div>
-
-      <div className="field mb-3">
-        <label>Fecha de nacimiento*</label>
-        <Calendar
-          value={credentials.birthDate}
-          onChange={(e) => setCredentials({ ...credentials, birthDate: e.value as Date })}
-          showIcon
-          className="w-full"
-          inputClassName="w-full"
-        />
-      </div>
-
-      <div className="field mb-3">
-        <label>Contraseña*</label>
-        <Password
-          className="w-full"
-          inputClassName="w-full"
-          toggleMask
-          feedback={false}
-          value={credentials.password}
-          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-        />
-      </div>
-
-      <div className="field mb-4">
-        <label>Reingrese la contraseña*</label>
-        <Password
-          className="w-full"
-          inputClassName="w-full"
-          toggleMask
-          feedback={false}
-          value={password2}
-          onChange={(e) => setPassword2(e.target.value)}
-        />
-      </div>
-
-      <Button label="Registrarse" className="w-full p-button-custom-primary" onClick={handleRegister} />
-
-      <p className="text-center mt-3">
-        ¿Ya tienes una cuenta?{' '}
-        <Link to="/login" className="font-bold">Inicia sesión</Link>
-      </p>
-    </Card>
-  </div>
-)
+        {/* Link login */}
+        <p className="text-center m-0 mt-3">
+          ¿Ya tienes una cuenta?{' '}
+          <Link to="/login" className="font-bold">Inicia sesión</Link>
+        </p>
+      </Card>
+    </section>
+  )
 }

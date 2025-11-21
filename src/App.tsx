@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import 'primereact/resources/themes/lara-light-blue/theme.css'  
 import 'primereact/resources/primereact.min.css'                
 import 'primeicons/primeicons.css'
@@ -20,61 +20,34 @@ import { OrderView } from './main/pages/OrderView/OrderView'
 import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
 import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
 
-interface RouteConfig {
-  title: string
-  showBackButton: boolean
-}
-
-// Ver si es mejor idea separar AppContent en otro archivo
 function AppContent() {
-  const location = useLocation()
-  // const hideFooterRoutes = ['/login', '/register']
-  // const shouldShowFooter = !hideFooterRoutes.includes(location.pathname)
+  return (
+      <div className="App">
+          <Routes>
+            <Route path='/' element={<LayoutMain/>}>
+                {/*<Route path='/cart' element={<LayoutCart/>}></Route>*/}
+                <Route path="/home" element={<StoreSearch />} />
+                <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
+                <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
+                <Route path="/orders" element={<OrderView />} />
+                <Route path="/review" element={<ReviewsView />} />
+                <Route path="/review-restorant" element={<ReviewRestorantView/>} />
+                <Route path='/profile' element={<LayoutProfile/>}>
+                  <Route path="/profile" element={<ProfileView />} />
+                  <Route path="criteria" element= {<SearchCriteria/>} />
+                  <Route path= "ingredients-avoid" element= {<IngredientsAvoid/>}/>
+                  <Route path= "ingredients-preffered" element= {<IngredientsPreffered/>}/>
+                </Route>
+            </Route>
 
-  const routeConfig: Record<string, RouteConfig> = {
-    '/login': { title: 'Iniciar Sesion', showBackButton: false},
-    '/profile': { title: 'Perfil', showBackButton: false },
-    'criteria': { title: 'Selecciona tu criterio', showBackButton: true},
-    'ingredientsAvoid' : { title: ' Ingredientes a evitar ', showBackButton: true },
-    'ingredientsPreffered' : { title: ' Ingredientes preferidos ', showBackButton: true },
-    '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
-    '/order-checkout': { title: 'Tu pedido', showBackButton: true }
-  }
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-  const basePath = Object.keys(routeConfig).find(path =>
-    location.pathname.startsWith(path)
-  )
-
-  const matchedConfig = basePath ? routeConfig[basePath] : { title: '', showBackButton: false }
-
-return (
-    <div className="App">
-
-        <Routes>
-          <Route path='/' element={<LayoutMain/>}>
-              <Route path='/profile' element={<LayoutProfile/>}>
-                <Route path="/profile" element={<ProfileView />} />
-                <Route path="criteria" element= {<SearchCriteria/>} />
-                <Route path= "ingredientsAvoid" element= {<IngredientsAvoid/>}/>
-                <Route path= "ingredientsPreffered" element= {<IngredientsPreffered/>}/>
-              </Route>
-              {/*<Route path='/cart' element={<LayoutCart/>}></Route>*/}
-              <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-              <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
-              <Route path="/home" element={<StoreSearch />} />
-              <Route path="/orders" element={<OrderView />} />
-              <Route path="/review" element={<ReviewsView />} />
-              <Route path="/review-restorant" element={<ReviewRestorantView/>} />
-          </Route>
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-
-          {/* <Route path="/" element={<Navigate to={pathLocation} replace />} /> /}
-          {/ loading && LOADER */}
-        </Routes>
-    </div>
-  )
+            {/* <Route path="/" element={<Navigate to={pathLocation} replace />} /> /}
+            {/ loading && LOADER */}
+          </Routes>
+      </div>
+    )
 }
 
 export default function App() {

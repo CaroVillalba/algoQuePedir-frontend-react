@@ -245,12 +245,12 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={() => navigate('./IngredientsAvoid')} className="preference-button">
+            <div onClick={() => navigate('./ingredients-avoid')} className="preference-button">
                 <h4>Ingredientes a evitar</h4>
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=> navigate('./IngredientsPreffered')} className="preference-button">
+            <div onClick={()=> navigate('./ingredients-preffered')} className="preference-button">
                 <h4>Ingredientes preferidos</h4>
                 <ChevronRightIcon/>
             </div>
