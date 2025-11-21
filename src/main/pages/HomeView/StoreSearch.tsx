@@ -126,7 +126,7 @@ export const StoreSearch = () => {
                   <img
                     src={local.imgURL}
                     alt={`Imagen de ${local.name}`}
-                    className="local-img"
+                    className="store-img"
                   />
                   <PinIcon esCercano={local.esCercano ?? false} />
                 </div>
