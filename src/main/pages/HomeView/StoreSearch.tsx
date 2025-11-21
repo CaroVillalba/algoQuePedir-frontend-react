@@ -36,24 +36,9 @@ export const StoreSearch = () => {
     ? locales.filter((local) => local.esCercano)
     : locales
 
-  const fetchLocales = async () => {
-    try {
-      const result = await localService.getRestaurants()
-
-      setLocales(result);
-    } catch (error) {
-      console.error('Error al obtener los locales', error)
-      window.alert('Hubo un error al obtener los locales.')
-    }
-  }
-
-  useOnInit(fetchLocales)
+  useOnInit(() => buscar(''))
 
   const buscar = async (query: string) => {
-    /*  if (!query.trim()) {
-      setLocales([])
-      return
-    } */
 
     try {
       const userId = Number(sessionStorage.getItem("userId"));
@@ -141,7 +126,7 @@ export const StoreSearch = () => {
                   <img
                     src={local.imgURL}
                     alt={`Imagen de ${local.name}`}
-                    className="local-img"
+                    className="store-img"
                   />
                   <PinIcon esCercano={local.esCercano ?? false} />
                 </div>
