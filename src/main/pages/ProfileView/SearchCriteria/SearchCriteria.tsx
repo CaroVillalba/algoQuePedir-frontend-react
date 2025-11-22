@@ -11,8 +11,8 @@ import { useOutletContext } from 'react-router-dom'
 import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const SearchCriteria = () => {
-    const { criteria, showToast } = useOutletContext<ProfileContextType>()
-    
+    const { criteria } = useOutletContext<ProfileContextType>()
+
     const { checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
          distance, setDistance } = criteria
     

@@ -7,15 +7,16 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 import { AddIngredientDialog } from './AddIngredientDialog' 
 import { useToast } from '../../../../hooks/useToast'
 import { DataView } from 'primereact/dataview'
+import type { MainContextType } from '../../../../types/MainContextType'
 
 
 export const IngredientsAvoid = () => {
     const navigate = useNavigate()
     
     const { 
-        ingredients,
-         showToast
+        ingredients, showToast
     } = useOutletContext<ProfileContextType>()
+
 
     const { avoidIngredients, setAvoidIngredients, preferredIngredients } = ingredients
 
@@ -51,7 +52,6 @@ export const IngredientsAvoid = () => {
                     className="p-d-flex p-jc-between p-ai-center ingredient-data-row p-card p-p-2 p-mb-2"
                 >
                     <div className="ingredient-name">{ingredient}</div>
-                    
                     <Button 
                         icon="pi pi-times" 
                         className="p-button-danger p-button-text p-button-rounded" 

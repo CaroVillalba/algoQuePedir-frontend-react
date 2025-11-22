@@ -16,11 +16,13 @@ import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
 import { authService } from '../../../services/AuthService'
 import type { ProfileContextType } from '../../../types/ProfileContextType'
+import type { MainContextType } from '../../../types/MainContextType'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
     
     const { profile, showToast } = useOutletContext<ProfileContextType>()
+
 
     const { profileInfo, setProfileInfo } = profile
 

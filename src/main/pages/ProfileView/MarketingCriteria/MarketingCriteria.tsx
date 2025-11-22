@@ -9,7 +9,7 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const MarketingCriteria = () => {
     
-    const { criteria, showToast } = useOutletContext<ProfileContextType>()
+    const { criteria } = useOutletContext<ProfileContextType>()
 
     const { checkedMarketing, setCheckedMarketing } = criteria
     
