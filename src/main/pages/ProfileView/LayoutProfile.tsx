@@ -41,31 +41,39 @@ export const LayoutProfile = () => {
                 },
                 email: '',
         
-            })
+        })
+
         const [ username, setUsername ] = useState('username')
 
 
-        const [savedProfileInfo, setSavedProfileInfo] = useState<User>({
-              id : -1,
-                firstname : '',
-                username : '',
-                lastname : '',
-                location : '',
-                address: {
-                    street: '',
-                    number: 0,
-                    coordinates: {
-                        x: 0,
-                        y:0,
-                    }
-                },
-
-                email: '',
-        
-        })
-
         const [ avoidIngredients, setAvoidIngredients ] = useState<string[]>([])
         const [ preferredIngredients, setPreferredIngredients ] = useState<string[]>([])
+
+        const profileContext = {
+            profileInfo, setProfileInfo,
+            username, setUsername,
+        }
+
+        const criteriaContext = {
+            checkedMarketing, setCheckedMarketing,
+            checkedVegan, setCheckedVegan,
+            checkedExquisite, setCheckedExquisite,
+            checkedConservative, setCheckedConservative,
+            checkedImpatient, setCheckedImpatient,
+            checkedFaithful, setCheckedFaithful,
+            distance, setDistance,
+        }
+
+        const restaurantContext = {
+            availableRestaurants, setAvailableRestaurants,
+            selectedRestaurants, setSelectedRestaurants,
+            displayAddDialog, setDisplayAddDialog,
+        }
+
+        const ingredientContext = {
+            avoidIngredients, setAvoidIngredients,
+            preferredIngredients, setPreferredIngredients,
+        }
 
 
         const getRestaurants = async () => {
@@ -113,30 +121,18 @@ export const LayoutProfile = () => {
 
         return(<>
         <Outlet context= {{
-            avoidIngredients, setAvoidIngredients,
-            preferredIngredients, setPreferredIngredients,
-            checkedFaithful, setCheckedFaithful, 
-            availableRestaurants, setAvailableRestaurants, 
-            selectedRestaurants, setSelectedRestaurants, 
-            displayAddDialog, setDisplayAddDialog, 
-            checkedMarketing, setCheckedMarketing, 
-            checkedVegan, setCheckedVegan, 
-            checkedExquisite, setCheckedExquisite, 
-            checkedConservative, setCheckedConservative,
-            checkedImpatient, setCheckedImpatient, 
-            distance, setDistance,
-            profileInfo, setProfileInfo,
-            username, setUsername,
-            getRestaurants,
-           }}/>
-        
-        
+            profile: profileContext,
+            criteria: criteriaContext,
+            restaurant: restaurantContext,
+            ingredients: ingredientContext,
+            showToast,
 
-    
+        }}/>
+        
+        
         <div id= "toast-container">
             <Toast toast = { toast } />
         </div>
-        
         
         </>
         )

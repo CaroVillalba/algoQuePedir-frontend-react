@@ -19,10 +19,10 @@ import type { ProfileContextType } from '../../../types/ProfileContextType'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
-    const { toast, showToast } = useToast()
     
+    const { profile, showToast } = useOutletContext<ProfileContextType>()
 
-    const { profileInfo, setProfileInfo } = useOutletContext<ProfileContextType>()
+    const { profileInfo, setProfileInfo } = profile
 
     async function handlePersonalInfo(e: FormEvent) {
         e.preventDefault()
@@ -262,10 +262,6 @@ export const ProfileView = () => {
         </form>
         </section>
         
-
-        <div id ="toast-container">
-            <Toast toast = {toast} />
-        </div>
 
         </>
     )

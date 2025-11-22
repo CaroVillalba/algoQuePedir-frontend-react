@@ -1,0 +1,5 @@
+.add-ingredient{
+    display: flex;
+    position: sticky;
+    top: 10rem;
+}

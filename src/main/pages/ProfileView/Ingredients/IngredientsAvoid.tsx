@@ -13,12 +13,12 @@ export const IngredientsAvoid = () => {
     const navigate = useNavigate()
     
     const { 
-        avoidIngredients, setAvoidIngredients,
-        preferredIngredients, 
-    
+        ingredients,
+         showToast
     } = useOutletContext<ProfileContextType>()
 
-    const { toast, showToast } = useToast() 
+    const { avoidIngredients, setAvoidIngredients, preferredIngredients } = ingredients
+
 
     const [dialogVisible, setDialogVisible] = useState(false)
 
@@ -31,7 +31,7 @@ export const IngredientsAvoid = () => {
 
        
         if (avoidIngredients.map(i => i.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast('El ingrediente ya existe en la lista de "a evitar"', 'warning')
+            showToast('El ingrediente ya existe en la lista de "a evitar"', 'warn')
             return
         }
         
@@ -50,10 +50,8 @@ export const IngredientsAvoid = () => {
                 <div 
                     className="p-d-flex p-jc-between p-ai-center ingredient-data-row p-card p-p-2 p-mb-2"
                 >
-                    {/* Nombre del Ingrediente */}
                     <div className="ingredient-name">{ingredient}</div>
                     
-                    {/* Botón de Remover */}
                     <Button 
                         icon="pi pi-times" 
                         className="p-button-danger p-button-text p-button-rounded" 
