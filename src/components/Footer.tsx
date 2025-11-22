@@ -7,17 +7,20 @@ export default function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const getIndexFromPath = (path: string) => {
-    //Cambiar a map de js
-    switch (path) {
-      case '/':
-        return 0
-      case '/profile':
-        return 3
-      default:
-        return 0
-    }
+  const pathIndexMap: Record<string, number> = {
+    '/home': 0,
+    '/restaurant-menu': 0,
+    '/order-checkout': 0,
+    '/orders': 1,
+    '/review': 2,
+    '/review-restorant': 2,
+    '/profile': 3,
+    '/profile/criteria': 3,
+    '/profile/IngredientsAvoid': 3,
+    '/profile/IngredientsPreffered': 3
   }
+
+  const getIndexFromPath = (path: string) => pathIndexMap[path] ?? 0
 
   const [activeIndex, setActiveIndex] = useState(getIndexFromPath(location.pathname))
 
