@@ -11,7 +11,7 @@ export const MarketingCriteria = () => {
     
     const { criteria } = useOutletContext<ProfileContextType>()
 
-    const { checkedMarketing, setCheckedMarketing } = criteria
+    const { criteria: c, setCriteria } = criteria
     
     return (
         <>
@@ -24,8 +24,12 @@ export const MarketingCriteria = () => {
                 </div>
                 <Checkbox 
                     className='custom-checkbox' 
-                    onChange={e => setCheckedMarketing(e.checked ?? false)} 
-                    checked={checkedMarketing}
+                    onChange={() =>
+                                    setCriteria(prev => ({
+                                    ...prev,
+                                    marketing: !prev.marketing
+                                    }))} 
+                    checked={c.marketing}
                 />
             </div>
         </section>

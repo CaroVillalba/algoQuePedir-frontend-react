@@ -20,7 +20,7 @@ export const FaithfulCriteria = () => {
 
     const { criteria, restaurant, showToast } = useOutletContext<ProfileContextType>()
 
-    const { checkedFaithful, setCheckedFaithful } = criteria
+    const { criteria: c , setCriteria } = criteria
 
     const { availableRestaurants, setAvailableRestaurants, selectedRestaurants,
             setSelectedRestaurants, displayAddDialog, setDisplayAddDialog  } = restaurant
@@ -82,8 +82,13 @@ export const FaithfulCriteria = () => {
                 </div>
                 <Checkbox 
                     className='custom-checkbox' 
-                    onChange={e => setCheckedFaithful(e.checked ?? false)} 
-                    checked={checkedFaithful}
+                    onChange={() =>
+                        setCriteria(prev => ({
+                            ...prev,
+                            faithful: !prev.faithful
+                        }))
+                    }
+                    checked={c.faithful}
                 />
             </Card>
 

@@ -3,6 +3,16 @@ import type { Local } from './Local'
 import type { User } from './User'
 
 
+export type CriteriaType = {
+    faithful : boolean
+    marketing: boolean
+    vegan: boolean
+    exquisite: boolean
+    conservative: boolean
+    impatient: boolean
+}
+
+
 export type ProfileData = {
     profileInfo: User;
     setProfileInfo: Dispatch<SetStateAction<User>>;
@@ -10,12 +20,7 @@ export type ProfileData = {
 
 
 export type CriteriaData = {
-    checkedMarketing: boolean; setCheckedMarketing: Dispatch<SetStateAction<boolean>>;
-    checkedVegan: boolean; setCheckedVegan: Dispatch<SetStateAction<boolean>>;
-    checkedExquisite: boolean; setCheckedExquisite: Dispatch<SetStateAction<boolean>>;
-    checkedConservative: boolean; setCheckedConservative: Dispatch<SetStateAction<boolean>>;
-    checkedImpatient: boolean; setCheckedImpatient: Dispatch<SetStateAction<boolean>>;
-    checkedFaithful: boolean; setCheckedFaithful: Dispatch<SetStateAction<boolean>>;
+    criteria: CriteriaType; setCriteria: Dispatch<SetStateAction<CriteriaType>>;
     distance: number; setDistance: Dispatch<SetStateAction<number>>;
 }
 

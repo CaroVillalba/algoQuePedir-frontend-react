@@ -14,15 +14,9 @@ import type { FormEvent } from 'react'
 
 
 export const LayoutProfile = () => {
-        const [ checkedFaithful, setCheckedFaithful ] = useState(false)
         const [ availableRestaurants, setAvailableRestaurants ] = useState<Local[]>([])
         const [ selectedRestaurants, setSelectedRestaurants ] = useState<Local[]>([])
         const [ displayAddDialog, setDisplayAddDialog ] = useState(false)
-        const [ checkedMarketing, setCheckedMarketing ] = useState(false)
-        const [checkedVegan, setCheckedVegan] = useState(false)
-        const [checkedExquisite, setCheckedExquisite] = useState(false)
-        const [checkedConservative, setCheckedConservative] = useState(false)
-        const [checkedImpatient, setCheckedImpatient] = useState(false)
         const [ distance, setDistance ] = useState<number>(1)
         const { toast, showToast } = useToast()
         const [profileInfo, setProfileInfo] = useState<User>({ 
@@ -43,6 +37,15 @@ export const LayoutProfile = () => {
         
         })
 
+        const [criteria, setCriteria] = useState({
+            faithful: false,
+            marketing: false,
+            vegan: false,
+            exquisite: false,
+            conservative: false,
+            impatient: false,
+        })
+
         const [ username, setUsername ] = useState('username')
 
 
@@ -55,12 +58,7 @@ export const LayoutProfile = () => {
         }
 
         const criteriaContext = {
-            checkedMarketing, setCheckedMarketing,
-            checkedVegan, setCheckedVegan,
-            checkedExquisite, setCheckedExquisite,
-            checkedConservative, setCheckedConservative,
-            checkedImpatient, setCheckedImpatient,
-            checkedFaithful, setCheckedFaithful,
+            criteria, setCriteria,
             distance, setDistance,
         }
 

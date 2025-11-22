@@ -12,9 +12,9 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const SearchCriteria = () => {
     const { criteria } = useOutletContext<ProfileContextType>()
-
-    const { checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
-         distance, setDistance } = criteria
+    //checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
+         //distance, setDistance
+    const { criteria: c, setCriteria, distance, setDistance} = criteria
     
 
     return (
@@ -26,7 +26,14 @@ export const SearchCriteria = () => {
                     <span className='title'>Veganos</span>
                     <span className='subtitle'>Solo platos veganos</span>
                     </div>
-                <Checkbox className='custom-checkbox' onChange={e => setCheckedVegan(e.checked ?? false)} checked={checkedVegan}></Checkbox>
+                <Checkbox 
+                className='custom-checkbox' 
+                onChange={() =>
+                        setCriteria(prev => ({
+                            ...prev,
+                            vegan: !prev.vegan
+                        }))
+                    } checked={c.vegan}></Checkbox>
                 </Card>
                 
            
@@ -35,7 +42,13 @@ export const SearchCriteria = () => {
                     <span className='title'>Exquisitos</span>
                     <span className='subtitle'>Solo platos de autor</span>
                     </div>
-                <Checkbox className='custom-checkbox' onChange={e => setCheckedExquisite(e.checked ?? false)} checked={checkedExquisite}></Checkbox>
+                <Checkbox className='custom-checkbox' 
+                onChange={() =>
+                        setCriteria(prev => ({
+                            ...prev,
+                            exquisite: !prev.exquisite
+                        }))
+                    } checked={c.exquisite}></Checkbox>
                 </Card>
 
                 <Card className='criteria-card'>
@@ -43,7 +56,15 @@ export const SearchCriteria = () => {
                     <span className='title'>Conservadores</span>
                     <span className='subtitle'>Solo platos con ingredientes preferidos</span>
                     </div>
-                <Checkbox className='custom-checkbox' onChange={e => setCheckedConservative(e.checked ?? false)} checked={checkedConservative}></Checkbox>
+                <Checkbox className='custom-checkbox' 
+                onChange={() =>
+                        setCriteria(prev => ({
+                            ...prev,
+                            conservative: !prev.conservative
+                        }))
+                    } 
+                checked={c.conservative}
+                />
                 </Card>
 
                 <FaithfulCriteria></FaithfulCriteria>
@@ -59,8 +80,12 @@ export const SearchCriteria = () => {
                             </div>
                             <Checkbox 
                                 className='custom-checkbox impatient-checkbox' 
-                                onChange={e => setCheckedImpatient(e.checked ?? false)} 
-                                checked={checkedImpatient}
+                                 onChange={() =>
+                                    setCriteria(prev => ({
+                                    ...prev,
+                                    impatient: !prev.impatient
+                                    }))} 
+                                checked={c.impatient}
                             />
                         </div>
                         <section className='sub-subtitle distance-row'>
@@ -73,7 +98,7 @@ export const SearchCriteria = () => {
                             buttonLayout='horizontal'
                             min={1}
                             max={5}
-                            disabled={!checkedImpatient}
+                            disabled={!c.impatient}
                             incrementButtonIcon='pi pi-plus'
                             decrementButtonIcon='pi pi-minus'
                             />
