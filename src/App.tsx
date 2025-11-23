@@ -19,6 +19,7 @@ import { LayoutProfile } from './main/pages/ProfileView/LayoutProfile'
 import { OrderView } from './main/pages/OrderView/OrderView'
 import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
 import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
+import { OrderDetailsView } from './main/pages/OrderDetailsView/OrderDetailsView'
 
 function AppContent() {
   return (
@@ -30,6 +31,7 @@ function AppContent() {
                 <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
                 <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
                 <Route path="/orders" element={<OrderView />} />
+                <Route path="/orders/:id" element={<OrderDetailsView/>} />
                 <Route path="/review" element={<ReviewsView />} />
                 <Route path="/review-restorant" element={<ReviewRestorantView/>} />
                 <Route path='/profile' element={<LayoutProfile/>}>

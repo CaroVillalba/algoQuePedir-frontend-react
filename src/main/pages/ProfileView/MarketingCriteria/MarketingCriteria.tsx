@@ -9,7 +9,9 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const MarketingCriteria = () => {
     
-    const { checkedMarketing, setCheckedMarketing } = useOutletContext<ProfileContextType>()
+    const { criteria } = useOutletContext<ProfileContextType>()
+
+    const { criteria: c, setCriteria } = criteria
     
     return (
         <>
@@ -22,8 +24,12 @@ export const MarketingCriteria = () => {
                 </div>
                 <Checkbox 
                     className='custom-checkbox' 
-                    onChange={e => setCheckedMarketing(e.checked ?? false)} 
-                    checked={checkedMarketing}
+                    onChange={() =>
+                                    setCriteria(prev => ({
+                                    ...prev,
+                                    marketing: !prev.marketing
+                                    }))} 
+                    checked={c.marketing}
                 />
             </div>
         </section>

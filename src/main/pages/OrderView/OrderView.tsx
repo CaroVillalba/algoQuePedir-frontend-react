@@ -18,17 +18,7 @@ export const OrderView = () => {
         setOrdenesCompletadas(ordenes.filter((orden: any) => (orden.state == "ENTREGADO")))
         setOrdenesCanceladas(ordenes.filter((orden: any) => (orden.state == "CANCELADO")))
 
-        console.log("Todas las ordenes:")
         console.log(ordenes)
-        
-        console.log("Ordenes pendientes/preparadas:")
-        console.log(ordenesPendientes)
-
-        console.log("Ordenes entregadas:")
-        console.log(ordenesCompletadas)
-        
-        console.log("Ordenes canceladas:")
-        console.log(ordenesCanceladas)
     }
     useOnInit(updateOrders)
 
@@ -40,7 +30,7 @@ export const OrderView = () => {
                 <TabPanel header="Pendientes">
                     {
                         ordenesPendientes.map((orden) => (
-                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl}/>
+                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl} href={"/orders/"+orden.id}/>
                         ))
                     }
                 </TabPanel>
@@ -48,7 +38,7 @@ export const OrderView = () => {
                 <TabPanel header="Completados">
                     {
                         ordenesCompletadas.map((orden) => (
-                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl}/>
+                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl} href={"/orders/"+orden.id}/>
                         ))
                     }
                 </TabPanel>
@@ -56,7 +46,7 @@ export const OrderView = () => {
                 <TabPanel header="Cancelados">
                     {
                         ordenesCanceladas.map((orden) => (
-                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl}/>
+                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl} href={"/orders/"+orden.id}/>
                         ))
                     }
                 </TabPanel>

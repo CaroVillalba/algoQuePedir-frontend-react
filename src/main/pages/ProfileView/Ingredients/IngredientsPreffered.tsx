@@ -6,17 +6,19 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 import { AddIngredientDialog } from './AddIngredientDialog' 
 import { useToast } from '../../../../hooks/useToast'
 import { DataView } from 'primereact/dataview'
+import { Toast } from '../../../../components/common/toast'
+import './Ingredients.css'
 
 
 export const IngredientsPreffered = () => {
 
     const { 
-        preferredIngredients, setPreferredIngredients,
-        avoidIngredients, 
+        ingredients,
+        showToast,
 
     } = useOutletContext<ProfileContextType>()
 
-    const { toast, showToast } = useToast()
+    const { preferredIngredients, setPreferredIngredients, avoidIngredients } = ingredients
 
     const [dialogVisible, setDialogVisible] = useState(false)
 
@@ -29,7 +31,7 @@ export const IngredientsPreffered = () => {
         
         
         if (preferredIngredients.map(i => i.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast('El ingrediente ya existe en la lista de "preferidos"', 'warning')
+            showToast('El ingrediente ya existe en la lista de "preferidos"', 'warn')
             return
         }
         
@@ -75,7 +77,7 @@ export const IngredientsPreffered = () => {
             <Button 
                 label="Añadir ingrediente" 
                 icon="pi pi-plus" 
-                className="p-button-primary p-mt-5" 
+                className="p-button-primary p-mt-5 add-ingredient"
                 onClick={() => setDialogVisible(true)} 
             />
 
@@ -85,6 +87,7 @@ export const IngredientsPreffered = () => {
                 onAdd={handleAddIngredient}
                 title="Añadir ingrediente preferido"
             />
+
         </>
     )
 }
