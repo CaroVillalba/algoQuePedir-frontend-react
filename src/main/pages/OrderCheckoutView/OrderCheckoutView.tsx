@@ -1,13 +1,11 @@
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import { Image } from 'primereact/image'
-import { Toast } from '../../../components/common/toast'
 import { useState } from 'react'
 import { useCart } from '../../../hooks/useCart'
-import { useToast } from '../../../hooks/useToast'
 import { orderService } from '../../../services/OrderService'
 import { localService } from '../../../services/LocalService'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { LocalCheckout } from '../../../types/Local'
 
@@ -15,14 +13,20 @@ export const OrderCheckoutView = () => {
     const { id } = useParams()
     const restaurantId = Number(id ?? 0)
 
-    const cartItems = useCart(state => state.items)
-    const subtotal = useCart(state => state.getSubtotal())
-    const removeItem = useCart(state => state.removeItem)
-    const clearCart = useCart(state => state.clearCart)
+    const { cart } = useOutletContext<{ cart: ReturnType<typeof useCart> }>()
+
+    const {
+        items,
+        setItems,
+        subtotal,
+        restaurantId: cartRestaurantId,
+        setRestaurantId,
+        totalItems
+    } = cart
 
     const navigate = useNavigate()
 
-    const {toast, showToast} = useToast()
+    const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
 
     const [paymentMethod, setPaymentMethod] = useState<string>('')
     const [loading, setLoading] = useState(false)
@@ -35,6 +39,20 @@ export const OrderCheckoutView = () => {
         paymentMethods: [],
         distanceKm: 0
     })
+
+    const removeItem = (id: number) => {
+        setItems(prev =>
+            prev
+                .map(i =>
+                    i.id === id
+                        ? { ...i, qty: i.qty - 1, total: (i.qty - 1) * i.unitPrice }
+                        : i
+                )
+                .filter(i => i.qty > 0)
+        )
+    }
+    
+    const clearCart = () => setItems([])
 
     const paymentOptions = (localCheckout.paymentMethods ?? []).map(pm => {
         const method = pm.name || ''
@@ -79,7 +97,7 @@ export const OrderCheckoutView = () => {
             }
 
             await orderService.confirmOrder(
-                cartItems,
+                items,
                 restaurantId,
                 paymentMethod,
                 clientId
@@ -136,7 +154,7 @@ export const OrderCheckoutView = () => {
 
                 <div className="p-2">
                     <div className="font-bold text-lg mb-3">Artículos</div>
-                    {cartItems.map(item => (
+                    {items.map(item => (
                         <div key={item.id} className="flex justify-content-between align-items-center mb-3">
                             <div>
                                 <div className="font-bold">{item.name}</div>
@@ -192,18 +210,15 @@ export const OrderCheckoutView = () => {
                 <Button 
                     label={loading ? 'Confirmando...' : 'Confirmar pedido'} 
                     className="p-button-custom-primary w-full" 
-                    disabled={!paymentMethod || cartItems.length === 0}
+                    disabled={!paymentMethod || items.length === 0}
                     onClick={handleConfirmOrder}
                 />
                 <Button 
                     label="Limpiar carrito" 
                     className="p-button-custom-secondary w-full"
                     onClick={() => clearCart()}
-                    disabled={cartItems.length === 0} 
+                    disabled={items.length === 0} 
                 />
-            </div>
-            <div id="toast-container">
-                <Toast toast = { toast } />
             </div>
         </div>
     )
