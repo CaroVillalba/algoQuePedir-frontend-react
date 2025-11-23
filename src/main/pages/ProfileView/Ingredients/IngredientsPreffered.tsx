@@ -48,13 +48,13 @@ export const IngredientsPreffered = () => {
         return (
             <div className="p-col-12">
                 <div 
-                    className="p-d-flex p-jc-between p-ai-center ingredient-data-row p-card p-p-2 p-mb-2"
+                    className="ingredient-data-row p-card p-p-2 p-mb-2 "
                 >
                     <div className="ingredient-name">{ingredient}</div>
                     
                     <Button 
                         icon="pi pi-times" 
-                        className="p-button-danger p-button-text p-button-rounded" 
+                        className="p-button-danger p-button-text p-button-rounded ingredient-remove-button" 
                         onClick={() => handleRemoveIngredient(ingredient)} 
                     />
                 </div>
@@ -66,18 +66,21 @@ export const IngredientsPreffered = () => {
 
     return (
         <>
+            <section className='ingredient-list-row'>
             <DataView
+                className='ingredient-list'
                 value={preferredIngredients}
                 layout="list" 
                 itemTemplate={ingredientItemTemplate}
                 paginator={false} 
                 emptyMessage="No hay ingredientes en esta lista."
              />
+            </section>
 
             <Button 
                 label="Añadir ingrediente" 
                 icon="pi pi-plus" 
-                className="p-button-primary p-mt-5 add-ingredient"
+                className='button-primary button-ingredients'
                 onClick={() => setDialogVisible(true)} 
             />
 
