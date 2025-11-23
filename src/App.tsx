@@ -20,22 +20,24 @@ import { OrderView } from './main/pages/OrderView/OrderView'
 import { IngredientsAvoid } from './main/pages/ProfileView/Ingredients/IngredientsAvoid'
 import { IngredientsPreffered } from './main/pages/ProfileView/Ingredients/IngredientsPreffered'
 import { OrderDetailsView } from './main/pages/OrderDetailsView/OrderDetailsView'
+import { LayoutCart } from './main/pages/LayoutCart'
 
 function AppContent() {
   return (
       <div className="App">
           <Routes>
             <Route path='/' element={<LayoutMain/>}>
-                {/*<Route path='/cart' element={<LayoutCart/>}></Route>*/}
-                <Route path="/home" element={<StoreSearch />} />
-                <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-                <Route path="/order-checkout/:id" element={<OrderCheckoutView />} />
-                <Route path="/orders" element={<OrderView />} />
-                <Route path="/orders/:id" element={<OrderDetailsView/>} />
-                <Route path="/review" element={<ReviewsView />} />
-                <Route path="/review-restorant" element={<ReviewRestorantView/>} />
-                <Route path='/profile' element={<LayoutProfile/>}>
-                  <Route path="/profile" element={<ProfileView />} />
+                <Route path='home' element={<LayoutCart/>}>
+                  <Route index element={<StoreSearch />} /> 
+                  <Route path="restaurant-menu/:id" element={<RestaurantMenuView />} />
+                  <Route path="order-checkout/:id" element={<OrderCheckoutView />} />
+                </Route>
+                <Route path="orders" element={<OrderView />} />
+                <Route path="orders/:id" element={<OrderDetailsView/>} />
+                <Route path="review" element={<ReviewsView />} />
+                <Route path="review-restorant" element={<ReviewRestorantView/>} />
+                <Route path='profile' element={<LayoutProfile/>}>
+                  <Route index element={<ProfileView />} />
                   <Route path="criteria" element= {<SearchCriteria/>} />
                   <Route path= "ingredients-avoid" element= {<IngredientsAvoid/>}/>
                   <Route path= "ingredients-preffered" element= {<IngredientsPreffered/>}/>

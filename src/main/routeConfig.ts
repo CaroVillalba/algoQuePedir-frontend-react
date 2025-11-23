@@ -1,7 +1,7 @@
 export const routeConfig = {
     '/home': { title: 'Delivery', back: false },
-    '/restaurant-menu': { title: 'Menú', back: true },
-    '/order-checkout': { title: 'Tu Pedido', back: true },
+    '/home/restaurant-menu': { title: 'Menú', back: true },
+    '/home/order-checkout': { title: 'Tu Pedido', back: true },
     '/orders': { title: 'Pedidos', back: false },
     '/review': { title: 'Restaurantes a calificar', back: false },
     '/review-restorant': { title: 'Calificar', back: true },
