@@ -1,17 +1,15 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { Card } from 'primereact/card'
 import { IconField } from 'primereact/iconfield'
 import { InputIcon } from 'primereact/inputicon'
-import { useNavigate } from 'react-router-dom'
-import { Toast } from '../../../components/common/toast'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import './StoreSearch.css'
 import { localService } from '../../../services/LocalService'
 import type { Local } from '../../../types/Local'
 import { useOnInit } from '../../../hooks/useOnInit'
-import { useCart } from '../../../hooks/useCart'
-import { useToast } from '../../../hooks/useToast'
+import type { CartContextType } from '../../../types/CartContextType'
 
 export const PinIcon = ({ esCercano }: { esCercano: boolean }) => {
   if (esCercano) {
@@ -29,8 +27,11 @@ export const StoreSearch = () => {
   const [checked, setChecked] = useState(false)
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('') 
+  const { cart } = useOutletContext<{ cart: CartContextType }>()
 
-  const { toast, showToast } = useToast()
+  const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
+
+  const cartRestaurantId = cart.restaurantId
 
   const localesFiltrados = checked
     ? locales.filter((local) => local.esCercano)
@@ -41,13 +42,12 @@ export const StoreSearch = () => {
   const buscar = async (query: string) => {
 
     try {
-      const userId = Number(sessionStorage.getItem("userId"));
-      const result = await localService.getRestaurantsBySearch(query, userId);
+      const userId = Number(sessionStorage.getItem('userId'))
+      const result = await localService.getRestaurantsBySearch(query, userId)
 
-      setLocales(result);
-    }catch (error) {
-      console.error('Error al buscar los locales', error)
-      window.alert('Hubo un error al buscar los locales.')
+      setLocales(result)
+    } catch {
+      showToast('Hubo un error al buscar los locales.', 'error')
     }
   }
   
@@ -67,8 +67,6 @@ export const StoreSearch = () => {
     debouncedBuscar(value)
   }
   
-  const cartRestaurantId = useCart(state => state.restaurantId)
-
   return (
     <>
       <div className="search-header">
@@ -78,11 +76,11 @@ export const StoreSearch = () => {
           className="shopping-cart-container"
           onClick={() => {
             if (!cartRestaurantId) {
-              showToast("No tenés ningún pedido activo.", "info")
+              showToast('No tenés ningún pedido activo.', 'info')
               return
             }
 
-            navigate(`/order-checkout/${cartRestaurantId}`)
+            navigate(`order-checkout/${cartRestaurantId}`)
           }}
         >
           <i className="pi pi-shopping-cart shopping-cart-icon"></i>
@@ -120,7 +118,7 @@ export const StoreSearch = () => {
             <div key={local.id} className="grid-item">
               <Card
                 className="local-card"
-                onClick={() => navigate(`/restaurant-menu/${local.id}`)}
+                onClick={() => navigate(`restaurant-menu/${local.id}`)}
               >
                 <div className="local-img-container">
                   <img
@@ -138,9 +136,6 @@ export const StoreSearch = () => {
               </Card>
             </div>
           ))}
-            <div id="toast-container">
-                <Toast toast = { toast } />
-            </div>
         </div>
       </main>
     </>
