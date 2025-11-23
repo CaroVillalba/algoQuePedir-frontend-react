@@ -1,22 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
-import { Card } from  'primereact/card'
 import { ChevronRightIcon } from 'primereact/icons/chevronright'
 import './ProfileView.css'
 import { useNavigate, useOutletContext } from 'react-router-dom'
-import type { User } from '../../../types/User'
 import { userService } from '../../../services/UserService'
-import { Toast } from '../../../components/common/toast'
-import { useToast } from '../../../hooks/useToast'
-import { useOnInit } from '../../../hooks/useOnInit'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import type { FormEvent } from 'react'
 import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
-import { authService } from '../../../services/AuthService'
 import type { ProfileContextType } from '../../../types/ProfileContextType'
-import type { MainContextType } from '../../../types/MainContextType'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
