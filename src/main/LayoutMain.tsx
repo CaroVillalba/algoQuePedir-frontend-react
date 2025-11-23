@@ -16,31 +16,19 @@ export const LayoutMain = () => {
         )
     const title = match?.[1].title ?? ''
     const showBackButton = match?.[1].back ?? false
+    const { toast, showToast } = useToast()
 
     return (
         <>
             <Header title={title} showBackButton={showBackButton} />
             <main className='main-content'>
-                <Outlet />
+                <Outlet context= { {showToast} }/>
             </main>
             <Footer />
 
-        const { toast, showToast } = useToast()
-
-        return(<>
-
-        <Header title='placeholder'/>
-        <main className='main-content'>
-            <Outlet context= { {showToast} }/>
-        </main>
-
-        <Footer />
-
-        <div id= "toast-container">
-            <Toast toast = { toast } />
-        </div>
-
+            <div id= "toast-container">
+                <Toast toast = { toast } />
+            </div>
         </>
-
     )
 }
