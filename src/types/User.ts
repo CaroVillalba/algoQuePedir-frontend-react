@@ -1,4 +1,5 @@
 import type { Address } from './Address'
+import type { Ingredient } from './IngredientType'
 
 export interface User {
     id: number
@@ -6,6 +7,8 @@ export interface User {
     username: string
     lastname: string
     location: string
+    preferredIngredients: Ingredient[]
+    ingredientsToAvoid: Ingredient[]
     address: Address
     email: string
 }
