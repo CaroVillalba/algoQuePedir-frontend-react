@@ -113,7 +113,7 @@ export const FaithfulCriteria = () => {
                 visible={displayAddDialog} 
                 onHide={() => setDisplayAddDialog(false)} 
                 modal 
-                style={{ width: '80%' , height: '100%'}}
+                style={{ width: '80%' , height: '79%'}}
                 
             >
                 <div className="p-fluid">
@@ -122,11 +122,11 @@ export const FaithfulCriteria = () => {
                         source={availableRestaurants} 
                         target={selectedRestaurants} 
                         itemTemplate={pickListItemTemplate} 
-                        sourceHeader="Disponibles" 
-                        targetHeader="Preferidos" 
+                        sourceHeader="Restaurantes disponibles" 
+                        targetHeader="Restaurantes en preferidos" 
                         onChange={onChangePickList} 
-                        sourceStyle={{ height: '90px'}} 
-                        targetStyle={{ height: '90px' }} 
+                        sourceStyle={{ height: '120px'}} 
+                        targetStyle={{ height: '120px' }} 
                         
                     />
                 </div>

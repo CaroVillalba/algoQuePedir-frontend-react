@@ -40,6 +40,7 @@ export const LayoutProfile = () => {
         const [criteria, setCriteria] = useState({
             faithful: false,
             marketing: false,
+            marketingWords: [] as string[],
             vegan: false,
             exquisite: false,
             conservative: false,

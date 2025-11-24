@@ -6,6 +6,7 @@ import type { User } from './User'
 export type CriteriaType = {
     faithful : boolean
     marketing: boolean
+    marketingWords: string[]
     vegan: boolean
     exquisite: boolean
     conservative: boolean
