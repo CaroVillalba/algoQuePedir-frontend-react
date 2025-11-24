@@ -1,6 +1,3 @@
-import React, { useState } from 'react'
-import { InputText } from 'primereact/inputtext'
-import { Button } from 'primereact/button'
 import { Card } from  'primereact/card'
 import './SearchCriteria.css'
 import { Checkbox } from 'primereact/checkbox'

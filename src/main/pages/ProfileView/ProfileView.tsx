@@ -48,7 +48,6 @@ export const ProfileView = () => {
         }
         
         try {
-            console.log(profileInfo)
             await userService.updateUserProfile(profileInfo)
             showToast('Perfil actualizado y preferencias guardadas correctamente', 'success')
         } catch(error : unknown) {

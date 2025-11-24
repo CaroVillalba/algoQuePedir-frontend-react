@@ -11,7 +11,6 @@ import { useOnInit } from '../../../hooks/useOnInit'
 import type { User } from '../../../types/User'
 import { authService } from '../../../services/AuthService'
 import { userService } from '../../../services/UserService'
-import type { FormEvent } from 'react'
 import type { Ingredient } from '../../../types/IngredientType'
 
 
@@ -117,7 +116,6 @@ export const LayoutProfile = () => {
         
                 try {
                     const userProfile = await userService.getUserProfile(username) 
-                    console.log(userProfile)
                     setProfileInfo(userProfile)
                     setAvoidIngredients(userProfile.ingredientsToAvoid)
                     setPreferredIngredients(userProfile.preferredIngredients)
