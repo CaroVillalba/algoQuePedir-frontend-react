@@ -1,0 +1,4 @@
+.p-tabview .p-tabview-nav{
+    display: flex;
+    justify-content: space-evenly;
+}
