@@ -66,6 +66,7 @@ export const Login = () => {
               hideIcon="pi pi-eye"
               placeholder="Contraseña"
               toggleMask
+              required
             />
           </div>
 
