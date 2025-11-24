@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom'
 import { Button } from 'primereact/button'
 import { Divider } from 'primereact/divider'
@@ -14,6 +14,7 @@ import './RestaurantMenuView.css'
 import type { LocalPublic } from '../../../types/Local'
 import type { Dish } from '../../../types/Dish'
 import type { CartContextType } from '../../../types/CartContextType'
+import { MainContext } from '../../../types/MainContextType'
 
 let initialLocalState: LocalPublic = {
     id: 0,
@@ -38,11 +39,10 @@ export const RestaurantMenuView = () => {
         setItems,
         restaurantId,
         setRestaurantId,
-        subtotal,
         totalItems,
     } = cart
 
-    const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
+    const { showToast } = useContext(MainContext)
 
     const addItem = (newItem: CartItem, restId: number) => {
         // Si el carrito está vacío → inicializar restaurante
