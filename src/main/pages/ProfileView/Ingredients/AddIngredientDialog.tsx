@@ -1,47 +1,52 @@
 import React, { useState } from 'react'
 import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
+import { Dropdown } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
+import type { Ingredient } from '../../../../types/IngredientType'
 
 interface AddIngredientDialogProps {
     visible: boolean;
     onHide: () => void;
-    onAdd: (ingredient: string) => void;
+    onAdd: (ingredient: Ingredient) => void;
     title: string;
+    options: Ingredient[];   // <<--- NUEVO: ingredientes disponibles
 }
 
-export const AddIngredientDialog: React.FC<AddIngredientDialogProps> = ({ visible, onHide, onAdd, title }) => {
-    const [ingredientName, setIngredientName] = useState('')
+export const AddIngredientDialog: React.FC<AddIngredientDialogProps> = ({
+    visible, onHide, onAdd, title, options
+}) => {
+
+    const [selectedIngredient, setSelectedIngredient] = useState<Ingredient | null>(null)
 
     const handleAdd = () => {
-        if (ingredientName.trim()) {
-            onAdd(ingredientName.trim())
-            setIngredientName('') 
+        if (selectedIngredient) {
+            onAdd(selectedIngredient)
+            setSelectedIngredient(null)
         }
     }
 
-    const dialogFooter = (
-            <Button label="Añadir" icon="pi pi-check" onClick={handleAdd} autoFocus />
+    const footer = (
+        <Button label="Añadir" icon="pi pi-check" onClick={handleAdd} disabled={!selectedIngredient} />
     )
 
     return (
         <Dialog 
-            header={title} 
-            visible={visible} 
-            style={{ width: '90vw', maxWidth: '400px' }} 
-            modal 
+            header={title}
+            visible={visible}
+            style={{ width: '90vw', maxWidth: '400px' }}
+            modal
             onHide={onHide}
-            footer={dialogFooter}
+            footer={footer}
         >
             <div className="p-fluid">
-                <span className="p-float-label">
-                    <InputText 
-                        id="ingredientName" 
-                        value={ingredientName} 
-                        onChange={(e) => setIngredientName(e.target.value)} 
-                    />
-                    <label htmlFor="ingredientName">Nombre del ingrediente</label>
-                </span>
+                <Dropdown
+                    value={selectedIngredient}
+                    options={options}
+                    optionLabel="name"
+                    placeholder="Selecciona un ingrediente"
+                    onChange={(e) => setSelectedIngredient(e.value)}
+                    className="w-full"
+                />
             </div>
         </Dialog>
     )

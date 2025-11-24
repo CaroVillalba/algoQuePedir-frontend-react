@@ -6,11 +6,13 @@ import { Toast } from '../../../components/common/toast'
 import '../../../toast.css'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import { localService } from '../../../services/LocalService'
+import { ingredientService } from '../../../services/IngredientService'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { User } from '../../../types/User'
 import { authService } from '../../../services/AuthService'
 import { userService } from '../../../services/UserService'
 import type { FormEvent } from 'react'
+import type { Ingredient } from '../../../types/IngredientType'
 
 
 export const LayoutProfile = () => {
@@ -25,6 +27,8 @@ export const LayoutProfile = () => {
                 username : '',
                 lastname : '',
                 location : '',
+                preferredIngredients: [],
+                ingredientsToAvoid: [],
                 address: {
                     street: '',
                     number: 0,
@@ -50,8 +54,9 @@ export const LayoutProfile = () => {
         const [ username, setUsername ] = useState('username')
 
 
-        const [ avoidIngredients, setAvoidIngredients ] = useState<string[]>([])
-        const [ preferredIngredients, setPreferredIngredients ] = useState<string[]>([])
+        const [ avoidIngredients, setAvoidIngredients ] = useState<Ingredient[]>(profileInfo.ingredientsToAvoid)
+        const [ preferredIngredients, setPreferredIngredients ] = useState<Ingredient[]>(profileInfo.preferredIngredients)
+        const [ availableIngredients, setAvailableIngredients ] = useState<Ingredient[]>([])
 
         const profileContext = {
             profileInfo, setProfileInfo,
@@ -70,15 +75,20 @@ export const LayoutProfile = () => {
         }
 
         const ingredientContext = {
-            avoidIngredients, setAvoidIngredients,
-            preferredIngredients, setPreferredIngredients,
-        }
+           avoidIngredients, setAvoidIngredients,
+           preferredIngredients, setPreferredIngredients,
+           availableIngredients, setAvailableIngredients,
+       }
+
+      
+
 
 
         const getRestaurants = async () => {
         
                 try{
                 const allRestaurants = await localService.getRestaurants()
+                
         
                 const initialSelected = allRestaurants.slice(0, 3)
                 const initialAvailable = allRestaurants.slice(3) 
@@ -95,7 +105,8 @@ export const LayoutProfile = () => {
         }
 
         async function fetchProfileInfo()  {
-                const username = authService.getLoggedUsername() 
+                const username =  authService.getLoggedUsername()
+                const ingredients = await ingredientService.getAll()
                 
                 if (username == null) {
                     showToast('Debe iniciar sesión para ver su perfil.', 'error')
@@ -106,7 +117,12 @@ export const LayoutProfile = () => {
         
                 try {
                     const userProfile = await userService.getUserProfile(username) 
+                    console.log(userProfile)
                     setProfileInfo(userProfile)
+                    setAvoidIngredients(userProfile.ingredientsToAvoid)
+                    setPreferredIngredients(userProfile.preferredIngredients)
+                    setAvailableIngredients(ingredients) // <<--- NUEVO
+
                 } catch (error: unknown) {
                     const errorMessage = getMensajeError(error as ErrorResponse)
                     showToast(`Error al cargar perfil: ${errorMessage}`, 'error')

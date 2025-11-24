@@ -12,6 +12,7 @@ class UserService extends CRUDService<User>{
         const response = await this.api.get<User>(`/${this.path}`, {
             params : { username }
         })
+        console.log(response.data)
         return response.data
     }
 
@@ -35,6 +36,8 @@ class UserService extends CRUDService<User>{
                 }
             },
             location : user.location,
+            preferredIngredients: user.preferredIngredients,
+            ingredientsToAvoid: user.ingredientsToAvoid,
         }
         
         await this.api.patch<User>(`/${this.path}`, payload)
