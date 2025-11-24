@@ -26,8 +26,18 @@ export const IngredientsAvoid = () => {
     const [dialogVisible, setDialogVisible] = useState(false)
 
     const handleRemoveIngredient = (ingredientToRemove: Ingredient) => {
-        setAvoidIngredients(prevList => prevList.filter(ing => ing.name !== ingredientToRemove.name))
-    }
+    setAvoidIngredients(prev => {
+        const updated = prev.filter(ing => ing.name !== ingredientToRemove.name)
+
+        
+        setProfileInfo(prevProfile => ({
+            ...prevProfile,
+            ingredientsToAvoid: updated,
+        }))
+
+        return updated
+    })
+}
 
     const handleAddIngredient = (newIngredient: Ingredient) => {
        const normalizedNewIngredient = newIngredient.name.toLowerCase()
@@ -43,11 +53,11 @@ export const IngredientsAvoid = () => {
             return
         }
 
-        // 1) actualizás el estado local
+        
         setAvoidIngredients(prev => {
         const updated = [...prev, newIngredient];
 
-        // 2) sincronizás `profileInfo`
+        
         setProfileInfo(prevProfile => ({
             ...prevProfile,
             ingredientsToAvoid: updated,
@@ -100,7 +110,7 @@ export const IngredientsAvoid = () => {
                 onHide={() => setDialogVisible(false)}
                 onAdd={handleAddIngredient}
                 title="Añadir ingrediente a evitar"
-                options={availableIngredients} // <<--- NUEVO
+                options={availableIngredients} 
             />
     </>
     )
