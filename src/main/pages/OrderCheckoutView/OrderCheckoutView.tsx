@@ -1,13 +1,14 @@
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import { Image } from 'primereact/image'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useCart } from '../../../hooks/useCart'
 import { orderService } from '../../../services/OrderService'
 import { localService } from '../../../services/LocalService'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { LocalCheckout } from '../../../types/Local'
+import { MainContext } from '../../../types/MainContextType'
 
 export const OrderCheckoutView = () => {
     const { id } = useParams()
@@ -18,15 +19,12 @@ export const OrderCheckoutView = () => {
     const {
         items,
         setItems,
-        subtotal,
-        restaurantId: cartRestaurantId,
-        setRestaurantId,
-        totalItems
+        subtotal
     } = cart
 
     const navigate = useNavigate()
 
-    const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
+    const { showToast } = useContext(MainContext)
 
     const [paymentMethod, setPaymentMethod] = useState<string>('')
     const [loading, setLoading] = useState(false)

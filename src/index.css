@@ -122,3 +122,23 @@ html, :root {
   color: var(--color-logo) !important;
   border-color: var(--color-logo) !important;
 }
+
+/* Dialog de alerta de carrito */
+.p-dialog .p-dialog-footer button {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.p-button-label {
+  font-weight: 700;
+  color: var(--color-container);
+}
+
+.p-calendar-w-btn-right .p-datepicker-trigger {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.p-button.p-button-text {
+  color: var(--color-primary);
+}

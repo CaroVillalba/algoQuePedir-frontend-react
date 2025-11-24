@@ -9,7 +9,7 @@ interface AddIngredientDialogProps {
     onHide: () => void;
     onAdd: (ingredient: Ingredient) => void;
     title: string;
-    options: Ingredient[];   // <<--- NUEVO: ingredientes disponibles
+    options: Ingredient[];   
 }
 
 export const AddIngredientDialog: React.FC<AddIngredientDialogProps> = ({

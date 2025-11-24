@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { TabMenu } from 'primereact/tabmenu'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { MainContext } from '../types/MainContextType'
+import type { MainContextType } from '../types/MainContextType'
 import './Footer.css'
 
 export default function Footer() {
-  const navigate = useNavigate()
   const location = useLocation()
+  const { navigateWithGuard } = useContext<MainContextType>(MainContext)
 
   const pathIndexMap: Record<string, number> = {
     '/home': 0,
@@ -16,11 +18,14 @@ export default function Footer() {
     '/review-restorant': 2,
     '/profile': 3,
     '/profile/criteria': 3,
-    '/profile/IngredientsAvoid': 3,
-    '/profile/IngredientsPreffered': 3
+    '/profile/ingredients-avoid': 3,
+    '/profile/ingredients-preffered': 3
   }
 
-  const getIndexFromPath = (path: string) => pathIndexMap[path] ?? 0
+  const getIndexFromPath = (path: string) => {
+    const match = Object.keys(pathIndexMap).find(key => path.startsWith(key))
+    return match ? pathIndexMap[match] : 0
+  }
 
   const [activeIndex, setActiveIndex] = useState(getIndexFromPath(location.pathname))
 
@@ -29,10 +34,10 @@ export default function Footer() {
   }, [location.pathname])
 
   const items = [
-    { label: 'Inicio', icon: 'pi pi-home', command: () => navigate('/home') },
-    { label: 'Pedidos', icon: 'pi pi-file', command: () => navigate('/orders') },
-    { label: 'Calificar', icon: 'pi pi-star', command: () => navigate('/review') },
-    { label: 'Perfil', icon: 'pi pi-user', command: () => navigate('/profile') }
+    { label: 'Inicio', icon: 'pi pi-home', command: () => navigateWithGuard('/home') },
+    { label: 'Pedidos', icon: 'pi pi-file', command: () => navigateWithGuard('/orders') },
+    { label: 'Calificar', icon: 'pi pi-star', command: () => navigateWithGuard('/review') },
+    { label: 'Perfil', icon: 'pi pi-user', command: () => navigateWithGuard('/profile') }
   ]
 
   return (

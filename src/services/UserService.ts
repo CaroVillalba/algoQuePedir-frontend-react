@@ -1,7 +1,5 @@
 import { CRUDService } from './CRUDService'
 import type { User } from '../types/User'
-import { Password } from '@mui/icons-material'
-
 
 class UserService extends CRUDService<User>{
     constructor (){
@@ -12,7 +10,6 @@ class UserService extends CRUDService<User>{
         const response = await this.api.get<User>(`/${this.path}`, {
             params : { username }
         })
-        console.log(response.data)
         return response.data
     }
 
