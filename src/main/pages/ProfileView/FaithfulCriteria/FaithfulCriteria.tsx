@@ -18,12 +18,13 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const FaithfulCriteria = () => {
 
-    const { checkedFaithful, setCheckedFaithful, availableRestaurants, setAvailableRestaurants, selectedRestaurants,
-         setSelectedRestaurants, displayAddDialog, setDisplayAddDialog } = useOutletContext<ProfileContextType>()
+    const { criteria, restaurant, showToast } = useOutletContext<ProfileContextType>()
 
-    const { toast, showToast } = useToast()
+    const { criteria: c , setCriteria } = criteria
 
-
+    const { availableRestaurants, setAvailableRestaurants, selectedRestaurants,
+            setSelectedRestaurants, displayAddDialog, setDisplayAddDialog  } = restaurant
+    
 
 
     const onChangePickList = (event: { source: Local[], target: Local[] }) => {
@@ -81,8 +82,13 @@ export const FaithfulCriteria = () => {
                 </div>
                 <Checkbox 
                     className='custom-checkbox' 
-                    onChange={e => setCheckedFaithful(e.checked ?? false)} 
-                    checked={checkedFaithful}
+                    onChange={() =>
+                        setCriteria(prev => ({
+                            ...prev,
+                            faithful: !prev.faithful
+                        }))
+                    }
+                    checked={c.faithful}
                 />
             </Card>
 
@@ -107,7 +113,7 @@ export const FaithfulCriteria = () => {
                 visible={displayAddDialog} 
                 onHide={() => setDisplayAddDialog(false)} 
                 modal 
-                style={{ width: '80%' , height: '100%'}}
+                style={{ width: '80%' , height: '79%'}}
                 
             >
                 <div className="p-fluid">
@@ -116,20 +122,15 @@ export const FaithfulCriteria = () => {
                         source={availableRestaurants} 
                         target={selectedRestaurants} 
                         itemTemplate={pickListItemTemplate} 
-                        sourceHeader="Disponibles" 
-                        targetHeader="Preferidos" 
+                        sourceHeader="Restaurantes disponibles" 
+                        targetHeader="Restaurantes en preferidos" 
                         onChange={onChangePickList} 
-                        sourceStyle={{ height: '90px'}} 
-                        targetStyle={{ height: '90px' }} 
+                        sourceStyle={{ height: '120px'}} 
+                        targetStyle={{ height: '120px' }} 
                         
                     />
                 </div>
             </Dialog>
-
-        <div id ="toast-container">
-            <Toast toast = {toast} />
-        </div>
-
 
         </>
     )

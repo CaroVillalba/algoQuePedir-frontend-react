@@ -7,18 +7,20 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 import { AddIngredientDialog } from './AddIngredientDialog' 
 import { useToast } from '../../../../hooks/useToast'
 import { DataView } from 'primereact/dataview'
+import type { MainContextType } from '../../../../types/MainContextType'
+import './Ingredients.css'
 
 
 export const IngredientsAvoid = () => {
     const navigate = useNavigate()
     
     const { 
-        avoidIngredients, setAvoidIngredients,
-        preferredIngredients, 
-    
+        ingredients, showToast
     } = useOutletContext<ProfileContextType>()
 
-    const { toast, showToast } = useToast() 
+
+    const { avoidIngredients, setAvoidIngredients, preferredIngredients } = ingredients
+
 
     const [dialogVisible, setDialogVisible] = useState(false)
 
@@ -31,7 +33,7 @@ export const IngredientsAvoid = () => {
 
        
         if (avoidIngredients.map(i => i.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast('El ingrediente ya existe en la lista de "a evitar"', 'warning')
+            showToast('El ingrediente ya existe en la lista de "a evitar"', 'warn')
             return
         }
         
@@ -48,15 +50,12 @@ export const IngredientsAvoid = () => {
         return (
             <div className="p-col-12">
                 <div 
-                    className="p-d-flex p-jc-between p-ai-center ingredient-data-row p-card p-p-2 p-mb-2"
+                    className="ingredient-data-row p-card p-p-2 p-mb-2 "
                 >
-                    {/* Nombre del Ingrediente */}
                     <div className="ingredient-name">{ingredient}</div>
-                    
-                    {/* Botón de Remover */}
                     <Button 
                         icon="pi pi-times" 
-                        className="p-button-danger p-button-text p-button-rounded" 
+                        className="p-button-danger p-button-text p-button-rounded ingredient-remove-button" 
                         onClick={() => handleRemoveIngredient(ingredient)} 
                     />
                 </div>
@@ -66,21 +65,23 @@ export const IngredientsAvoid = () => {
 
     return (
         <>
-            <DataView
+            <section className='ingredient-list-row'>
+            <DataView 
+                className='ingredient-list'
                 value={avoidIngredients}
                 layout="list" 
                 itemTemplate={ingredientItemTemplate}
                 paginator={false} 
                 emptyMessage="No hay ingredientes en esta lista."
             />
-
+            </section>
             <Button 
                 label="Añadir ingrediente" 
                 icon="pi pi-plus" 
-                className="p-button-primary p-mt-5" 
+                className='button-primary button-ingredients' 
                 onClick={() => setDialogVisible(true)} 
             />
-
+           
             <AddIngredientDialog
                 visible={dialogVisible}
                 onHide={() => setDialogVisible(false)}

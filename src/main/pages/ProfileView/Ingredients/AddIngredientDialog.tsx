@@ -21,10 +21,7 @@ export const AddIngredientDialog: React.FC<AddIngredientDialogProps> = ({ visibl
     }
 
     const dialogFooter = (
-        <div>
-            <Button label="Cancelar" icon="pi pi-times" onClick={onHide} className="p-button-text" />
             <Button label="Añadir" icon="pi pi-check" onClick={handleAdd} autoFocus />
-        </div>
     )
 
     return (
@@ -33,7 +30,7 @@ export const AddIngredientDialog: React.FC<AddIngredientDialogProps> = ({ visibl
             visible={visible} 
             style={{ width: '90vw', maxWidth: '400px' }} 
             modal 
-            onHide={onHide} 
+            onHide={onHide}
             footer={dialogFooter}
         >
             <div className="p-fluid">

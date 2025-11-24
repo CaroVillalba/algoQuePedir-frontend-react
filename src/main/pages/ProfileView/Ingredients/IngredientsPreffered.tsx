@@ -6,17 +6,19 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 import { AddIngredientDialog } from './AddIngredientDialog' 
 import { useToast } from '../../../../hooks/useToast'
 import { DataView } from 'primereact/dataview'
+import { Toast } from '../../../../components/common/toast'
+import './Ingredients.css'
 
 
 export const IngredientsPreffered = () => {
 
     const { 
-        preferredIngredients, setPreferredIngredients,
-        avoidIngredients, 
+        ingredients,
+        showToast,
 
     } = useOutletContext<ProfileContextType>()
 
-    const { toast, showToast } = useToast()
+    const { preferredIngredients, setPreferredIngredients, avoidIngredients } = ingredients
 
     const [dialogVisible, setDialogVisible] = useState(false)
 
@@ -29,7 +31,7 @@ export const IngredientsPreffered = () => {
         
         
         if (preferredIngredients.map(i => i.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast('El ingrediente ya existe en la lista de "preferidos"', 'warning')
+            showToast('El ingrediente ya existe en la lista de "preferidos"', 'warn')
             return
         }
         
@@ -46,13 +48,13 @@ export const IngredientsPreffered = () => {
         return (
             <div className="p-col-12">
                 <div 
-                    className="p-d-flex p-jc-between p-ai-center ingredient-data-row p-card p-p-2 p-mb-2"
+                    className="ingredient-data-row p-card p-p-2 p-mb-2 "
                 >
                     <div className="ingredient-name">{ingredient}</div>
                     
                     <Button 
                         icon="pi pi-times" 
-                        className="p-button-danger p-button-text p-button-rounded" 
+                        className="p-button-danger p-button-text p-button-rounded ingredient-remove-button" 
                         onClick={() => handleRemoveIngredient(ingredient)} 
                     />
                 </div>
@@ -64,18 +66,21 @@ export const IngredientsPreffered = () => {
 
     return (
         <>
+            <section className='ingredient-list-row'>
             <DataView
+                className='ingredient-list'
                 value={preferredIngredients}
                 layout="list" 
                 itemTemplate={ingredientItemTemplate}
                 paginator={false} 
                 emptyMessage="No hay ingredientes en esta lista."
              />
+            </section>
 
             <Button 
                 label="Añadir ingrediente" 
                 icon="pi pi-plus" 
-                className="p-button-primary p-mt-5" 
+                className='button-primary button-ingredients'
                 onClick={() => setDialogVisible(true)} 
             />
 
@@ -85,6 +90,7 @@ export const IngredientsPreffered = () => {
                 onAdd={handleAddIngredient}
                 title="Añadir ingrediente preferido"
             />
+
         </>
     )
 }

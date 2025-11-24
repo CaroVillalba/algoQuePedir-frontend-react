@@ -1,23 +1,19 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom'
 import { Button } from 'primereact/button'
 import { Divider } from 'primereact/divider'
 import { Image } from 'primereact/image'
 import { Dialog } from 'primereact/dialog'
 import { InputNumber } from 'primereact/inputnumber'
 import { TabView, TabPanel } from 'primereact/tabview'
-import { Toast } from '../../../components/common/toast'
-import { useCart } from '../../../hooks/useCart'
 import { useOnInit } from '../../../hooks/useOnInit'
-import { useToast } from '../../../hooks/useToast'
 import type { CartItem } from '../../../types/Order'
 import { localService } from '../../../services/LocalService'
 import { dishService } from '../../../services/DishService'
 import './RestaurantMenuView.css'
 import type { LocalPublic } from '../../../types/Local'
 import type { Dish } from '../../../types/Dish'
-
-// TODO: Mejorar estilos y agregar datos reales del back, incorporar con los clientes guardados en el repo
+import type { CartContextType } from '../../../types/CartContextType'
 
 let initialLocalState: LocalPublic = {
     id: 0,
@@ -36,10 +32,49 @@ export const RestaurantMenuView = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
     const [quantity, setQuantity] = useState(1)
-    const addItem = useCart(state => state.addItem)
-    const totalItems = useCart(state => state.getTotalItems())
-    const { toast, showToast } = useToast()
-    const cartRestaurantId = useCart(state => state.restaurantId)
+    const { cart } = useOutletContext<{ cart: CartContextType }>()
+    const {
+        items,
+        setItems,
+        restaurantId,
+        setRestaurantId,
+        subtotal,
+        totalItems,
+    } = cart
+
+    const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
+
+    const addItem = (newItem: CartItem, restId: number) => {
+        // Si el carrito está vacío → inicializar restaurante
+        if (items.length === 0) {
+            setRestaurantId(restId)
+            setItems([newItem])
+            return true
+        }
+    
+        // Si el carrito es de otro restaurante
+        if (restaurantId !== restId) {
+            return false
+        }
+    
+        // Si el item ya existe → actualizar cantidad
+        const exists = items.find(i => i.id === newItem.id)
+    
+        if (exists) {
+            const updated = items.map(i =>
+                i.id === newItem.id
+                    ? { ...i, qty: i.qty + newItem.qty, total: (i.qty + newItem.qty) * i.unitPrice }
+                    : i
+            )
+    
+            setItems(updated)
+            return true
+        }
+    
+        // Si es un ítem nuevo
+        setItems([...items, newItem])
+        return true
+    }    
 
     const handleOpenModal = (dish: Dish) => {
         setSelectedDish(dish)
@@ -160,12 +195,12 @@ export const RestaurantMenuView = () => {
                 </TabPanel>
             </TabView>
 
-            {totalItems > 0 && Number(restaurantIdParam) === cartRestaurantId && (
+            {totalItems > 0 && Number(restaurantIdParam) === restaurantId && (
                 <div className="fixed-bottom checkout-bar">
                     <Button
                         label={`Ver Pedido (${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}
                         className="p-button-custom-primary w-full"
-                        onClick={() => navigate(`/order-checkout/${restaurantIdParam}`)}
+                        onClick={() => navigate(`../order-checkout/${restaurantIdParam}`)}
                     />
                 </div>
             )}
@@ -223,10 +258,6 @@ export const RestaurantMenuView = () => {
                     <span>${(selectedDish ? selectedDish.price * quantity : 0).toFixed(2)}</span>
                 </div>
             </Dialog>
-        
-            <div id="toast-container">
-                <Toast toast = { toast } />
-            </div>
         </div>
     )
 }

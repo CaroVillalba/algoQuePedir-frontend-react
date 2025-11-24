@@ -1,28 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
-import { Card } from  'primereact/card'
 import { ChevronRightIcon } from 'primereact/icons/chevronright'
 import './ProfileView.css'
 import { useNavigate, useOutletContext } from 'react-router-dom'
-import type { User } from '../../../types/User'
 import { userService } from '../../../services/UserService'
-import { Toast } from '../../../components/common/toast'
-import { useToast } from '../../../hooks/useToast'
-import { useOnInit } from '../../../hooks/useOnInit'
 import { getMensajeError, type ErrorResponse } from '../../../utils/errorHandling'
 import type { FormEvent } from 'react'
 import { Avatar } from 'primereact/avatar'
 import '../../../toast.css'
-import { authService } from '../../../services/AuthService'
 import type { ProfileContextType } from '../../../types/ProfileContextType'
 
 export const ProfileView = () => {
     const navigate = useNavigate()
-    const { toast, showToast } = useToast()
     
+    const { profile, showToast } = useOutletContext<ProfileContextType>()
 
-    const { profileInfo, setProfileInfo } = useOutletContext<ProfileContextType>()
+
+    const { profileInfo, setProfileInfo } = profile
 
     async function handlePersonalInfo(e: FormEvent) {
         e.preventDefault()
@@ -245,12 +240,12 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={() => navigate('./IngredientsAvoid')} className="preference-button">
+            <div onClick={() => navigate('./ingredients-avoid')} className="preference-button">
                 <h4>Ingredientes a evitar</h4>
                 <ChevronRightIcon/>
             </div>
 
-            <div onClick={()=> navigate('./IngredientsPreffered')} className="preference-button">
+            <div onClick={()=> navigate('./ingredients-preffered')} className="preference-button">
                 <h4>Ingredientes preferidos</h4>
                 <ChevronRightIcon/>
             </div>
@@ -262,10 +257,6 @@ export const ProfileView = () => {
         </form>
         </section>
         
-
-        <div id ="toast-container">
-            <Toast toast = {toast} />
-        </div>
 
         </>
     )

@@ -14,15 +14,9 @@ import type { FormEvent } from 'react'
 
 
 export const LayoutProfile = () => {
-        const [ checkedFaithful, setCheckedFaithful ] = useState(false)
         const [ availableRestaurants, setAvailableRestaurants ] = useState<Local[]>([])
         const [ selectedRestaurants, setSelectedRestaurants ] = useState<Local[]>([])
         const [ displayAddDialog, setDisplayAddDialog ] = useState(false)
-        const [ checkedMarketing, setCheckedMarketing ] = useState(false)
-        const [checkedVegan, setCheckedVegan] = useState(false)
-        const [checkedExquisite, setCheckedExquisite] = useState(false)
-        const [checkedConservative, setCheckedConservative] = useState(false)
-        const [checkedImpatient, setCheckedImpatient] = useState(false)
         const [ distance, setDistance ] = useState<number>(1)
         const { toast, showToast } = useToast()
         const [profileInfo, setProfileInfo] = useState<User>({ 
@@ -41,31 +35,44 @@ export const LayoutProfile = () => {
                 },
                 email: '',
         
-            })
+        })
+
+        const [criteria, setCriteria] = useState({
+            faithful: false,
+            marketing: false,
+            marketingWords: [] as string[],
+            vegan: false,
+            exquisite: false,
+            conservative: false,
+            impatient: false,
+        })
+
         const [ username, setUsername ] = useState('username')
 
 
-        const [savedProfileInfo, setSavedProfileInfo] = useState<User>({
-              id : -1,
-                firstname : '',
-                username : '',
-                lastname : '',
-                location : '',
-                address: {
-                    street: '',
-                    number: 0,
-                    coordinates: {
-                        x: 0,
-                        y:0,
-                    }
-                },
-
-                email: '',
-        
-        })
-
         const [ avoidIngredients, setAvoidIngredients ] = useState<string[]>([])
         const [ preferredIngredients, setPreferredIngredients ] = useState<string[]>([])
+
+        const profileContext = {
+            profileInfo, setProfileInfo,
+            username, setUsername,
+        }
+
+        const criteriaContext = {
+            criteria, setCriteria,
+            distance, setDistance,
+        }
+
+        const restaurantContext = {
+            availableRestaurants, setAvailableRestaurants,
+            selectedRestaurants, setSelectedRestaurants,
+            displayAddDialog, setDisplayAddDialog,
+        }
+
+        const ingredientContext = {
+            avoidIngredients, setAvoidIngredients,
+            preferredIngredients, setPreferredIngredients,
+        }
 
 
         const getRestaurants = async () => {
@@ -113,30 +120,18 @@ export const LayoutProfile = () => {
 
         return(<>
         <Outlet context= {{
-            avoidIngredients, setAvoidIngredients,
-            preferredIngredients, setPreferredIngredients,
-            checkedFaithful, setCheckedFaithful, 
-            availableRestaurants, setAvailableRestaurants, 
-            selectedRestaurants, setSelectedRestaurants, 
-            displayAddDialog, setDisplayAddDialog, 
-            checkedMarketing, setCheckedMarketing, 
-            checkedVegan, setCheckedVegan, 
-            checkedExquisite, setCheckedExquisite, 
-            checkedConservative, setCheckedConservative,
-            checkedImpatient, setCheckedImpatient, 
-            distance, setDistance,
-            profileInfo, setProfileInfo,
-            username, setUsername,
-            getRestaurants,
-           }}/>
-        
-        
+            profile: profileContext,
+            criteria: criteriaContext,
+            restaurant: restaurantContext,
+            ingredients: ingredientContext,
+            showToast,
 
-    
+        }}/>
+        
+        
         <div id= "toast-container">
             <Toast toast = { toast } />
         </div>
-        
         
         </>
         )

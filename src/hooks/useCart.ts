@@ -1,76 +1,20 @@
-import { create } from 'zustand'
+import { useState } from 'react'
 import type { CartItem } from '../types/Order'
+import type { CartContextType } from '../types/CartContextType'
 
-interface CartState {
-    restaurantId: number | null;
-    items: CartItem[];
+export const useCart = (): CartContextType => {
+    const [items, setItems] = useState<CartItem[]>([])
+    const [restaurantId, setRestaurantId] = useState<number | null>(null)
 
-    addItem: (item: CartItem, restaurantId: number) => boolean;
-    removeItem: (itemId: number) => void;
-    clearCart: () => void;
+    const subtotal = items.reduce((acc, i) => acc + i.total, 0)
+    const totalItems = items.reduce((acc, i) => acc + i.qty, 0)
 
-    getSubtotal: () => number;
-    getTotalItems: () => number;
-}
-
-export const useCart = create<CartState>((set, get) => ({
-    restaurantId: null,
-    items: [],
-    
-    addItem: (item: CartItem, restaurantId: number) => {
-        const state = get();
-
-        if (state.restaurantId === null) {
-            set({
-                restaurantId,
-                items: [item]
-            });
-            return true;
-        }
-
-        if (state.restaurantId === restaurantId) {
-            const existing = state.items.find(i => i.id === item.id);
-
-            if (existing) {
-                set({
-                    items: state.items.map(i =>
-                        i.id === item.id
-                            ? {
-                                ...i,
-                                qty: i.qty + item.qty,
-                                total: (i.qty + item.qty) * i.unitPrice
-                            }
-                            : i
-                    )
-                });
-            } else {
-                set({ items: [...state.items, item] });
-            }
-
-            return true;
-        }
-
-        return false;
-    },
-
-    removeItem: (itemId) => {
-        set(state => ({
-            items: state.items.filter(i => i.id !== itemId)
-        }));
-    },
-
-    clearCart: () => {
-        set({
-            restaurantId: null,
-            items: []
-        });
-    },
-
-    getSubtotal: () => {
-        return get().items.reduce((acc, i) => acc + i.total, 0);
-    },
-
-    getTotalItems: () => {
-        return get().items.reduce((acc, i) => acc + i.qty, 0);
+    return {
+        items,
+        setItems,
+        restaurantId,
+        setRestaurantId,
+        subtotal,
+        totalItems,
     }
-}));
+}
