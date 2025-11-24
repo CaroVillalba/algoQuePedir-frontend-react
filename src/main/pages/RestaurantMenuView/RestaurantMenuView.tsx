@@ -45,19 +45,16 @@ export const RestaurantMenuView = () => {
     const { showToast } = useContext(MainContext)
 
     const addItem = (newItem: CartItem, restId: number) => {
-        // Si el carrito está vacío → inicializar restaurante
         if (items.length === 0) {
             setRestaurantId(restId)
             setItems([newItem])
             return true
         }
     
-        // Si el carrito es de otro restaurante
         if (restaurantId !== restId) {
             return false
         }
     
-        // Si el item ya existe → actualizar cantidad
         const exists = items.find(i => i.id === newItem.id)
     
         if (exists) {
@@ -71,7 +68,6 @@ export const RestaurantMenuView = () => {
             return true
         }
     
-        // Si es un ítem nuevo
         setItems([...items, newItem])
         return true
     }    
