@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext, type ErrorResponse } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Password } from 'primereact/password'
 import { Calendar } from 'primereact/calendar'
@@ -7,8 +7,14 @@ import { Button } from 'primereact/button'
 import { Card } from 'primereact/card'
 import { authService } from '../../../../services/AuthService'
 import type { UserCredentialRegister } from '../../../../types/UserCredentialRegister'
+import { getMensajeError } from '../../../../utils/errorHandling'
+import type { MainContextType } from '../../../../types/MainContextType'
 
 export const Register = () => {
+
+  const { 
+        showToast
+    } = useOutletContext<MainContextType>()
   const navigate = useNavigate()
 
   const [credentials, setCredentials] = useState<UserCredentialRegister>({
@@ -28,21 +34,38 @@ export const Register = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
+  const validateFirstname = () => credentials.firstname.trim().length >= 1
+
+  const validateLastname = () => credentials.lastname.trim().length >= 1
+
+  const validateBirthDate = () => credentials.birthDate
 
   const validateUser = () => credentials.username.length > 3
   const validatePassword = () => credentials.password === password2 && credentials.password !== ''
 
   const handleRegister = async () => {
-    if (!validateUser()) {
-      window.alert('El usuario debe tener al menos 4 caracteres.')
+    if (!validateFirstname()) {
+      showToast('El Nombre no debe estar vacio.', 'error')
       return
     }
-    if (!validatePassword()) {
-      window.alert('Las contraseñas no coinciden.')
+    if (!validateLastname()) {
+      showToast('El apellido no debe estar vacio.', 'error')
+      return
+    }
+    if (!validateBirthDate()) {
+      showToast('Debe seleccionar su fecha de nacimiento.', 'error')
+      return
+    }
+    if (!validateUser()) {
+      showToast('El usuario debe tener al menos 4 caracteres.', 'error')
       return
     }
     if (!validateEmail()) {
-      window.alert('El email ingresado no es válido.')
+      showToast('El email ingresado no es válido.', 'error')
+      return
+    }
+    if (!validatePassword()) {
+      showToast('Las contraseñas no coinciden.', 'error')
       return
     }
 
@@ -50,9 +73,10 @@ export const Register = () => {
       await authService.register(credentials)
       window.alert('Usuario registrado con éxito.')
       navigate('/login')
-    } catch {
-      window.alert('Error al registrar el usuario.')
-    }
+    } catch (error: unknown) {
+                            const errorMessage = getMensajeError(error as ErrorResponse)
+                            showToast(`Error al registrarse: ${errorMessage}`, 'error')
+                        }
   }
 
   return (

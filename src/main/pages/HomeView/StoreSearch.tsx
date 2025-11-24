@@ -12,6 +12,7 @@ import { useOnInit } from '../../../hooks/useOnInit'
 import type { CartContextType } from '../../../types/CartContextType'
 import { MainContext } from '../../../types/MainContextType'
 
+
 export const PinIcon = ({ esCercano }: { esCercano: boolean }) => {
   if (esCercano) {
     return (
@@ -71,7 +72,7 @@ export const StoreSearch = () => {
   return (
     <>
       <div className="search-header">
-        <h3>Delivery</h3>
+        <h3 className="search-title">Delivery</h3>
 
         <i
           className="shopping-cart-container"
@@ -111,8 +112,8 @@ export const StoreSearch = () => {
       </label>
 
 
-      <main className="main-container">
-        <h2>Locales de comida</h2>
+      <main>
+        <h2 className="locales-title">Locales de comida</h2>
 
         <div className="grid">
           {localesFiltrados.map((local) => (

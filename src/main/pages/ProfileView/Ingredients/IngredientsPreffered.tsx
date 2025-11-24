@@ -27,8 +27,18 @@ export const IngredientsPreffered = () => {
     const [dialogVisible, setDialogVisible] = useState(false)
 
     const handleRemoveIngredient = (ingredientToRemove: Ingredient) => {
-        setPreferredIngredients(prevList => prevList.filter(ing => ing.name !== ingredientToRemove.name))
-    }
+    setPreferredIngredients(prev => {
+        const updated = prev.filter(ing => ing.name !== ingredientToRemove.name)
+
+        setProfileInfo(prevProfile => ({
+            ...prevProfile,
+            preferredIngredients: updated,
+        }))
+
+        return updated
+    })
+}
+
 
     const handleAddIngredient = (newIngredient: Ingredient) => {
         const normalizedNewIngredient = newIngredient.name.toLowerCase()
@@ -44,11 +54,11 @@ export const IngredientsPreffered = () => {
             return
         }
 
-        // 1) actualizás el estado local
+        
         setPreferredIngredients(prev => {
         const updated = [...prev, newIngredient];
 
-        // 2) sincronizás `profileInfo`
+
         setProfileInfo(prevProfile => ({
             ...prevProfile,
             preferredIngredients: updated,
@@ -104,7 +114,7 @@ export const IngredientsPreffered = () => {
                 onHide={() => setDialogVisible(false)}
                 onAdd={handleAddIngredient}
                 title="Añadir ingrediente preferido"
-                options={availableIngredients} // <<--- NUEVO
+                options={availableIngredients} 
             />
 
         </>
