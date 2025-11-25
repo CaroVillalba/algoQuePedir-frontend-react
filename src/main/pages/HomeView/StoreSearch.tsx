@@ -35,6 +35,7 @@ export const StoreSearch = () => {
 
   const cartRestaurantId = cart.restaurantId
 
+  //convertirla a función 
   const localesFiltrados = checked
     ? locales.filter((local) => local.esCercano)
     : locales

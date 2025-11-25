@@ -1,6 +1,5 @@
 import "./OrderCard.css"
 import { Image } from 'primereact/image'
-import { PrimeIcons } from 'primereact/api';
 
 export const OrderCard = (props: any) => {
     return (
