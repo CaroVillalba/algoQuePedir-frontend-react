@@ -31,7 +31,6 @@ export const ReviewsView = () => {
 
     return (
         <div className = "ReviewsView">
-            <h1>Restaurantes a Calificar</h1>
             <div className = "pendingReviews">
                 {items.map(item => (
                     <RestorantToReview localId={item.localId} nombre={item.localName} puntuacion={item.localRating} tiempo={item.lastOrderDate}></RestorantToReview>
