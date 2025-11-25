@@ -49,7 +49,7 @@ export const IngredientsAvoid = () => {
         }
         
         if (preferredIngredients.map(i => i.name.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast(`"${newIngredient}" no puede estar en la lista de preferidos y a evitar a la vez.`, 'error')
+            showToast(`"${newIngredient.name}" no puede estar en la lista de preferidos y a evitar a la vez.`, 'error')
             return
         }
 
