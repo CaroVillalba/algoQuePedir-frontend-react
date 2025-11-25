@@ -9,6 +9,7 @@ import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { LocalCheckout } from '../../../types/Local'
 import { MainContext } from '../../../types/MainContextType'
+import './OrderCheckoutView.css'
 
 export const OrderCheckoutView = () => {
     const { id } = useParams()
@@ -156,8 +157,10 @@ export const OrderCheckoutView = () => {
                         <div key={item.id} className="flex justify-content-between align-items-center mb-3">
                             <div>
                                 <div className="font-bold">{item.name}</div>
-                                <small className="text-color-secondary block text-sm">Cantidad: {item.qty}</small>
-                                <small className="text-color-secondary text-sm">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
+                                <div className="order-item-details-text">
+                                    <small className="text-color-secondary block text-sm">Cantidad: {item.qty}</small>
+                                    <small className="text-color-secondary text-sm">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
+                                </div>
                             </div>
                             <div className="flex flex-column align-items-center">
                                 <span className="font-bold">${(item.unitPrice * item.qty).toFixed(2)}</span>

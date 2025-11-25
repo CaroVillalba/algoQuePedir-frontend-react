@@ -6,6 +6,7 @@ import { useOnInit } from "../../../hooks/useOnInit"
 import type { Order } from "../../../types/Order"
 import { orderService } from "../../../services/OrderService"
 import { useParams } from 'react-router-dom';
+import './OrderDetailsView.css'
 
 export const OrderDetailsView = () => {
     const { id } = useParams()
@@ -69,8 +70,10 @@ export const OrderDetailsView = () => {
                             <div key={item.id} className="flex justify-content-between align-items-center mb-3">
                                 <div>
                                     <div className="font-bold">{item.name}</div>
-                                    <small className="text-color-secondary block text-sm">Cantidad: {item.quantity}</small>
-                                    <small className="text-color-secondary text-sm">Precio unitario: ${item.price.toFixed(2)}</small>
+                                    <div className="order-item-details-text">
+                                        <small className="text-color-secondary block text-sm">Cantidad: {item.quantity}</small>
+                                        <small className="text-color-secondary text-sm">Precio unitario: ${item.price.toFixed(2)}</small>
+                                    </div>
                                 </div>
                                 <div className="flex flex-column align-items-center">
                                     <span className="font-bold">${(item.price * item.quantity).toFixed(2)}</span>
@@ -83,7 +86,7 @@ export const OrderDetailsView = () => {
                         <div className="font-bold text-lg mb-3">Resumen</div>
                         <div className="flex justify-content-between mb-2">
                             <span>Subtotal</span>
-                            <span>${/*subtotal.toFixed(2)*/}</span>
+                            <span>${order.subtotal?.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-content-between mb-2">
                             <span>Recargo por tipo de pago</span>
