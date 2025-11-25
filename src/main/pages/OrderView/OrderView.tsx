@@ -39,6 +39,11 @@ export const OrderView = () => {
     });
     }
 
+    const handleDelete = async (orderId: number) => {
+        await orderService.deleteOrder(orderId)
+        await updateOrders()
+    }
+
     return (
         <div className="OrderView">
             <ConfirmDialog />
@@ -61,13 +66,18 @@ export const OrderView = () => {
                             imageURL={orden.dishes[0].imageUrl} 
                             href={"/orders/"+orden.id}
                             showCancel={true}
+                            showDelete={false}
                             onCancel={handleCancel}/>
                         ))
                     }
                 </TabPanel>
 
                 <TabPanel header="Completados">
-                    {
+                    { ordenesCompletadas.length === 0 ? (
+                        <div className="sin-pedidos">
+                            Nada que ver acá. Podés realizar un pedido desde el inicio.
+                        </div>
+                    ):
                         ordenesCompletadas.map((orden) => (
                             <OrderCard 
                             key={orden.id}
@@ -78,13 +88,19 @@ export const OrderView = () => {
                             articulos={orden.quantity} 
                             imageURL={orden.dishes[0].imageUrl} 
                             href={"/orders/"+orden.id}
-                            showCancel={false}/>
+                            showCancel={false}
+                            showDelete={true}
+                            onDelete={handleDelete}/>
                         ))
                     }
                 </TabPanel>
 
                 <TabPanel header="Cancelados">
-                    {
+                    { ordenesCanceladas.length === 0 ? (
+                        <div className="sin-pedidos">
+                            No hay pedidos cancelados.
+                        </div>
+                    ):
                         ordenesCanceladas.map((orden) => (
                             <OrderCard 
                             key={orden.id}
@@ -95,7 +111,9 @@ export const OrderView = () => {
                             articulos={orden.quantity} 
                             imageURL={orden.dishes[0].imageUrl} 
                             href={"/orders/"+orden.id}
-                            showCancel={false}/>
+                            showCancel={false}
+                            showDelete={true}
+                            onDelete={handleDelete}/>
                         ))
                     }
                 </TabPanel>
