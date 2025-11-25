@@ -113,8 +113,8 @@ export const RestaurantMenuView = () => {
                 let data = await localService.getPublicById(Number(restaurantIdParam))
                 setLocal(data)
             }
-        } catch (error) {
-            console.error('Error fetching local:', error)
+        } catch {
+            showToast('No se pudo cargar la información del local.', 'error')
         }
     }
 
@@ -124,8 +124,8 @@ export const RestaurantMenuView = () => {
                 const data = await dishService.getByLocal(Number(restaurantIdParam))
                 setDishes(data)
             }
-        } catch (error) {
-            console.error('Error fetching dishes:', error)
+        } catch {
+            showToast('No se pudieron cargar los platos del menú.', 'error')
         }
     }
 
