@@ -46,6 +46,11 @@ export class OrderService extends CRUDService<Order> {
         const response = await this.api.patch<Order>(`/${this.path}/${id}`)
         return response.data
     }
+
+    async cancelOrder(id: number): Promise<Order> {
+        const response = await this.api.patch<Order>(`/${this.path}/cancel/${id}`)
+        return response.data
+    }
 }
 
 export const orderService = new OrderService()

@@ -2,6 +2,18 @@ import "./OrderCard.css"
 import { Image } from 'primereact/image'
 
 export const OrderCard = (props: any) => {
+
+    const handleCancel = () => {
+        props.onCancel(props.id)
+    }
+
+    {props.showCancel && (
+        <div className="order-card-button">
+            <i className="pi pi-ban delete-icon" onClick={handleCancel}></i>
+        </div>
+    )}
+
+
     return (
         <div className="OrderCard">
                 <Image  
@@ -18,9 +30,11 @@ export const OrderCard = (props: any) => {
                         <p>{props.fecha} - {props.articulos} articulos</p>
                     </span>
                 </a>
-                <div className="order-card-button">
-                    <i className="pi pi-ban delete-icon"></i>
-                </div>
+                {props.showCancel && (
+                    <div className="order-card-button">
+                        <i className="pi pi-ban delete-icon" onClick={handleCancel}></i>
+                    </div>
+                )}
         </div>
     )
 }

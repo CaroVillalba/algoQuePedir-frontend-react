@@ -19,17 +19,38 @@ export const OrderView = () => {
         setOrdenesCompletadas(ordenes.filter((orden: any) => (orden.state == "ENTREGADO")))
         setOrdenesCanceladas(ordenes.filter((orden: any) => (orden.state == "CANCELADO")))
 
+        console.log(ordenes)
     }
+
     useOnInit(updateOrders)
+
+    const handleCancel = async (orderId: number) => {
+        await orderService.cancelOrder(orderId)
+        await updateOrders()
+    }
 
     return (
         <div className="OrderView">
 
             <TabView>
                 <TabPanel header="Pendientes">
-                    {
+                    { ordenesPendientes.length === 0 ? (
+                        <div className="sin-pedidos">
+                            Ahora mismo, no hay pedidos pendientes.
+                        </div>
+                    ):
                         ordenesPendientes.map((orden) => (
-                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl} href={"/orders/"+orden.id}/>
+                            <OrderCard 
+                            key={orden.id}
+                            id={orden.id}
+                            local={orden.localName} 
+                            costo={orden.total} 
+                            fecha="12 de mayo" 
+                            articulos={orden.quantity} 
+                            imageURL={orden.dishes[0].imageUrl} 
+                            href={"/orders/"+orden.id}
+                            showCancel={true}
+                            onCancel={handleCancel}/>
                         ))
                     }
                 </TabPanel>
@@ -37,7 +58,16 @@ export const OrderView = () => {
                 <TabPanel header="Completados">
                     {
                         ordenesCompletadas.map((orden) => (
-                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl} href={"/orders/"+orden.id}/>
+                            <OrderCard 
+                            key={orden.id}
+                            id={orden.id}
+                            local={orden.localName} 
+                            costo={orden.total} 
+                            fecha="12 de mayo" 
+                            articulos={orden.quantity} 
+                            imageURL={orden.dishes[0].imageUrl} 
+                            href={"/orders/"+orden.id}
+                            showCancel={false}/>
                         ))
                     }
                 </TabPanel>
@@ -45,7 +75,16 @@ export const OrderView = () => {
                 <TabPanel header="Cancelados">
                     {
                         ordenesCanceladas.map((orden) => (
-                            <OrderCard local={orden.localName} costo={orden.total} fecha="12 de mayo" articulos={orden.quantity} imageURL={orden.dishes[0].imageUrl} href={"/orders/"+orden.id}/>
+                            <OrderCard 
+                            key={orden.id}
+                            id={orden.id}
+                            local={orden.localName} 
+                            costo={orden.total} 
+                            fecha="12 de mayo" 
+                            articulos={orden.quantity} 
+                            imageURL={orden.dishes[0].imageUrl} 
+                            href={"/orders/"+orden.id}
+                            showCancel={false}/>
                         ))
                     }
                 </TabPanel>
