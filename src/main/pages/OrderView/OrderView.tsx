@@ -1,4 +1,5 @@
 import { TabView, TabPanel } from "primereact/tabview"
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { OrderCard } from "./OrderCard/OrderCard"
 import { orderService } from "../../../services/OrderService"
 import { useOnInit } from "../../../hooks/useOnInit"
@@ -25,12 +26,22 @@ export const OrderView = () => {
     useOnInit(updateOrders)
 
     const handleCancel = async (orderId: number) => {
-        await orderService.cancelOrder(orderId)
-        await updateOrders()
+        confirmDialog({
+        message: '¿Seguro que querés cancelar este pedido?',
+        header: 'Confirmar cancelación',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sí, cancelar',
+        rejectLabel: 'No',
+        accept: async () => {
+            await orderService.cancelOrder(orderId)
+            await updateOrders()
+        }
+    });
     }
 
     return (
         <div className="OrderView">
+            <ConfirmDialog />
 
             <TabView>
                 <TabPanel header="Pendientes">

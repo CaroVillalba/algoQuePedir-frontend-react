@@ -7,13 +7,6 @@ export const OrderCard = (props: any) => {
         props.onCancel(props.id)
     }
 
-    {props.showCancel && (
-        <div className="order-card-button">
-            <i className="pi pi-ban delete-icon" onClick={handleCancel}></i>
-        </div>
-    )}
-
-
     return (
         <div className="OrderCard">
                 <Image  
@@ -32,7 +25,7 @@ export const OrderCard = (props: any) => {
                 </a>
                 {props.showCancel && (
                     <div className="order-card-button">
-                        <i className="pi pi-ban delete-icon" onClick={handleCancel}></i>
+                        <i className="pi pi-ban delete-icon" onClick={handleCancel} title="Cancelar pedido"></i>
                     </div>
                 )}
         </div>
