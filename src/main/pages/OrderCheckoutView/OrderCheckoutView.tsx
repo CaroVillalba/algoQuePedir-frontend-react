@@ -51,7 +51,10 @@ export const OrderCheckoutView = () => {
         )
     }
     
-    const clearCart = () => setItems([])
+    const clearCart = () => {
+        setItems([])
+        navigate('/home')
+    }
 
     const paymentOptions = (localCheckout.paymentMethods ?? []).map(pm => {
         const method = pm.name || ''
