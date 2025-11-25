@@ -8,9 +8,12 @@ import type { Rating } from "../../../types/Rating";
 import { ratingService } from "../../../services/RatingService";
 import { authService } from "../../../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { MainContext } from '../../../types/MainContextType'
 
 export const ReviewRestorantView = () => {
     const navigate = useNavigate()
+    const { showToast } = useContext(MainContext)
 
     const { id } = useParams()
     const [localName, setLocalName] = useState("error")
@@ -37,6 +40,7 @@ export const ReviewRestorantView = () => {
             "rating": Number(stars), 
             "description": review
         })
+        showToast("Calificacion enviada exitosamente", "success")
         navigate("/review")
     }
 

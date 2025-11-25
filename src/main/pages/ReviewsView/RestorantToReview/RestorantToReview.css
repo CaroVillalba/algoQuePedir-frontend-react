@@ -9,5 +9,23 @@
 .flexContainer{
     display:flex;
     justify-content: space-between;
+    align-items:end;
+    padding-bottom:0.5rem;
 }
 
+.image-local {
+    object-fit: cover;
+    object-position: center;
+    height:auto;
+    width:80px;
+    height:80px;
+    border-radius: 5px;
+}
+
+.columna1{
+    padding-bottom:1rem;
+}
+
+.columna1{
+    padding-bottom:0.4rem;
+}
