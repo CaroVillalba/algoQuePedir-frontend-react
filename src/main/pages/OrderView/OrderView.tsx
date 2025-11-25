@@ -19,8 +19,6 @@ export const OrderView = () => {
         setOrdenesPendientes(ordenes.filter((orden: any) => (orden.state == "PENDIENTE" || orden.state === "PREPARADO")))
         setOrdenesCompletadas(ordenes.filter((orden: any) => (orden.state == "ENTREGADO")))
         setOrdenesCanceladas(ordenes.filter((orden: any) => (orden.state == "CANCELADO")))
-
-        console.log(ordenes)
     }
 
     useOnInit(updateOrders)

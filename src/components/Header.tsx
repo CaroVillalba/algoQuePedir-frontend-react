@@ -26,6 +26,4 @@ export const Header: React.FC<HeaderProps> = ({ title, showBackButton = false })
             center={<span className="font-semibold text-lg">{title}</span>}
         />
     )
-
-    // TODO: Hacer que ocupe todo el ancho de la pantalla 
 }

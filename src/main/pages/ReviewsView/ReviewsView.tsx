@@ -15,9 +15,6 @@ export const ReviewsView = () => {
         const username = authService.getLoggedUsername()!!
         const userProfile = await userService.getUserProfile(username)
         setItems(userProfile.pendingRatings as any)
-        // pendingRatings is not declared on User; cast to any (or define a proper type) to avoid the implicit any index error
-        console.log(username)
-        console.log(userProfile)
     }
 
     const [items, setItems] = useState([
@@ -27,7 +24,6 @@ export const ReviewsView = () => {
         {localId: 4, localName:"Burger Joint", localRating:"4,0", lastOrderDate:"25-35 min"}
     ])
 
-    //console.log(profileInfo)
     useOnInit(() => {
         loadReviews()
     })
