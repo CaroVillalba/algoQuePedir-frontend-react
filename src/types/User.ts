@@ -8,4 +8,10 @@ export interface User {
     location: string
     address: Address
     email: string
+    pendingRatings: PendingRating[]
+}
+
+export interface PendingRating {
+    local: string,
+    lastOrderDate: string
 }
