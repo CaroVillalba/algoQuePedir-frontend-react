@@ -70,7 +70,7 @@ export const LayoutMain = () => {
             </div>
 
             <Dialog
-                header="Salir del carrito"
+                header="Salir del área de carrito"
                 visible={showModal}
                 modal
                 onHide={cancelLeave}
@@ -81,7 +81,7 @@ export const LayoutMain = () => {
                 </div>
                 }
             >
-                <p>Si salís del carrito, se vaciará automáticamente.</p>
+                <p>Si salís, el carrito se vaciará automáticamente.</p>
             </Dialog>
         </MainContext.Provider>
     )

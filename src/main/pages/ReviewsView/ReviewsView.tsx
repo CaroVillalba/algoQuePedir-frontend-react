@@ -21,7 +21,6 @@ export const ReviewsView = () => {
         {localId: 1, localName:"Defautl local", localRating:"default rating", date:"default date", localImage:""}
     ])
 
-    //console.log(profileInfo)
     useOnInit(() => {
         loadReviews()
     })
