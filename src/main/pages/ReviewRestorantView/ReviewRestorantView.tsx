@@ -4,8 +4,14 @@ import { useState } from "react";
 import { useOnInit } from "../../../hooks/useOnInit";
 import { localService } from "../../../services/LocalService";
 import { useParams } from "react-router-dom";
+import type { Rating } from "../../../types/Rating";
+import { ratingService } from "../../../services/RatingService";
+import { authService } from "../../../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewRestorantView = () => {
+    const navigate = useNavigate()
+
     const { id } = useParams()
     const [localName, setLocalName] = useState("error")
 
@@ -24,7 +30,14 @@ export const ReviewRestorantView = () => {
     }
 
     const postReview = async () => {
-        alert(`Local ID:${id}, Stars: ${stars}, Description: ${review}`)
+        const username = authService.getLoggedUsername()
+        await ratingService.create({
+            "username": username, 
+            "localId": 1, 
+            "rating": Number(stars), 
+            "description": review
+        })
+        navigate("/review")
     }
 
     useOnInit(() => {
