@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import 'primereact/resources/themes/lara-light-blue/theme.css'  
 import 'primereact/resources/primereact.min.css'                
 import 'primeicons/primeicons.css'
@@ -6,6 +6,7 @@ import 'primeflex/primeflex.css'
 import './App.css'
 
 import { LayoutMain } from './main/LayoutMain'
+import { LayoutAuth } from './main/LayoutAuth'
 import { ProfileView } from './main/pages/ProfileView/ProfileView'
 import { RestaurantMenuView } from './main/pages/RestaurantMenuView/RestaurantMenuView'
 import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutView'
@@ -26,6 +27,11 @@ function AppContent() {
   return (
       <div className="App">
           <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route element={<LayoutAuth/>}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
             <Route path='/' element={<LayoutMain/>}>
                 <Route path='home' element={<LayoutCart/>}>
                   <Route index element={<StoreSearch />} /> 
@@ -44,12 +50,11 @@ function AppContent() {
                 </Route>
             </Route>
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
 
-            {/* <Route path="/" element={<Navigate to={pathLocation} replace />} /> /}
-            {/ loading && LOADER */}
+            
           </Routes>
+            
+
       </div>
     )
 }

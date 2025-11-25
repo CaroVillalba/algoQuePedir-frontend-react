@@ -3,10 +3,16 @@
   margin: 0 auto;
 }
 
+.App{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .main-content {
   padding: 1.5rem;
   padding-bottom: 3rem;
-  min-height: calc(100vh - 125px); 
+  flex: 1;
 }
 
 .auth-content {

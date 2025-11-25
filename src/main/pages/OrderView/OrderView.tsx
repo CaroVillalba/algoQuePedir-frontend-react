@@ -3,6 +3,7 @@ import { OrderCard } from "./OrderCard/OrderCard"
 import { orderService } from "../../../services/OrderService"
 import { useOnInit } from "../../../hooks/useOnInit"
 import { useState } from "react"
+import "./OrderView.css"
 
 export const OrderView = () => {
 
@@ -18,13 +19,11 @@ export const OrderView = () => {
         setOrdenesCompletadas(ordenes.filter((orden: any) => (orden.state == "ENTREGADO")))
         setOrdenesCanceladas(ordenes.filter((orden: any) => (orden.state == "CANCELADO")))
 
-        console.log(ordenes)
     }
     useOnInit(updateOrders)
 
     return (
         <div className="OrderView">
-            <h3>Pedidos</h3>
 
             <TabView>
                 <TabPanel header="Pendientes">

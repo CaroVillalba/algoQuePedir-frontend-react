@@ -12,7 +12,7 @@ class LocalService extends CRUDService<Local>{
     }
 
     async getRestaurants(): Promise<Local[]>{ 
-        const response = await this.api.get<Local[]>(`/${this.path}`)
+        const response = await this.api.get<Local[]>(`/${this.path}/profile`)
         return response.data
     }
 

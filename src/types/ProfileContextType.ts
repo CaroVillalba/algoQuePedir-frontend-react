@@ -1,11 +1,13 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { Local } from './Local'
 import type { User } from './User'
+import type { Ingredient } from './IngredientType'
 
 
 export type CriteriaType = {
     faithful : boolean
     marketing: boolean
+    marketingWords: string[]
     vegan: boolean
     exquisite: boolean
     conservative: boolean
@@ -34,10 +36,12 @@ export type RestaurantData = {
 
 
 export type IngredientData = {
-    avoidIngredients: string[];
-    setAvoidIngredients: Dispatch<SetStateAction<string[]>>;
-    preferredIngredients: string[];
-    setPreferredIngredients: Dispatch<SetStateAction<string[]>>;
+    avoidIngredients: Ingredient[];
+    setAvoidIngredients: Dispatch<SetStateAction<Ingredient[]>>;
+    preferredIngredients: Ingredient[];
+    setPreferredIngredients: Dispatch<SetStateAction<Ingredient[]>>;
+    availableIngredients: Ingredient[];
+    setAvailableIngredients: Dispatch<SetStateAction<Ingredient[]>>;
 }
 
 

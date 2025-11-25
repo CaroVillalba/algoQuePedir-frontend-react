@@ -1,12 +1,18 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useOutletContext } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Password } from 'primereact/password'
 import { Button } from 'primereact/button'
 import { Card } from 'primereact/card'
 import { authService } from '../../../../services/AuthService'
+import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHandling'
+import type { MainContextType } from '../../../../types/MainContextType'
 
 export const Login = () => {
+  const { 
+        showToast
+    } = useOutletContext<MainContextType>()
+
   const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
@@ -18,11 +24,10 @@ export const Login = () => {
       const res = await authService.login({ username: user, password })
       sessionStorage.setItem('userId', res.id.toString())
       navigate('/home')
-    } catch (error) {
-      window.alert(
-        '¿Olvidaste tu contraseña o usuario? 😅 Todavía no implementamos recuperarlas.'
-      )
-    }
+    } catch (error: unknown) {
+                        const errorMessage = getMensajeError(error as ErrorResponse)
+                        showToast(`Error al logearse: ${errorMessage}`, 'error')
+                    }
   }
 
   return (
@@ -61,6 +66,7 @@ export const Login = () => {
               hideIcon="pi pi-eye"
               placeholder="Contraseña"
               toggleMask
+              required
             />
           </div>
 
@@ -75,3 +81,5 @@ export const Login = () => {
     </section>
   )
 }
+
+

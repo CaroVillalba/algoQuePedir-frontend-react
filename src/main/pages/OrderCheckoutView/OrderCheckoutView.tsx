@@ -1,13 +1,15 @@
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import { Image } from 'primereact/image'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useCart } from '../../../hooks/useCart'
 import { orderService } from '../../../services/OrderService'
 import { localService } from '../../../services/LocalService'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { LocalCheckout } from '../../../types/Local'
+import { MainContext } from '../../../types/MainContextType'
+import './OrderCheckoutView.css'
 
 export const OrderCheckoutView = () => {
     const { id } = useParams()
@@ -18,15 +20,12 @@ export const OrderCheckoutView = () => {
     const {
         items,
         setItems,
-        subtotal,
-        restaurantId: cartRestaurantId,
-        setRestaurantId,
-        totalItems
+        subtotal
     } = cart
 
     const navigate = useNavigate()
 
-    const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
+    const { showToast } = useContext(MainContext)
 
     const [paymentMethod, setPaymentMethod] = useState<string>('')
     const [loading, setLoading] = useState(false)
@@ -158,8 +157,10 @@ export const OrderCheckoutView = () => {
                         <div key={item.id} className="flex justify-content-between align-items-center mb-3">
                             <div>
                                 <div className="font-bold">{item.name}</div>
-                                <small className="text-color-secondary block text-sm">Cantidad: {item.qty}</small>
-                                <small className="text-color-secondary text-sm">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
+                                <div className="order-item-details-text">
+                                    <small className="text-color-secondary block text-sm">Cantidad: {item.qty}</small>
+                                    <small className="text-color-secondary text-sm">Precio unitario: ${item.unitPrice.toFixed(2)}</small>
+                                </div>
                             </div>
                             <div className="flex flex-column align-items-center">
                                 <span className="font-bold">${(item.unitPrice * item.qty).toFixed(2)}</span>

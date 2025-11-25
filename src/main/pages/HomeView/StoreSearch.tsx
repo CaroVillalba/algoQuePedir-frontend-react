@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { Card } from 'primereact/card'
@@ -10,6 +10,8 @@ import { localService } from '../../../services/LocalService'
 import type { Local } from '../../../types/Local'
 import { useOnInit } from '../../../hooks/useOnInit'
 import type { CartContextType } from '../../../types/CartContextType'
+import { MainContext } from '../../../types/MainContextType'
+
 
 export const PinIcon = ({ esCercano }: { esCercano: boolean }) => {
   if (esCercano) {
@@ -29,7 +31,7 @@ export const StoreSearch = () => {
   const [searchTerm, setSearchTerm] = useState('') 
   const { cart } = useOutletContext<{ cart: CartContextType }>()
 
-  const { showToast } = useOutletContext<{ showToast: (msg: string, type: string) => void }>()
+  const { showToast } = useContext(MainContext)
 
   const cartRestaurantId = cart.restaurantId
 
@@ -70,7 +72,7 @@ export const StoreSearch = () => {
   return (
     <>
       <div className="search-header">
-        <h3>Delivery</h3>
+        <h3 className="search-title">Delivery</h3>
 
         <i
           className="shopping-cart-container"
@@ -110,8 +112,8 @@ export const StoreSearch = () => {
       </label>
 
 
-      <main className="main-container">
-        <h2>Locales de comida</h2>
+      <main>
+        <h2 className="locales-title">Locales de comida</h2>
 
         <div className="grid">
           {localesFiltrados.map((local) => (

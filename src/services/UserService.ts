@@ -1,7 +1,5 @@
 import { CRUDService } from './CRUDService'
 import type { User } from '../types/User'
-import { Password } from '@mui/icons-material'
-
 
 class UserService extends CRUDService<User>{
     constructor (){
@@ -35,6 +33,8 @@ class UserService extends CRUDService<User>{
                 }
             },
             location : user.location,
+            preferredIngredients: user.preferredIngredients,
+            ingredientsToAvoid: user.ingredientsToAvoid,
         }
         
         await this.api.patch<User>(`/${this.path}`, payload)

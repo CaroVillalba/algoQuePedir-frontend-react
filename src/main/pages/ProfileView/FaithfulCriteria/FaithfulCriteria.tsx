@@ -1,24 +1,18 @@
-import { useState } from 'react'
 import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
 import { Card } from 'primereact/card'
 import './FaithfulCriteria.css'
 import { DataView } from 'primereact/dataview'
-import { localService } from '../../../../services/LocalService'
 import type { Local } from '../../../../types/Local'
-import { getMensajeError, type ErrorResponse } from '../../../../utils/errorHandling'
-import { Toast } from '../../../../components/common/toast'
-import { useToast } from '../../../../hooks/useToast'
-import { useOnInit } from '../../../../hooks/useOnInit'
 import { Dialog } from 'primereact/dialog'
 import { PickList } from 'primereact/picklist'
 import '../../../../toast.css'
-import { useOutlet, useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const FaithfulCriteria = () => {
 
-    const { criteria, restaurant, showToast } = useOutletContext<ProfileContextType>()
+    const { criteria, restaurant } = useOutletContext<ProfileContextType>()
 
     const { criteria: c , setCriteria } = criteria
 
@@ -113,7 +107,7 @@ export const FaithfulCriteria = () => {
                 visible={displayAddDialog} 
                 onHide={() => setDisplayAddDialog(false)} 
                 modal 
-                style={{ width: '80%' , height: '100%'}}
+                style={{ width: '80%' , height: '79%'}}
                 
             >
                 <div className="p-fluid">
@@ -122,11 +116,11 @@ export const FaithfulCriteria = () => {
                         source={availableRestaurants} 
                         target={selectedRestaurants} 
                         itemTemplate={pickListItemTemplate} 
-                        sourceHeader="Disponibles" 
-                        targetHeader="Preferidos" 
+                        sourceHeader="Restaurantes disponibles" 
+                        targetHeader="Restaurantes en preferidos" 
                         onChange={onChangePickList} 
-                        sourceStyle={{ height: '90px'}} 
-                        targetStyle={{ height: '90px' }} 
+                        sourceStyle={{ height: '120px'}} 
+                        targetStyle={{ height: '120px' }} 
                         
                     />
                 </div>

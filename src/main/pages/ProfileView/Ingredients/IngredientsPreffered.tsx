@@ -8,6 +8,7 @@ import { useToast } from '../../../../hooks/useToast'
 import { DataView } from 'primereact/dataview'
 import { Toast } from '../../../../components/common/toast'
 import './Ingredients.css'
+import type { Ingredient } from '../../../../types/IngredientType'
 
 
 export const IngredientsPreffered = () => {
@@ -15,42 +16,66 @@ export const IngredientsPreffered = () => {
     const { 
         ingredients,
         showToast,
+        profile
 
     } = useOutletContext<ProfileContextType>()
 
-    const { preferredIngredients, setPreferredIngredients, avoidIngredients } = ingredients
+    const { preferredIngredients, setPreferredIngredients, avoidIngredients, availableIngredients} = ingredients
+
+    const { profileInfo, setProfileInfo } = profile;
 
     const [dialogVisible, setDialogVisible] = useState(false)
 
-    const handleRemoveIngredient = (ingredientToRemove: string) => {
-        setPreferredIngredients(prevList => prevList.filter(ing => ing !== ingredientToRemove))
-    }
+    const handleRemoveIngredient = (ingredientToRemove: Ingredient) => {
+    setPreferredIngredients(prev => {
+        const updated = prev.filter(ing => ing.name !== ingredientToRemove.name)
 
-    const handleAddIngredient = (newIngredient: string) => {
-        const normalizedNewIngredient = newIngredient.toLowerCase()
+        setProfileInfo(prevProfile => ({
+            ...prevProfile,
+            preferredIngredients: updated,
+        }))
+
+        return updated
+    })
+}
+
+
+    const handleAddIngredient = (newIngredient: Ingredient) => {
+        const normalizedNewIngredient = newIngredient.name.toLowerCase()
         
         
-        if (preferredIngredients.map(i => i.toLowerCase()).includes(normalizedNewIngredient)) {
+        if (preferredIngredients.map(i => i.name.toLowerCase()).includes(normalizedNewIngredient)) {
             showToast('El ingrediente ya existe en la lista de "preferidos"', 'warn')
             return
         }
         
-        if (avoidIngredients.map(i => i.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast(`"${newIngredient}" no puede estar en la lista de a evitar y preferidos a la vez.`, 'error')
+        if (avoidIngredients.map(i => i.name.toLowerCase()).includes(normalizedNewIngredient)) {
+            showToast(`"${newIngredient.name}" no puede estar en la lista de a evitar y preferidos a la vez.`, 'error')
             return
         }
 
-        setPreferredIngredients(prevList => [...prevList, newIngredient])
-        setDialogVisible(false)
+        
+        setPreferredIngredients(prev => {
+        const updated = [...prev, newIngredient];
+
+
+        setProfileInfo(prevProfile => ({
+            ...prevProfile,
+            preferredIngredients: updated,
+        }));
+
+        return updated;
+    });
+        setDialogVisible(false);
     }
 
-    const ingredientItemTemplate = (ingredient: string) => {
+    const ingredientItemTemplate = (ingredient: Ingredient) => {
         return (
             <div className="p-col-12">
                 <div 
                     className="ingredient-data-row p-card p-p-2 p-mb-2 "
                 >
-                    <div className="ingredient-name">{ingredient}</div>
+                    <div className="ingredient-name">{ingredient.name}</div>
                     
                     <Button 
                         icon="pi pi-times" 
@@ -89,6 +114,7 @@ export const IngredientsPreffered = () => {
                 onHide={() => setDialogVisible(false)}
                 onAdd={handleAddIngredient}
                 title="Añadir ingrediente preferido"
+                options={availableIngredients} 
             />
 
         </>
