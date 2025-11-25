@@ -26,10 +26,17 @@ p {
     display: flex;
     align-items: center;
     padding-left: 2.5rem;
+}
+
+.cancel-button {
     color: red;
 }
 
-.delete-icon {
+.delete-button {
+    color: var(--color-label);
+}
+
+.button-icon{
     font-size: 1.3rem;
     cursor: pointer;
 }
