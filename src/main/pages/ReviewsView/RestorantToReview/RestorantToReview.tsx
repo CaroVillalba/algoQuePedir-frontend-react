@@ -13,7 +13,7 @@ export const RestorantToReview = (props: any) => {
                     <p>{props.puntuacion} {props.tiempo}</p>
                 </div>
                 <div className="columna2">
-                    <p><Button onClick={() => navigate('/review-restorant')}>Calificar</Button></p>
+                    <p><Button onClick={() => navigate(`/review/${props.localId}`)}>Calificar</Button></p>
                 </div>
             </div>
         </div>

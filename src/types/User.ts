@@ -11,4 +11,10 @@ export interface User {
     ingredientsToAvoid: Ingredient[]
     address: Address
     email: string
+    pendingRatings: PendingRating[]
+}
+
+export interface PendingRating {
+    local: string,
+    lastOrderDate: string
 }

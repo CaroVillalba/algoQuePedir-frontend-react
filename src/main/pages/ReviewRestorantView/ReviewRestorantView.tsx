@@ -1,15 +1,39 @@
 import { Button, TextareaAutosize } from "@mui/material"
 import "./ReviewRestorantView.css"
 import { useState } from "react";
+import { useOnInit } from "../../../hooks/useOnInit";
+import { localService } from "../../../services/LocalService";
+import { useParams } from "react-router-dom";
 
 export const ReviewRestorantView = () => {
+    const { id } = useParams()
+    const [localName, setLocalName] = useState("error")
+
     const [stars, setStars] = useState("1");
+    const [review, setReview] = useState("");
 
     const handleChangeStars = (e:any) => setStars(e.target.value)
 
+    const handleChangeReview = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setReview(e.target.value);
+    };
+
+    const loadLocalInfo = async () => {
+        const localInfo = await localService.getById(Number(id))
+        setLocalName(localInfo.name)
+    }
+
+    const postReview = async () => {
+        alert(`Local ID:${id}, Stars: ${stars}, Description: ${review}`)
+    }
+
+    useOnInit(() => {
+        loadLocalInfo()
+    })
+
     return (
         <div className="ReviewRestorantView">
-            <h1>¿Como fue tu experiencia en El Sabor?</h1>
+            <h1>¿Como fue tu experiencia en {localName}?</h1>
 
             <form className="starContainer">
                 {
@@ -27,9 +51,9 @@ export const ReviewRestorantView = () => {
 
             <br/>
 
-            <TextareaAutosize minRows={5} placeholder="Contanos tu experiencia"/>
+            <TextareaAutosize minRows={5} placeholder="Contanos tu experiencia" onChange={handleChangeReview}/>
 
-            <Button className='button-primary' type='submit'>Enviar</Button>
+            <Button className='button-primary' type='submit' onClick={postReview}>Enviar</Button>
         </div>
     )
 }

@@ -41,7 +41,7 @@ function AppContent() {
                 <Route path="orders" element={<OrderView />} />
                 <Route path="orders/:id" element={<OrderDetailsView/>} />
                 <Route path="review" element={<ReviewsView />} />
-                <Route path="review-restorant" element={<ReviewRestorantView/>} />
+                <Route path="review/:id" element={<ReviewRestorantView/>} />
                 <Route path='profile' element={<LayoutProfile/>}>
                   <Route index element={<ProfileView />} />
                   <Route path="criteria" element= {<SearchCriteria/>} />

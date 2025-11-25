@@ -16,7 +16,6 @@ export const ProfileView = () => {
     
     const { profile, showToast } = useOutletContext<ProfileContextType>()
 
-
     const { profileInfo, setProfileInfo } = profile
 
     async function handlePersonalInfo(e: FormEvent) {
