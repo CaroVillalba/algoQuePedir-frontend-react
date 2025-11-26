@@ -22,7 +22,7 @@ export const IngredientsPreffered = () => {
 
     const { preferredIngredients, setPreferredIngredients, avoidIngredients, availableIngredients} = ingredients
 
-    const { profileInfo, setProfileInfo } = profile;
+    const { profileInfo, setProfileInfo } = profile
 
     const [dialogVisible, setDialogVisible] = useState(false)
 
@@ -56,17 +56,17 @@ export const IngredientsPreffered = () => {
 
         
         setPreferredIngredients(prev => {
-        const updated = [...prev, newIngredient];
+        const updated = [...prev, newIngredient]
 
 
         setProfileInfo(prevProfile => ({
             ...prevProfile,
             preferredIngredients: updated,
-        }));
+        }))
 
-        return updated;
-    });
-        setDialogVisible(false);
+        return updated
+    })
+        setDialogVisible(false)
     }
 
     const ingredientItemTemplate = (ingredient: Ingredient) => {

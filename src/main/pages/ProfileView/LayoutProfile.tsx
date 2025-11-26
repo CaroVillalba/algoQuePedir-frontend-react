@@ -126,15 +126,13 @@ export const LayoutProfile = () => {
                     
                     const allRestaurants = await localService.getRestaurants()
                     
-                    
-                    const preferredFromProfile = userProfile.preferredRestaurants
+                    const preferredIds = userProfile.preferredRestaurants.map(r => r.id)
+                    const preferredFromProfile = allRestaurants.filter(r => preferredIds.includes(r.id))
                     setSelectedRestaurants(preferredFromProfile)
-
-                    const available = allRestaurants.filter(
-                        (r1) => !preferredFromProfile.some((r2) => r2.id === r1.id)
-                    )
                     
+                    const available = allRestaurants.filter(r => !preferredIds.includes(r.id))
                     setAvailableRestaurants(available)
+
                     setCriteria(userProfile.criteria)
                     setProfileInfo(userProfile)
                     setAvoidIngredients(userProfile.ingredientsToAvoid)

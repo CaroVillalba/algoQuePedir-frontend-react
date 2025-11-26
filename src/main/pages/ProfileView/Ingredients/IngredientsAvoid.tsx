@@ -19,7 +19,7 @@ export const IngredientsAvoid = () => {
         ingredients, showToast, profile
     } = useOutletContext<ProfileContextType>()
 
-    const { profileInfo, setProfileInfo } = profile;
+    const { profileInfo, setProfileInfo } = profile
     const { avoidIngredients, setAvoidIngredients, preferredIngredients, availableIngredients} = ingredients
 
 
@@ -55,18 +55,18 @@ export const IngredientsAvoid = () => {
 
         
         setAvoidIngredients(prev => {
-        const updated = [...prev, newIngredient];
+        const updated = [...prev, newIngredient]
 
         
         setProfileInfo(prevProfile => ({
             ...prevProfile,
             ingredientsToAvoid: updated,
-        }));
+        }))
 
-        return updated;
-    });
+        return updated
+    })
 
-    setDialogVisible(false);
+    setDialogVisible(false)
     }
 
     const ingredientItemTemplate = (ingredient: Ingredient): ReactElement => { 

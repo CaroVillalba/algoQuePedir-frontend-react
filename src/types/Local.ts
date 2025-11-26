@@ -20,7 +20,7 @@ export interface LocalAccount{
     appCommission: number
     authorCommission: number
     paymentMethods: string[]
-    rating: string
+    rating: number
 }
 
 

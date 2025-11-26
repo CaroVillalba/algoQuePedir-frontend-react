@@ -25,6 +25,7 @@ export const FaithfulCriteria = () => {
 
 
     const onChangePickList = (event: { source: LocalAccount[], target: LocalAccount[] }) => {
+
         setAvailableRestaurants(event.source)
         setSelectedRestaurants(event.target)
 

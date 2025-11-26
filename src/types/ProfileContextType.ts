@@ -32,7 +32,7 @@ export type RestaurantData = {
     availableRestaurants: LocalAccount[]; setAvailableRestaurants: Dispatch<SetStateAction<LocalAccount[]>>;
     selectedRestaurants: LocalAccount[]; setSelectedRestaurants: Dispatch<SetStateAction<LocalAccount[]>>;
     displayAddDialog: boolean; setDisplayAddDialog: (value: boolean) => void;
-    getRestaurants: () => Promise<Local[]>;
+    getRestaurants: () => Promise<LocalAccount[]>;
 }
 
 
