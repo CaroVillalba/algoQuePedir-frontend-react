@@ -70,7 +70,7 @@
   border-radius: 2rem;
 }
 
-.grid-nogutter {
+.restaurants-dataview .grid-nogutter {
   padding-left: 1rem;
 }
 
@@ -126,4 +126,8 @@
 
 .p-picklist-target-controls{
     display: none;
+}
+
+.restaurants-dataview .p-dataview-emptymessage{
+    padding-left: 1rem;
 }

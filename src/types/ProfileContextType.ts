@@ -52,5 +52,5 @@ export type ProfileContextType = {
     restaurant: RestaurantData;
     ingredients: IngredientData;
     updateCriteria: (updater: (prev: CriteriaType) => CriteriaType) => void;
-    showToast: (message: string, severity: 'success' | 'error' | 'warn') => void;
+    showToast: (message: string, severity: 'success' | 'error' | 'warning') => void;
 }

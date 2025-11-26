@@ -45,7 +45,7 @@ export const IngredientsPreffered = () => {
         
         
         if (preferredIngredients.map(i => i.name.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast('El ingrediente ya existe en la lista de "preferidos"', 'warn')
+            showToast('El ingrediente ya existe en la lista de "preferidos"', 'warning')
             return
         }
         
