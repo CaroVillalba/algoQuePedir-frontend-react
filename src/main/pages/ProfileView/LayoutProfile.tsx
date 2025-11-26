@@ -144,7 +144,9 @@ export const LayoutProfile = () => {
         
                 try {
                     const userProfile = await userService.getUserProfile(username) 
+                    
                     const allRestaurants = await localService.getRestaurants()
+                    console.log(allRestaurants)
 
                     console.log(userProfile.criteria)
                     const preferredFromProfile = userProfile.preferredRestaurants
@@ -153,6 +155,7 @@ export const LayoutProfile = () => {
                     const available = allRestaurants.filter(
                         (r1) => !preferredFromProfile.some((r2) => r2.id === r1.id)
                     )
+                    
                     setAvailableRestaurants(available)
                     setCriteria(userProfile.criteria)
                     setProfileInfo(userProfile)

@@ -35,34 +35,34 @@ export const FaithfulCriteria = () => {
     }
 
 
-    const pickListItemTemplate = (restaurant: Local) => {
+    const pickListItemTemplate = (restaurant: LocalAccount) => {
         return (
             <div className="flex align-items-center p-2">
                 <img src={restaurant.imgURL} alt={restaurant.name} className="w-3rem h-3rem shadow-2 flex-shrink-0 mr-3" />
                 <div className="flex-1">
                     <div className="font-bold">{restaurant.name}</div>
-                    <div>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</div>
+                    <div> ★ {restaurant.rating} • 🧑‍🍳${restaurant.authorCommission} • ${restaurant.appCommission}</div>
                 </div>
             </div>
         )
     }
 
 
-    const itemTemplate = (restaurant: Local) => {
+    const itemTemplate = (restaurant: LocalAccount) => {
         return (
             <div className="restaurant-item" key={restaurant.id}>
                 <img src={restaurant.imgURL} alt={restaurant.name} className="restaurant-image" />
                 <div className="restaurant-details">
                     <span className="restaurant-name">{restaurant.name}</span>
                     <div className="restaurant-info">
-                        <span>{restaurant.rating} • {restaurant.deliveryDelay} • ${restaurant.appCommission}</span>
+                        <span> ★ {restaurant.rating} • 🧑‍🍳${restaurant.authorCommission} • ${restaurant.appCommission}</span>
                     </div>
                 </div>
             </div>
         )
     }
 
-    const listTemplate = ( items : Local[] ) => {
+    const listTemplate = ( items : LocalAccount[] ) => {
         if( !items || items.length === 0) return null
 
         let list = items.map((restaurants) => {
@@ -89,7 +89,7 @@ export const FaithfulCriteria = () => {
                         updateCriteria(prev => ({
                             ...prev,
                             faithful: !prev.faithful
-                        }));
+                        }))
                         }}
                     />
             </Card>
@@ -98,6 +98,7 @@ export const FaithfulCriteria = () => {
                 value={selectedRestaurants} 
                 listTemplate={listTemplate}
                 layout='list'
+                emptyMessage='No hay restaurantes agregados.'
                 className='restaurants-dataview'
             />
 
