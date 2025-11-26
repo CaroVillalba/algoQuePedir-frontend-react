@@ -23,7 +23,7 @@ export const MarketingCriteria = () => {
         const normalized = newWord.toLowerCase()
 
         if (marketingWords.map(w => w.toLowerCase()).includes(normalized)) {
-            showToast('La palabra ya existe en la lista.', 'warn')
+            showToast('La palabra ya existe en la lista.', 'warning')
             return
         }
 
