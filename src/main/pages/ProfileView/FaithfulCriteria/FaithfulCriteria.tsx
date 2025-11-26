@@ -12,7 +12,7 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const FaithfulCriteria = () => {
 
-    const { criteria, restaurant } = useOutletContext<ProfileContextType>()
+    const { criteria, restaurant, updateCriteria  } = useOutletContext<ProfileContextType>()
 
     const { criteria: c , setCriteria } = criteria
 
@@ -24,6 +24,11 @@ export const FaithfulCriteria = () => {
     const onChangePickList = (event: { source: Local[], target: Local[] }) => {
         setAvailableRestaurants(event.source)
         setSelectedRestaurants(event.target)
+
+        updateCriteria(prev => ({
+        ...prev,
+        preferredRestaurants: event.target
+    }))
     }
 
 
@@ -77,11 +82,12 @@ export const FaithfulCriteria = () => {
                 <Checkbox 
                     className='custom-checkbox' 
                     onChange={() =>
-                        setCriteria(prev => ({
-                            ...prev,
-                            faithful: !prev.faithful
-                        }))
-                    }
+                    updateCriteria(prev => ({
+                        ...prev,
+                        faithful: !prev.faithful,
+                        preferredRestaurants: selectedRestaurants
+                    }))
+                }
                     checked={c.faithful}
                 />
             </Card>

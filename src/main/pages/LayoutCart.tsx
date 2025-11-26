@@ -4,7 +4,8 @@ import type { MainContextType } from '../../types/MainContextType'
 
 export const LayoutCart = () => {
     
-    const cart = useCart()
     const parent = useOutletContext<MainContextType>()
+    const { cart } = useOutletContext<{ cart: ReturnType<typeof useCart> }>()
+    
     return <Outlet context={{ cart, ...parent }} />
 }

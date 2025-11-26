@@ -1,5 +1,6 @@
 import type { Address } from './Address'
 import type { Ingredient } from './IngredientType'
+import type { CriteriaData, CriteriaType } from './ProfileContextType'
 
 export interface User {
     id: number
@@ -12,6 +13,9 @@ export interface User {
     address: Address
     email: string
     pendingRatings: PendingRating[]
+    criteria: CriteriaType
+    preferredRestaurants: []
+
 }
 
 export interface PendingRating {

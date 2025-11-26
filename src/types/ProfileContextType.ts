@@ -50,5 +50,6 @@ export type ProfileContextType = {
     criteria: CriteriaData;
     restaurant: RestaurantData;
     ingredients: IngredientData;
+    updateCriteria: (updater: (prev: CriteriaType) => CriteriaType) => void;
     showToast: (message: string, severity: 'success' | 'error' | 'warn') => void;
 }

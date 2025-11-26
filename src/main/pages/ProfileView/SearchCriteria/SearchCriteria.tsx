@@ -5,14 +5,14 @@ import { FaithfulCriteria } from '../FaithfulCriteria/FaithfulCriteria'
 import { MarketingCriteria } from '../MarketingCriteria/MarketingCriteria'
 import { InputNumber, type InputNumberValueChangeEvent } from 'primereact/inputnumber'
 import { useOutletContext } from 'react-router-dom'
-import type { ProfileContextType } from '../../../../types/ProfileContextType'
+import type { CriteriaType, ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const SearchCriteria = () => {
-    const { criteria } = useOutletContext<ProfileContextType>()
+    const { criteria, updateCriteria } = useOutletContext<ProfileContextType>()
     //checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
          //distance, setDistance
-    const { criteria: c, setCriteria, distance, setDistance} = criteria
-    
+    const { criteria: c, setCriteria, distance, setDistance} = criteria    
+
 
     return (
         <>
@@ -25,12 +25,12 @@ export const SearchCriteria = () => {
                     </div>
                 <Checkbox 
                 className='custom-checkbox' 
-                onChange={() =>
-                        setCriteria(prev => ({
+                onChange={() => {
+                        updateCriteria(prev => ({
                             ...prev,
                             vegan: !prev.vegan
                         }))
-                    } checked={c.vegan}></Checkbox>
+                    } } checked={c.vegan}></Checkbox>
                 </Card>
                 
            
@@ -41,7 +41,7 @@ export const SearchCriteria = () => {
                     </div>
                 <Checkbox className='custom-checkbox' 
                 onChange={() =>
-                        setCriteria(prev => ({
+                        updateCriteria(prev => ({
                             ...prev,
                             exquisite: !prev.exquisite
                         }))
@@ -55,7 +55,7 @@ export const SearchCriteria = () => {
                     </div>
                 <Checkbox className='custom-checkbox' 
                 onChange={() =>
-                        setCriteria(prev => ({
+                        updateCriteria(prev => ({
                             ...prev,
                             conservative: !prev.conservative
                         }))
@@ -78,7 +78,7 @@ export const SearchCriteria = () => {
                             <Checkbox 
                                 className='custom-checkbox impatient-checkbox' 
                                  onChange={() =>
-                                    setCriteria(prev => ({
+                                    updateCriteria(prev => ({
                                     ...prev,
                                     impatient: !prev.impatient
                                     }))} 

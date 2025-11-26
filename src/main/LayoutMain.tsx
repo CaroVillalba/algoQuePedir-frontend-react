@@ -9,10 +9,13 @@ import { Button } from 'primereact/button'
 import { routeConfig } from './routeConfig'
 import { MainContext } from '../types/MainContextType'
 import type { MainContextType } from '../types/MainContextType'
+import { useCart } from '../hooks/useCart'
 
 export const LayoutMain = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const cart = useCart()
+
     const path = location.pathname
 
     const match = Object.entries(routeConfig)
@@ -32,11 +35,11 @@ export const LayoutMain = () => {
         const isCurrentlyInCart = location.pathname.startsWith('/home')
         const leavingCartArea = isCurrentlyInCart && !to.startsWith('/home')
     
-        if (leavingCartArea) {
+   /*      if (leavingCartArea) {
             setPendingPath(to)
             setShowModal(true)
             return
-        }
+        } */
     
         navigate(to)
     }
@@ -61,11 +64,11 @@ export const LayoutMain = () => {
         <MainContext.Provider value={contextValue}>
             <Header title={title} showBackButton={showBackButton} />
             <main className='main-content'>
-                <Outlet />
+                <Outlet context={{ cart }} />
             </main>
             <Footer />
 
-            <div id= "toast-container">
+            <div id="toast-container">
                 <Toast toast = { toast } />
             </div>
 

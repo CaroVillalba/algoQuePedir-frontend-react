@@ -35,6 +35,8 @@ class UserService extends CRUDService<User>{
             location : user.location,
             preferredIngredients: user.preferredIngredients,
             ingredientsToAvoid: user.ingredientsToAvoid,
+            criteria: user.criteria,
+            preferredRestaurants: user.preferredRestaurants
         }
         
         await this.api.patch<User>(`/${this.path}`, payload)

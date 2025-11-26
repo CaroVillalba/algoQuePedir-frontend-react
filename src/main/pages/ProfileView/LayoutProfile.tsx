@@ -12,6 +12,7 @@ import type { User } from '../../../types/User'
 import { authService } from '../../../services/AuthService'
 import { userService } from '../../../services/UserService'
 import type { Ingredient } from '../../../types/IngredientType'
+import type { CriteriaType } from '../../../types/ProfileContextType'
 
 
 export const LayoutProfile = () => {
@@ -37,8 +38,19 @@ export const LayoutProfile = () => {
                     }
                 },
                 email: '',
-        
+                pendingRatings: [],
+                criteria: {
+                    faithful : false,
+                    marketing: false,
+                    marketingWords: [],
+                    vegan: false,
+                    exquisite: false,
+                    conservative: false,
+                    impatient: false
+                }, 
+                preferredRestaurants: [],
         })
+
 
         const [criteria, setCriteria] = useState({
             faithful: false,
@@ -81,6 +93,19 @@ export const LayoutProfile = () => {
 
       
 
+       const updateCriteria = (update: (prev: CriteriaType) => CriteriaType) => {
+        setCriteria(prev => {
+            const updated = update(prev);
+
+            // también actualizar el perfil del usuario
+            setProfileInfo(prevProfile => ({
+                ...prevProfile,
+                criteria: updated
+            }));
+
+            return updated;
+        });
+    };
 
 
         const getRestaurants = async () => {
@@ -119,7 +144,7 @@ export const LayoutProfile = () => {
                     setProfileInfo(userProfile)
                     setAvoidIngredients(userProfile.ingredientsToAvoid)
                     setPreferredIngredients(userProfile.preferredIngredients)
-                    setAvailableIngredients(ingredients) // <<--- NUEVO
+                    setAvailableIngredients(ingredients) 
 
                 } catch (error: unknown) {
                     const errorMessage = getMensajeError(error as ErrorResponse)
@@ -138,6 +163,7 @@ export const LayoutProfile = () => {
             criteria: criteriaContext,
             restaurant: restaurantContext,
             ingredients: ingredientContext,
+            updateCriteria,
             showToast,
 
         }}/>
