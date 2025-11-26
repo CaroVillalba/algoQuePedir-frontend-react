@@ -36,8 +36,8 @@
 }
 
 
-.grid-nogutter{
-    padding-left: 1rem;
+.marketing-list .grid-nogutter{
+    padding-left: 0rem;
     padding-top: 0.5rem;
     padding-bottom: 1rem;
 }
