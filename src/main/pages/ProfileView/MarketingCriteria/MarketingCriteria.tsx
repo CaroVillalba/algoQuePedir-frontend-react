@@ -12,7 +12,7 @@ import './MarketingCriteria.css'
 
 export const MarketingCriteria = () => {
 
-    const { criteria, showToast } = useOutletContext<ProfileContextType>()
+    const { criteria, showToast, updateCriteria } = useOutletContext<ProfileContextType>()
     const { criteria: c, setCriteria } = criteria
 
     const [dialogVisible, setDialogVisible] = useState(false)
@@ -27,7 +27,7 @@ export const MarketingCriteria = () => {
             return
         }
 
-        setCriteria(prev => ({
+        updateCriteria(prev => ({
             ...prev,
             marketingWords: [...prev.marketingWords, newWord]
         }))
@@ -36,7 +36,7 @@ export const MarketingCriteria = () => {
     }
 
     const handleRemoveWord = (wordToRemove: string) => {
-        setCriteria(prev => ({
+        updateCriteria(prev => ({
             ...prev,
             marketingWords: prev.marketingWords.filter(w => w !== wordToRemove)
         }))
@@ -71,7 +71,7 @@ export const MarketingCriteria = () => {
                             className='custom-checkbox' 
                             checked={c.marketing}
                             onChange={() =>
-                                setCriteria(prev => ({
+                                updateCriteria(prev => ({
                                     ...prev,
                                     marketing: !prev.marketing
                                 }))
@@ -97,6 +97,7 @@ export const MarketingCriteria = () => {
                 icon="pi pi-plus"
                 className="p-button-rounded p-button-danger add-button"
                 onClick={() => setDialogVisible(true)}
+                disabled={!c.marketing}  
                 />
             </div>
         </Card>

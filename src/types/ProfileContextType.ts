@@ -12,6 +12,7 @@ export type CriteriaType = {
     exquisite: boolean
     conservative: boolean
     impatient: boolean
+    distance: number
     
 }
 
@@ -24,7 +25,6 @@ export type ProfileData = {
 
 export type CriteriaData = {
     criteria: CriteriaType; setCriteria: Dispatch<SetStateAction<CriteriaType>>;
-    distance: number; setDistance: Dispatch<SetStateAction<number>>;
 }
 
 
