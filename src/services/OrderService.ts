@@ -1,13 +1,13 @@
 import { CRUDService } from './CRUDService'
-import type { Order, CartItem } from '../types/Order'
+import type { Order, CartItem, OrderDetailDTO } from '../types/Order'
 
 export class OrderService extends CRUDService<Order> {
     constructor() {
         super('order')
     }
 
-    async getOrderDetail(orderId: number): Promise<Order> {
-        const response = await this.api.get<Order>(`/${this.path}/orderDetail/${orderId}`)
+    async getOrderDetail(orderId: number): Promise<OrderDetailDTO> {
+        const response = await this.api.get<OrderDetailDTO>(`/${this.path}/${orderId}`)
         return response.data
     }
 

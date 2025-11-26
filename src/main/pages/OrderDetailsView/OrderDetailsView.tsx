@@ -11,28 +11,6 @@ import './OrderDetailsView.css'
 export const OrderDetailsView = () => {
     
     const { id } = useParams()
-    
-    /* const [order, setOrder] = useState<any>({
-        comission:0.0,
-        direction:{},
-        dishes:[{
-            description:"",
-            id:0,
-            imageUrl:"",
-            price:0.0,
-            quantity:0
-        }],
-        id:0,
-        increment:0.0,
-        localName:"",
-        paymentMethod:"",
-        quantity:0,
-        state:"",
-        subtotal:0.0,
-        time:"",
-        total:0.0,
-        user:{}
-    }) */
 
         const [order, setOrder] = useState<any>({
             id: 0,
@@ -59,7 +37,7 @@ export const OrderDetailsView = () => {
         });
 
     const getOrder = async() => {
-        const loadedOrder = await orderService.getById(Number(id))
+        const loadedOrder = await orderService.getOrderDetail(Number(id))
         console.log("DTO recibido en OrderDetailsView:", loadedOrder)
         setOrder(loadedOrder)
     }
@@ -85,7 +63,7 @@ export const OrderDetailsView = () => {
                                 <div>
                                     <div className="font-bold">{ order.localName }</div>
                                     <small className="text-color-secondary text-sm">
-                                        { '?' } km · { /*localCheckout.freeDelivery ? 'Envío gratis' :*/ 'Envío con costo' }
+                                        { order.distanceKm?.toFixed(2) ?? "?" } km · { order.freeDelivery ? 'Envío gratis' : 'Envío con costo' }
                                     </small>
                                 </div>
                             </div>
