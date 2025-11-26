@@ -1,6 +1,6 @@
-//import { useOutletContext } from "react-router-dom"
+
 import { RestorantToReview } from "./RestorantToReview/RestorantToReview"
-//import type { ProfileContextType } from "../../../types/ProfileContextType"
+
 import { authService } from "../../../services/AuthService"
 import { userService } from "../../../services/UserService"
 import { useOnInit } from "../../../hooks/useOnInit"
@@ -8,8 +8,7 @@ import { useState } from "react"
 
 export const ReviewsView = () => {
 
-    //const { profile, showToast } = useOutletContext<ProfileContextType>()
-    //const { profileInfo, setProfileInfo } = profile
+   
 
     const loadReviews = async () => {
         const username = authService.getLoggedUsername()!!

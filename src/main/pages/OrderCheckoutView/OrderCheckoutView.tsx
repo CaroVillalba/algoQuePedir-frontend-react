@@ -72,7 +72,7 @@ export const OrderCheckoutView = () => {
         return acc
     }, {})
 
-    // Función para redondear como en el back, puesto que sino hay una diferencia de 0.01 centavos (al menos hasta donde hice pruebas)
+    
     const round2 = (n: number) =>
         Number(
             n.toLocaleString('en-US', {
