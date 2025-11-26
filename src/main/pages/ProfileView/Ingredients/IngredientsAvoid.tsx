@@ -44,7 +44,7 @@ export const IngredientsAvoid = () => {
 
        
         if (avoidIngredients.map(i => i.name.toLowerCase()).includes(normalizedNewIngredient)) {
-            showToast('El ingrediente ya existe en la lista de "a evitar"', 'warn')
+            showToast('El ingrediente ya existe en la lista de "a evitar"', 'warning')
             return
         }
         
