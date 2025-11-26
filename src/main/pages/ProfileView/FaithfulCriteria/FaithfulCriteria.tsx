@@ -106,6 +106,7 @@ export const FaithfulCriteria = () => {
                     icon="pi pi-plus" 
                     className="p-button-rounded p-button-danger add-button"
                     onClick={() => setDisplayAddDialog(true)}
+                    disabled={!c.faithful}
                 />
             </div>
         </div>
