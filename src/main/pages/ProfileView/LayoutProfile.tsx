@@ -46,7 +46,8 @@ export const LayoutProfile = () => {
                     vegan: false,
                     exquisite: false,
                     conservative: false,
-                    impatient: false
+                    impatient: false,
+                    distance: 0
                 }, 
                 preferredRestaurants: [],
         })
@@ -60,6 +61,7 @@ export const LayoutProfile = () => {
             exquisite: false,
             conservative: false,
             impatient: false,
+            distance: 0
         })
 
         const [ username, setUsername ] = useState('username')
@@ -144,7 +146,7 @@ export const LayoutProfile = () => {
                     const userProfile = await userService.getUserProfile(username) 
                     const allRestaurants = await localService.getRestaurants()
 
-
+                    console.log(userProfile.criteria)
                     const preferredFromProfile = userProfile.preferredRestaurants
                     setSelectedRestaurants(preferredFromProfile)
 
@@ -152,7 +154,7 @@ export const LayoutProfile = () => {
                         (r1) => !preferredFromProfile.some((r2) => r2.id === r1.id)
                     )
                     setAvailableRestaurants(available)
-
+                    setCriteria(userProfile.criteria)
                     setProfileInfo(userProfile)
                     setAvoidIngredients(userProfile.ingredientsToAvoid)
                     setPreferredIngredients(userProfile.preferredIngredients)
