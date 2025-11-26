@@ -1,5 +1,5 @@
 import { CRUDService } from './CRUDService'
-import type { Local, LocalPublic, LocalCheckout } from '../types/Local'
+import type { Local, LocalPublic, LocalCheckout, LocalAccount } from '../types/Local'
 
 class LocalService extends CRUDService<Local>{
     constructor(){
@@ -11,8 +11,8 @@ class LocalService extends CRUDService<Local>{
         return response.data
     }
 
-    async getRestaurants(): Promise<Local[]>{ 
-        const response = await this.api.get<Local[]>(`/${this.path}/profile`)
+    async getRestaurants(): Promise<LocalAccount[]>{ 
+        const response = await this.api.get<LocalAccount[]>(`/${this.path}/profile`)
         return response.data
     }
 

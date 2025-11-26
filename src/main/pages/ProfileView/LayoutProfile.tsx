@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Local } from '../../../types/Local'
+import type { Local, LocalAccount } from '../../../types/Local'
 import { useToast } from '../../../hooks/useToast'
 import { Outlet } from 'react-router-dom'
 import { Toast } from '../../../components/common/toast'
@@ -16,8 +16,8 @@ import type { CriteriaType } from '../../../types/ProfileContextType'
 
 
 export const LayoutProfile = () => {
-        const [ availableRestaurants, setAvailableRestaurants ] = useState<Local[]>([])
-        const [ selectedRestaurants, setSelectedRestaurants ] = useState<Local[]>([])
+        const [ availableRestaurants, setAvailableRestaurants ] = useState<LocalAccount[]>([])
+        const [ selectedRestaurants, setSelectedRestaurants ] = useState<LocalAccount[]>([])
         const [ displayAddDialog, setDisplayAddDialog ] = useState(false)
         const [ distance, setDistance ] = useState<number>(1)
         const { toast, showToast } = useToast()
@@ -101,9 +101,10 @@ export const LayoutProfile = () => {
             setProfileInfo(prevProfile => ({
                 ...prevProfile,
                 criteria: updated
-            }));
+                
+            }))
 
-            return updated;
+            return updated
         });
     };
 
@@ -141,6 +142,17 @@ export const LayoutProfile = () => {
         
                 try {
                     const userProfile = await userService.getUserProfile(username) 
+                    const allRestaurants = await localService.getRestaurants()
+
+
+                    const preferredFromProfile = userProfile.preferredRestaurants
+                    setSelectedRestaurants(preferredFromProfile)
+
+                    const available = allRestaurants.filter(
+                        (r1) => !preferredFromProfile.some((r2) => r2.id === r1.id)
+                    )
+                    setAvailableRestaurants(available)
+
                     setProfileInfo(userProfile)
                     setAvoidIngredients(userProfile.ingredientsToAvoid)
                     setPreferredIngredients(userProfile.preferredIngredients)
@@ -153,7 +165,7 @@ export const LayoutProfile = () => {
         }
     
 
-        useOnInit(getRestaurants)
+       
         useOnInit(fetchProfileInfo)
 
 

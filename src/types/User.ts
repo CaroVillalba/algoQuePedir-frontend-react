@@ -1,5 +1,6 @@
 import type { Address } from './Address'
 import type { Ingredient } from './IngredientType'
+import type { Local, LocalAccount } from './Local'
 import type { CriteriaData, CriteriaType } from './ProfileContextType'
 
 export interface User {
@@ -14,7 +15,7 @@ export interface User {
     email: string
     pendingRatings: PendingRating[]
     criteria: CriteriaType
-    preferredRestaurants: []
+    preferredRestaurants: LocalAccount[]
 
 }
 

@@ -3,7 +3,7 @@ import { Button } from 'primereact/button'
 import { Card } from 'primereact/card'
 import './FaithfulCriteria.css'
 import { DataView } from 'primereact/dataview'
-import type { Local } from '../../../../types/Local'
+import type { Local, LocalAccount } from '../../../../types/Local'
 import { Dialog } from 'primereact/dialog'
 import { PickList } from 'primereact/picklist'
 import '../../../../toast.css'
@@ -12,7 +12,10 @@ import type { ProfileContextType } from '../../../../types/ProfileContextType'
 
 export const FaithfulCriteria = () => {
 
-    const { criteria, restaurant, updateCriteria  } = useOutletContext<ProfileContextType>()
+    const { criteria, restaurant, updateCriteria, profile } = useOutletContext<ProfileContextType>()
+
+
+    const { profileInfo, setProfileInfo } = profile
 
     const { criteria: c , setCriteria } = criteria
 
@@ -21,11 +24,11 @@ export const FaithfulCriteria = () => {
     
 
 
-    const onChangePickList = (event: { source: Local[], target: Local[] }) => {
+    const onChangePickList = (event: { source: LocalAccount[], target: LocalAccount[] }) => {
         setAvailableRestaurants(event.source)
         setSelectedRestaurants(event.target)
 
-        updateCriteria(prev => ({
+        setProfileInfo(prev => ({
         ...prev,
         preferredRestaurants: event.target
     }))
@@ -79,17 +82,16 @@ export const FaithfulCriteria = () => {
                     <span className='title'>Fieles</span>
                     <span className='subtitle'>Solo los restaurantes preferidos</span>
                 </div>
-                <Checkbox 
-                    className='custom-checkbox' 
-                    onChange={() =>
-                    updateCriteria(prev => ({
-                        ...prev,
-                        faithful: !prev.faithful,
-                        preferredRestaurants: selectedRestaurants
-                    }))
-                }
+                <Checkbox
+                    className="custom-checkbox"
                     checked={c.faithful}
-                />
+                    onChange={() => {
+                        updateCriteria(prev => ({
+                            ...prev,
+                            faithful: !prev.faithful
+                        }));
+                        }}
+                    />
             </Card>
 
             <DataView 

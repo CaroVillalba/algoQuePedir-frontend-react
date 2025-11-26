@@ -1,4 +1,4 @@
-import type { Coordinates } from './Address'
+import type { Address, Coordinates } from './Address'
 
 export interface Local {
     id: number
@@ -11,6 +11,17 @@ export interface Local {
     appCommission: number
     esCercano?: boolean;
 }
+
+export interface LocalAccount{
+    id: number
+    name: string 
+    imgURL: string
+    address: Address
+    appCommission: number
+    authorCommission: number
+    paymentMethods: string[]
+}
+
 
 export interface LocalPublic {
     id: number

@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import type { Local } from './Local'
+import type { Local, LocalAccount } from './Local'
 import type { User } from './User'
 import type { Ingredient } from './IngredientType'
 
@@ -12,6 +12,7 @@ export type CriteriaType = {
     exquisite: boolean
     conservative: boolean
     impatient: boolean
+    
 }
 
 
@@ -28,8 +29,8 @@ export type CriteriaData = {
 
 
 export type RestaurantData = {
-    availableRestaurants: Local[]; setAvailableRestaurants: Dispatch<SetStateAction<Local[]>>;
-    selectedRestaurants: Local[]; setSelectedRestaurants: Dispatch<SetStateAction<Local[]>>;
+    availableRestaurants: LocalAccount[]; setAvailableRestaurants: Dispatch<SetStateAction<LocalAccount[]>>;
+    selectedRestaurants: LocalAccount[]; setSelectedRestaurants: Dispatch<SetStateAction<LocalAccount[]>>;
     displayAddDialog: boolean; setDisplayAddDialog: (value: boolean) => void;
     getRestaurants: () => Promise<Local[]>;
 }
