@@ -11,28 +11,6 @@ import './OrderDetailsView.css'
 export const OrderDetailsView = () => {
     
     const { id } = useParams()
-    
-    /* const [order, setOrder] = useState<any>({
-        comission:0.0,
-        direction:{},
-        dishes:[{
-            description:"",
-            id:0,
-            imageUrl:"",
-            price:0.0,
-            quantity:0
-        }],
-        id:0,
-        increment:0.0,
-        localName:"",
-        paymentMethod:"",
-        quantity:0,
-        state:"",
-        subtotal:0.0,
-        time:"",
-        total:0.0,
-        user:{}
-    }) */
 
         const [order, setOrder] = useState<any>({
             id: 0,
