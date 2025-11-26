@@ -9,9 +9,8 @@ import type { CriteriaType, ProfileContextType } from '../../../../types/Profile
 
 export const SearchCriteria = () => {
     const { criteria, updateCriteria } = useOutletContext<ProfileContextType>()
-    //checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
-         //distance, setDistance
-    const { criteria: c, setCriteria, distance, setDistance} = criteria    
+    
+    const { criteria: c, setCriteria} = criteria    
 
 
     return (
@@ -89,8 +88,11 @@ export const SearchCriteria = () => {
                             <span>Distancia(Kms)</span>
                             <InputNumber 
                             inputId='Impatient' 
-                            value={distance} 
-                            onValueChange={(e: InputNumberValueChangeEvent) => setDistance(e.value ?? 0)} 
+                            value={c.distance} 
+                            onValueChange={e => updateCriteria(prev => ({
+                                                                ...prev,
+                                                                distance: e.value ?? 0
+                                                            }))} 
                             showButtons
                             buttonLayout='horizontal'
                             min={1}

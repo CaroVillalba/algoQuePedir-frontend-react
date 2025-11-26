@@ -75,4 +75,3 @@ export const ReviewRestorantView = () => {
     )
 }
 
-//<i className="pi pi-star"/>
