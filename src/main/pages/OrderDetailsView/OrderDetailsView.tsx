@@ -37,7 +37,7 @@ export const OrderDetailsView = () => {
         });
 
     const getOrder = async() => {
-        const loadedOrder = await orderService.getById(Number(id))
+        const loadedOrder = await orderService.getOrderDetail(Number(id))
         console.log("DTO recibido en OrderDetailsView:", loadedOrder)
         setOrder(loadedOrder)
     }
@@ -63,7 +63,7 @@ export const OrderDetailsView = () => {
                                 <div>
                                     <div className="font-bold">{ order.localName }</div>
                                     <small className="text-color-secondary text-sm">
-                                        { '?' } km · { /*localCheckout.freeDelivery ? 'Envío gratis' :*/ 'Envío con costo' }
+                                        { order.distanceKm?.toFixed(2) ?? "?" } km · { order.freeDelivery ? 'Envío gratis' : 'Envío con costo' }
                                     </small>
                                 </div>
                             </div>

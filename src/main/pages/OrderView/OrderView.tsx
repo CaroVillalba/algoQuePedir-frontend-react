@@ -15,6 +15,7 @@ export const OrderView = () => {
 
     const updateOrders = async() => {
         const ordenes = await orderService.getAll()
+        console.log(ordenes)
         setOrdenesTodas(ordenes)
         setOrdenesPendientes(ordenes.filter((orden: any) => (orden.state == "PENDIENTE" || orden.state === "PREPARADO")))
         setOrdenesCompletadas(ordenes.filter((orden: any) => (orden.state == "ENTREGADO")))
