@@ -15,6 +15,8 @@ import type { LocalPublic } from '../../../types/Local'
 import type { Dish } from '../../../types/Dish'
 import type { CartContextType } from '../../../types/CartContextType'
 import { MainContext } from '../../../types/MainContextType'
+import type { Rating } from '../../../types/Rating'
+import { ratingService } from '../../../services/RatingService'
 
 let initialLocalState: LocalPublic = {
     id: 0,
@@ -28,6 +30,7 @@ let initialLocalState: LocalPublic = {
 export const RestaurantMenuView = () => {
     const [local, setLocal] = useState<LocalPublic>(initialLocalState)
     const [dishes, setDishes] = useState<Dish[]>([])
+    const [ratings, setRatings] = useState<Rating[]>([])
     const navigate = useNavigate()
     const { id: restaurantIdParam } = useParams()
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -129,9 +132,21 @@ export const RestaurantMenuView = () => {
         }
     }
 
+    const getRatings = async () => {
+        try {
+            if (restaurantIdParam) {
+                const data = await ratingService.getLocalReviews(Number(restaurantIdParam))
+                setRatings(data)
+            }
+        } catch {
+            showToast('No se pudieron cargar las calificaciones.', 'error')
+        }
+    }
+
     useOnInit(() => {
         getLocal()
         getDishes()
+        getRatings()
     })
 
     return (
@@ -186,7 +201,16 @@ export const RestaurantMenuView = () => {
 
                 <TabPanel header="Reseñas">
                     <div className="p-3">
-                        <p>Aquí irían las reseñas...</p>
+                        {
+                            ratings.map((rating) => (
+                                <div className="restaurant-review">
+                                    <h4>{rating.username}  {"★".repeat(rating.rating)}</h4>
+                                    <p>{rating.description}</p>
+                                    <hr/>
+                                </div>
+                            ))
+                        }
+                        
                     </div>
                 </TabPanel>
             </TabView>
