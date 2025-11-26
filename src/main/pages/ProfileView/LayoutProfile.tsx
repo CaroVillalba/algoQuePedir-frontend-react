@@ -13,6 +13,7 @@ import { authService } from '../../../services/AuthService'
 import { userService } from '../../../services/UserService'
 import type { Ingredient } from '../../../types/IngredientType'
 import type { CriteriaType } from '../../../types/ProfileContextType'
+import { all } from 'axios'
 
 
 export const LayoutProfile = () => {
@@ -99,7 +100,7 @@ export const LayoutProfile = () => {
         setCriteria(prev => {
             const updated = update(prev);
 
-            // también actualizar el perfil del usuario
+            
             setProfileInfo(prevProfile => ({
                 ...prevProfile,
                 criteria: updated
@@ -109,28 +110,6 @@ export const LayoutProfile = () => {
             return updated
         });
     };
-
-
-        const getRestaurants = async () => {
-        
-                try{
-                const allRestaurants = await localService.getRestaurants()
-                
-        
-                const initialSelected = allRestaurants.slice(0, 3)
-                const initialAvailable = allRestaurants.slice(3) 
-        
-                setSelectedRestaurants(initialSelected)
-                setAvailableRestaurants(initialAvailable)
-        
-                
-                } catch(error : unknown ) {
-                    const errorMessage = getMensajeError(error as ErrorResponse)
-                    showToast(errorMessage, 'error')
-                }
-        
-        }
-
         async function fetchProfileInfo()  {
                 const username =  authService.getLoggedUsername()
                 const ingredients = await ingredientService.getAll()
@@ -145,8 +124,8 @@ export const LayoutProfile = () => {
                 try {
                     const userProfile = await userService.getUserProfile(username) 
                     const allRestaurants = await localService.getRestaurants()
-
-                    console.log(userProfile.criteria)
+                    
+                    
                     const preferredFromProfile = userProfile.preferredRestaurants
                     setSelectedRestaurants(preferredFromProfile)
 

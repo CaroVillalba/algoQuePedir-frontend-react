@@ -9,8 +9,7 @@ import type { CriteriaType, ProfileContextType } from '../../../../types/Profile
 
 export const SearchCriteria = () => {
     const { criteria, updateCriteria } = useOutletContext<ProfileContextType>()
-    //checkedVegan, setCheckedVegan, checkedExquisite, setCheckedExquisite, checkedConservative, setCheckedConservative, checkedImpatient, setCheckedImpatient,
-         //distance, setDistance
+    
     const { criteria: c, setCriteria} = criteria    
 
 
