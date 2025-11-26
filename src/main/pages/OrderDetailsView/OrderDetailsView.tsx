@@ -46,11 +46,11 @@ export const OrderDetailsView = () => {
             subtotal: 0,
             increment: 0,
             comission: 0,
-            deliveryFee: 0,     // 👈 LO QUE FALTABA
-            paymentFee: 0,      // 👈 LO QUE FALTABA
-            total: 0,           // 👈 YA ESTABA
+            deliveryFee: 0,     
+            paymentFee: 0,      
+            total: 0,           
             paymentMethod: "",
-            local: {            // 👈 LO QUE FALTABA
+            local: {            
                 name: "",
                 freeDelivery: false,
                 distanceKm: 0
@@ -60,7 +60,7 @@ export const OrderDetailsView = () => {
 
     const getOrder = async() => {
         const loadedOrder = await orderService.getById(Number(id))
-        console.log("📦 DTO recibido en OrderDetailsView:", loadedOrder)
+        console.log("DTO recibido en OrderDetailsView:", loadedOrder)
         setOrder(loadedOrder)
     }
 
