@@ -9,8 +9,10 @@ import { useParams } from 'react-router-dom';
 import './OrderDetailsView.css'
 
 export const OrderDetailsView = () => {
+    
     const { id } = useParams()
-    const [order, setOrder] = useState<any>({
+    
+    /* const [order, setOrder] = useState<any>({
         comission:0.0,
         direction:{},
         dishes:[{
@@ -30,10 +32,35 @@ export const OrderDetailsView = () => {
         time:"",
         total:0.0,
         user:{}
-    })
+    }) */
+
+        const [order, setOrder] = useState<any>({
+            id: 0,
+            dishes: [{
+                id: 0,
+                description: "",
+                imageUrl: "",
+                price: 0,
+                quantity: 0
+            }],
+            subtotal: 0,
+            increment: 0,
+            comission: 0,
+            deliveryFee: 0,     // 👈 LO QUE FALTABA
+            paymentFee: 0,      // 👈 LO QUE FALTABA
+            total: 0,           // 👈 YA ESTABA
+            paymentMethod: "",
+            local: {            // 👈 LO QUE FALTABA
+                name: "",
+                freeDelivery: false,
+                distanceKm: 0
+            },
+            user: {}
+        });
 
     const getOrder = async() => {
         const loadedOrder = await orderService.getById(Number(id))
+        console.log("📦 DTO recibido en OrderDetailsView:", loadedOrder)
         setOrder(loadedOrder)
     }
 
@@ -90,15 +117,15 @@ export const OrderDetailsView = () => {
                         </div>
                         <div className="flex justify-content-between mb-2">
                             <span>Recargo por tipo de pago</span>
-                            <span>${/*paymentFee.toFixed(2)*/}</span>
+                            <span>${order.increment?.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-content-between mb-2">
                             <span>Tarifa de entrega</span>
-                            <span>${/*DELIVERY_FEE.toFixed(2)*/}</span>
+                            <span>${order.comission?.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-content-between align-items-center mt-3">
                             <span className="font-bold text-lg">Total</span>
-                            <span className="font-bold text-lg">${/*total.toFixed(2)*/}</span>
+                            <span className="font-bold text-lg">${order.total.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>
