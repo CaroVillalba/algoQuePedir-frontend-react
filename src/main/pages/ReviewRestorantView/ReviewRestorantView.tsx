@@ -1,14 +1,15 @@
-import { Button, TextareaAutosize } from "@mui/material"
-import "./ReviewRestorantView.css"
-import { useState } from "react";
-import { useOnInit } from "../../../hooks/useOnInit";
-import { localService } from "../../../services/LocalService";
-import { useParams } from "react-router-dom";
-import type { Rating } from "../../../types/Rating";
-import { ratingService } from "../../../services/RatingService";
-import { authService } from "../../../services/AuthService";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import {  TextareaAutosize } from '@mui/material'
+import { Button } from 'primereact/button'
+import './ReviewRestorantView.css'
+import { useState } from 'react'
+import { useOnInit } from '../../../hooks/useOnInit'
+import { localService } from '../../../services/LocalService'
+import { useParams } from 'react-router-dom'
+import type { Rating } from '../../../types/Rating'
+import { ratingService } from '../../../services/RatingService'
+import { authService } from '../../../services/AuthService'
+import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
 import { MainContext } from '../../../types/MainContextType'
 
 export const ReviewRestorantView = () => {
@@ -16,15 +17,15 @@ export const ReviewRestorantView = () => {
     const { showToast } = useContext(MainContext)
 
     const { id } = useParams()
-    const [localName, setLocalName] = useState("error")
+    const [localName, setLocalName] = useState('error')
 
-    const [stars, setStars] = useState("1");
-    const [review, setReview] = useState("");
+    const [stars, setStars] = useState('1')
+    const [review, setReview] = useState('')
 
     const handleChangeStars = (e:any) => setStars(e.target.value)
 
     const handleChangeReview = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setReview(e.target.value);
+        setReview(e.target.value)
     };
 
     const loadLocalInfo = async () => {
@@ -35,13 +36,13 @@ export const ReviewRestorantView = () => {
     const postReview = async () => {
         const username = authService.getLoggedUsername()
         await ratingService.create({
-            "username": username, 
-            "localId": 1, 
-            "rating": Number(stars), 
-            "description": review
+            'username': username, 
+            'localId': 1, 
+            'rating': Number(stars), 
+            'description': review
         })
-        showToast("Calificacion enviada exitosamente", "success")
-        navigate("/review")
+        showToast('Calificacion enviada exitosamente', 'success')
+        navigate('/review')
     }
 
     useOnInit(() => {
@@ -54,7 +55,7 @@ export const ReviewRestorantView = () => {
 
             <form className="starContainer">
                 {
-                ["1","2","3","4","5"].map((v) => (
+                ['1','2','3','4','5'].map((v) => (
                     <label className="star">
                         <input type="radio" name="stars" value={v} checked={stars === v} onChange={handleChangeStars}/>
                         <svg viewBox="0 0 24 24" className="star-icon" aria-hidden="true">
@@ -70,7 +71,7 @@ export const ReviewRestorantView = () => {
 
             <TextareaAutosize minRows={5} placeholder="Contanos tu experiencia" onChange={handleChangeReview}/>
 
-            <Button className='button-primary' type='submit' onClick={postReview}>Enviar</Button>
+            <Button className='button-primary' label='Enviar' type='submit' onClick={postReview}></Button>
         </div>
     )
 }
