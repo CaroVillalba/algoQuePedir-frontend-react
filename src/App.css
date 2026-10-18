@@ -1,5 +1,14 @@
 #root {
   max-width: 480px;
   margin: 0 auto;
-  padding: 2rem;
+  overflow: hidden;
+}
+
+.app{
+  position: relative;
+}
+
+.app main{
+  min-height: calc(100vh - 120px);
+  padding: 1rem;
 }

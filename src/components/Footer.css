@@ -1,13 +1,14 @@
 
 .footer-container {
   /*TODO: PRÓXIMO FIXED, SE DESAPRUEBA -> TIENE QUE SER STICKY! */
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
   width: 100%;
   background-color: white;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  height: 60px;
 }
 
 .bottom-nav .MuiBottomNavigationAction-root {
@@ -23,4 +24,8 @@
 
 .bottom-nav .MuiBottomNavigationAction-root .MuiTouchRipple-root {
   color: var(--secondary-color);
+}
+
+.toolbar{
+  height: 60px;
 }

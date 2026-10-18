@@ -1,29 +1,74 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { Card } from  'primereact/card'
 import { ChevronRightIcon } from 'primereact/icons/chevronright'
 import './ProfileView.css'
 
+type ProfileForm = {
+    name: string;
+    surname: string;
+    address: string;
+    location: string;
+    latitude: string;
+    longitude: string;
+}
+
+const initialState = {
+        name: '',
+        surname: '',
+        address: '',
+        location: '',
+        latitude: '',
+        longitude: ''
+    }
+
 export const ProfileView = () => {
-    const [name, setName] = useState('')
-    const [surname, setSurname] = useState('')
-    const [address, setAddress] = useState('')
-    const [location, setLocation] = useState('')
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
+    const [profileForm, setProfileForm] = useState<ProfileForm>(initialState)
+
+    // keyof typeof profileForm es igual a
+    // type profileFormKeys = 'name' | 'surname' | 'address' | 'location' | 'latitude'...etc
+    const actualizarCampo = (referencia: keyof typeof profileForm, valor: unknown) =>{
+        setProfileForm({
+            ...profileForm,
+            [referencia]:valor
+        })
+    }
+
+/*     const [name, setName] = useState<string>('')
+    const [surname, setSurname] = useState<string>('')
+    const [address, setAddress] = useState<string>('')
+    const [location, setLocation] = useState<string>('')
+    const [latitude, setLatitude] = useState<string>('')
+    const [longitude, setLongitude] = useState<string>('') */
+
+    //OnMount
+    useEffect(() => {
+        console.log('Me monté',profileForm)
+
+        const intervalId = setInterval( () => {
+            actualizarCampo('name','Agustin')
+        },1000)
+        return () => {console.log('Me desmonté')
+            clearInterval(intervalId)
+        }
+    },[])
+
+    const handleSave = () => {
+        console.log(profileForm)
+    }
 
     return (
         <>
-            
+
             <h2>Información personal</h2>
             <div className="input-form">
                 <label htmlFor="name">Nombre</label>
                 <InputText
                     id="name"
-                    value={name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-                    
+                    value={profileForm.name}
+                    onChange={e => actualizarCampo('name',e.target.value)}
+
                 />
             </div>
 
@@ -31,37 +76,42 @@ export const ProfileView = () => {
                 <label htmlFor="surname">Apellido</label>
                 <InputText
                     id="surname"
-                    value={surname}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSurname(e.target.value)}
-                    
+                    value={profileForm.surname}
+                    onChange={e => setProfileForm({
+                                ...profileForm,
+                                ['surname']:e.target.value
+                            })}
+
                 />
             </div>
+
             <div className="input-form">
-                <label htmlFor="address">Direccion</label> 
+                <label htmlFor="address">Direccion</label>
                 <InputText
                     id="address"
-                    value={address}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddress(e.target.value)}
-                    
+                    value={profileForm.address}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => actualizarCampo('name',e.target.value)}
+
                 />
             </div>
+
             <div className="input-form">
-                <label htmlFor="location">Ubicación</label> 
+                <label htmlFor="location">Ubicación</label>
                 <InputText
                     id="location"
-                    value={location}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLocation(e.target.value)}
-                    
+                    value={profileForm.location}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => actualizarCampo('location',e.target.value)}
                 />
             </div>
+
             <div className="input-form-row">
                 <div className="input-form">
                     <label htmlFor="latitude">Latitud</label>
                     <InputText
                         id="latitude"
                         keyfilter={'int'}
-                        value={latitude}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLatitude(e.target.value)}
+                        value={profileForm.latitude}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => actualizarCampo('latitude',e.target.value)}
                     />
                 </div>
 
@@ -70,8 +120,8 @@ export const ProfileView = () => {
                     <InputText
                         id="longitude"
                         keyfilter={'int'}
-                        value={longitude}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLongitude(e.target.value)}
+                        value={profileForm.longitude}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => actualizarCampo('name',e.target.value)}
                     />
                 </div>
             </div>
@@ -92,21 +142,7 @@ export const ProfileView = () => {
                 <ChevronRightIcon/>
            </div>
 
-           <Button label="Guardar" className='button-primary' ></Button>
-
-
-
-            
-
-            
-            
-
-
-
-
-
-
-
+           <Button onClick={handleSave} label="Guardar" className='button-primary' ></Button>
 
         </>
     )

@@ -43,7 +43,7 @@ export const RestaurantMenuView = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
     const [quantity, setQuantity] = useState(1)
-    const { addItem, totalItems } = useCart()
+    const { addItem, totalItems } = useCart() // TODO: Debería estar siempre inicializado!
 
     const handleOpenModal = (dish: Dish) => {
         setSelectedDish(dish)

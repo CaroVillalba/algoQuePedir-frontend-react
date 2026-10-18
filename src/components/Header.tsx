@@ -21,10 +21,11 @@ export const Header: React.FC<HeaderProps> = ({ title, showBackButton = false })
 
     return (
         <Toolbar
+            className='toolbar'
             start={startContent}
             center={<span className="font-semibold text-lg">{title}</span>}
         />
     )
 
-    // TODO: Hacer que ocupe todo el ancho de la pantalla 
+    // TODO: Hacer que ocupe todo el ancho de la pantalla
 }

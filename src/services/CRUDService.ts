@@ -11,7 +11,7 @@ export interface InterfaceService<T> {
 
 export abstract class CRUDService<T> implements InterfaceService<T> {
     protected api: AxiosInstance
-    protected apiRoot = import.meta.env.VITE_API_URL || 'http://localhost:9000/v1'
+    protected apiRoot = 'http://localhost:9000/v1'
     protected path: string
 
     constructor(path: string) {

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import 'primereact/resources/themes/lara-light-blue/theme.css'  
-import 'primereact/resources/primereact.min.css'                
+import 'primereact/resources/themes/lara-light-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './App.css'
@@ -11,7 +11,7 @@ import { ProfileView } from './main/pages/ProfileView/ProfileView'
 import { RestaurantMenuView } from './main/pages/RestaurantMenuView/RestaurantMenuView'
 import { OrderCheckoutView } from './main/pages/OrderCheckoutView/OrderCheckoutView'
 import { StoreSearch } from './main/pages/HomeView/StoreSearch'
-import { CartProvider } from './context/CartProvider' 
+import { CartProvider } from './context/CartProvider'
 
 interface RouteConfig {
   title: string
@@ -23,28 +23,34 @@ function AppContent() {
   const location = useLocation()
 
   const routeConfig: Record<string, RouteConfig> = {
-    '/profile': { title: 'Perfil', showBackButton: false },
+    '/profile': { title: 'Perfil', showBackButton: true },
     '/restaurant-menu': { title: 'Menú del Restaurante', showBackButton: true },
     '/order-checkout': { title: 'Tu pedido', showBackButton: true }
   }
 
-  const basePath = Object.keys(routeConfig).find(path =>
+  const basePath = ()=>{
+    console.log(location.pathname)
+    return Object.keys(routeConfig).find(path =>
     location.pathname.startsWith(path)
-  )
+  )}
 
-  const matchedConfig = basePath ? routeConfig[basePath] : { title: '', showBackButton: false }
+  const matchedConfig = () => {
+    console.log('BasePath:',basePath())
+    return basePath() ? routeConfig[basePath()||''] : { title: '', showBackButton: false }
+  }
 
   return (
-    <div className="App">
-      <Header title={matchedConfig.title} showBackButton={matchedConfig.showBackButton} />
+    <div className="app">
+      <Header title={matchedConfig().title} showBackButton={matchedConfig().showBackButton} />
 
-      <Routes>
-        <Route path="/profile" element={<ProfileView />} />
-        <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
-        <Route path="/order-checkout" element={<OrderCheckoutView />} />
-        <Route path="/" element={<StoreSearch />} />
-      </Routes>
-
+      <main>
+        <Routes>
+          <Route path="/profile" element={<ProfileView />} />
+          <Route path="/restaurant-menu/:id" element={<RestaurantMenuView />} />
+          <Route path="/order-checkout" element={<OrderCheckoutView />} />
+          <Route path="/" element={<StoreSearch />} />
+        </Routes>
+      </main>
       <Footer />
     </div>
   )
